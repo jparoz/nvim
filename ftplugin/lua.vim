@@ -29,13 +29,3 @@ set errorformat+=Error:%*[^:]:\ %f:%l:%m
 set errorformat+=Error:\ %f:%l:%m
 set errorformat+=\	%f:%l:%m
 set errorformat+=%f:%l:%m
-
-nnoremap <buffer> <Leader>K
-            \ :setlocal iskeyword+=.<CR>
-            \ :DevDocsUnderCursor<CR>
-            \ :setlocal iskeyword-=.<CR>
-
-nnoremap <buffer> <Leader>k
-            \ :setlocal iskeyword+=.<CR>
-            \ :DevDocsUnderCursor<CR>
-            \ :setlocal iskeyword-=.<CR>

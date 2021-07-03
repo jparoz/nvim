@@ -3,6 +3,8 @@
 " URL: https://github.com/robertmeta/nofrils
 " (see this url for latest release & screenshots)
 " License: OSI approved MIT license
+"
+" Note: edited by jparoz
 
 hi clear
 if exists("syntax_on")
@@ -134,6 +136,9 @@ hi Normal term=NONE cterm=NONE ctermfg=255 ctermbg=235 gui=NONE guifg=#c5c8c6 gu
 hi LineNr term=NONE cterm=NONE ctermfg=8 ctermbg=bg gui=NONE guifg=#373b41 guibg=bg
 hi Comment term=NONE cterm=NONE ctermfg=135 ctermbg=NONE gui=NONE guifg=#8abeb7 guibg=NONE
 hi String term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#ffffff guibg=NONE
+
+" Dirvish
+hi DirvishSuffix guifg=#b5b8b6 guibg=#1d1f21
 
 let g:terminal_color_0  = "#151515"
 let g:terminal_color_1  = "#AC4142"

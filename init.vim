@@ -9,28 +9,127 @@ Plug 'ervandew/supertab'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-repeat'
-
 Plug 'tpope/vim-commentary'
+"{{{
 nmap <BSlash> <Plug>Commentary
 xmap <BSlash> <Plug>Commentary
 omap <BSlash> <Plug>Commentary
 nmap <BSlash><BSlash> <Plug>CommentaryLine
 nmap <BSlash>u <Plug>CommentaryUndo
-
+"}}}
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-fugitive'
 Plug 'dense-analysis/ale'
+"{{{
+let g:ale_linters = {'rust': []}
+
+let g:ale_sign_column_always = 1
+
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '○'
+let g:ale_sign_info = '𝒊'
+
+hi link ALEError NONE
+"}}}
 Plug 'itchyny/lightline.vim'
+"{{{
+" let g:lightline = { 'colorscheme': 'jellybeans' }
+
+function! SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    return join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), ", ")
+endfunc
+
+let g:lightline = {
+            \ 'colorscheme': 'jellybeans',
+            \ 'active': {
+            \   'right': [ [ 'lineinfo' ],
+            \              [ 'percent' ],
+            \              [ 'filetype' ] ]
+            \ },
+            \ 'inactive': {
+            \   'right': [ [ 'lineinfo' ],
+            \              [ 'percent' ] ]
+            \ },
+            \ 'component_function': {
+            \   'SynStack': 'SynStack',
+            \ }
+            \ }
+
+
+set noshowmode
+"}}}
 Plug 'rust-lang/rust.vim'
 Plug 'Raimondi/delimitMate'
+"{{{
+let g:delimitMate_matchpairs = '(:),[:],{:}'
+let g:delimitMate_quotes = ''
+let g:delimitMate_expand_cr=1
+"}}}
 Plug 'ludovicchabant/vim-gutentags'
+"{{{
+if !exists("g:gutentags_project_info")
+  let g:gutentags_project_info = []
+endif
+call add(g:gutentags_project_info, {'type': 'rust', 'file': 'Cargo.toml'})
+"}}}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+"{{{
+let g:LanguageClient_serverCommands = {
+            \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+            \ }
 
+let g:LanguageClient_diagnosticsDisplay = {
+            \     1: {
+            \         "name": "Error",
+            \         "texthl": "LanguageClientError",
+            \         "signText": "●",
+            \         "signTexthl": "LanguageClientErrorSign",
+            \         "virtualTexthl": "Virtual",
+            \     },
+            \     2: {
+            \         "name": "Warning",
+            \         "texthl": "LanguageClientWarning",
+            \         "signText": "○",
+            \         "signTexthl": "LanguageClientWarningSign",
+            \         "virtualTexthl": "Virtual",
+            \     },
+            \     3: {
+            \         "name": "Information",
+            \         "texthl": "LanguageClientInfo",
+            \         "signText": "ℹ",
+            \         "signTexthl": "LanguageClientInfoSign",
+            \         "virtualTexthl": "Virtual",
+            \     },
+            \     4: {
+            \         "name": "Hint",
+            \         "texthl": "LanguageClientInfo",
+            \         "signText": "➤",
+            \         "signTexthl": "LanguageClientInfoSign",
+            \         "virtualTexthl": "Virtual",
+            \     },
+            \ }
+
+let g:LanguageClient_hideVirtualTextsOnInsert = 1
+
+function LC_maps()
+    if has_key(g:LanguageClient_serverCommands, &filetype)
+        nmap <buffer> <silent> K <Plug>(lcn-hover)
+        nmap <buffer> <silent> <F2> <Plug>(lcn-rename)
+        nmap <buffer> <silent> gd <Plug>(lcn-definition)
+        nmap <buffer> <silent> <C-]> <Plug>(lcn-definition)
+    endif
+endfunction
+
+autocmd FileType * call LC_maps()
+"}}}
 Plug 'Shougo/deoplete.nvim'
 let g:deoplete#enable_at_startup = 1
 
@@ -41,7 +140,7 @@ set background=dark
 
 if has('macunix')
     if match(system('scutil --get ComputerName'), "Jesse’s MacBook Air") != -1
-        cd /Users/jlp/dev/projects
+        e /Users/jlp/dev/projects
     endif
 endif
 
@@ -59,6 +158,7 @@ set tabstop=4 shiftwidth=4 shiftround expandtab smarttab autoindent
 set list listchars=tab:·\ ,trail:·,nbsp:·,extends:>,precedes:<
 set splitbelow splitright
 set ignorecase smartcase
+set foldmethod=marker
 
 " Leader
 let mapleader = " "
@@ -129,5 +229,3 @@ nnoremap <C-l> <C-w>l
 
 nnoremap <C-Tab> gt
 nnoremap <C-S-Tab> gT
-
-e ~/dev/projects/
