@@ -60,7 +60,7 @@ hi Question term=NONE cterm=NONE ctermfg=69 ctermbg=NONE gui=NONE guifg=#b5bd68 
 hi Search term=NONE cterm=NONE ctermfg=black ctermbg=6 gui=NONE guifg=#1d1f21 guibg=#f0c674
 hi Todo term=NONE cterm=NONE ctermfg=10 ctermbg=NONE gui=NONE guifg=#f0c674 guibg=NONE
 hi VisualNOS term=NONE cterm=NONE ctermfg=NONE ctermbg=69 gui=NONE guifg=NONE guibg=#5F87FF
-hi WarningMsg term=NONE cterm=NONE ctermfg=fg ctermbg=52 gui=italic guifg=#cc6666 guibg=NONE
+hi WarningMsg term=NONE cterm=NONE ctermfg=fg ctermbg=52 gui=italic guifg=#f0c674 guibg=NONE
 
 " Reversed
 hi PmenuSbar term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE gui=reverse guifg=NONE guibg=NONE
@@ -139,6 +139,17 @@ hi String term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#ffffff 
 
 " Dirvish
 hi DirvishSuffix guifg=#b5b8b6 guibg=#1d1f21
+
+" LSP
+hi link LspDiagnosticsDefaultError Error
+hi link LspDiagnosticsDefaultWarning WarningMsg
+hi link LspDiagnosticsDefaultInformation WarningMsg
+hi link LspDiagnosticsDefaultHint WarningMsg
+
+hi link LspDiagnosticsVirtualTextError Virtual
+hi link LspDiagnosticsVirtualTextWarning Virtual
+hi link LspDiagnosticsVirtualTextInformation Virtual
+hi link LspDiagnosticsVirtualTextHint Virtual
 
 let g:terminal_color_0  = "#151515"
 let g:terminal_color_1  = "#AC4142"
