@@ -1,8 +1,10 @@
+--[[
 augroup MarkdownPreview
 	au BufNew <buffer> VimRShowTools
 augroup END
 
 nnoremap <Leader><CR> :VimRToggleTools<CR>
+]]
 
-setlocal linebreak
-setlocal conceallevel=2
+vim.wo.linebreak = true
+vim.wo.conceallevel = 2
