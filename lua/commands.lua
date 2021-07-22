@@ -3,13 +3,13 @@ local fn = vim.fn
 
 -- Open a terminal in the current file's directory
 cmd [[
-command! -nargs=* Terminal lua current_dir_terminal("<args>")
+command! -nargs=* Terminal lua Current_dir_terminal("<args>")
 command! -nargs=* STerminal split | Terminal <args>
 command! -nargs=* VTerminal vsplit | Terminal <args>
 ]]
 
 -- Open a terminal in the current file's directory
-function current_dir_terminal(arg)
+function Current_dir_terminal(arg)
     vim.env.VIM_CURRENT_DIR = fn.expand("%:p:h")
     cmd(":terminal " .. arg)
     vim.api.nvim_buf_set_keymap(0, "t", "<Esc>", "<C-\\><C-n>", {noremap=true})

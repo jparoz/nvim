@@ -13,6 +13,23 @@ M.each = function(t)
     end
 end
 
+M.has = function(s)
+    return vim.fn.has(s) == 1
+end
+
+M.keymap = function(mode, lhs, rhs, opts)
+    local options = {noremap = true}
+    if opts then options = vim.tbl_extend('force', options, opts) end
+
+    if options.buffer then
+        local buffer = options.buffer
+        options.buffer = nil
+        vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, options)
+    else
+        vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    end
+end
+
 return setmetatable(M, {
     __index = function(t, name)
         return function()

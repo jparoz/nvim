@@ -5,7 +5,7 @@ require "paq" {
     -- General/smallish Vim-type upgrades
     "junegunn/vim-slash",
     "justinmk/vim-sneak",
-    "justinmk/vim-dirvish",
+    -- "justinmk/vim-dirvish",
     "tpope/vim-surround",
     "tpope/vim-abolish",
     "tpope/vim-repeat",
@@ -16,10 +16,14 @@ require "paq" {
     "ervandew/supertab",
     "itchyny/lightline.vim",
     -- "ludovicchabant/vim-gutentags",
+    "airblade/vim-rooter",
 
     -- Specific feature packages
     "neovim/nvim-lspconfig",
-    "nvim-lua/completion-nvim",
+
+    "nvim-lua/popup.nvim",
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim",
 
     -- Language-specific
     "rust-lang/rust.vim",

@@ -9,13 +9,43 @@ for _, lsp in ipairs(servers) do
 
     nvim_lsp[lsp].setup {
         on_attach = function(client, bufnr)
-            if lsp_mappings then lsp_mappings(client, bufnr) end
-            -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
-
-            -- completion-nvim
-            -- return require("completion").on_attach(client, bufnr)
+            if LSP_mappings then LSP_mappings(client, bufnr) end
+            vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
         end,
-        -- on_attach = require("completion").on_attach,
+
+        flags = {
+            debounce_text_changes = 150,
+        },
+    }
+end
+
+do -- sumneko Lua LSP setup
+    local sumneko_root_path = vim.env.HOME .. "/dev/projects/lua-language-server"
+    local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
+
+    require("lspconfig").sumneko_lua.setup {
+        cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
+        settings = {
+            Lua = {
+                runtime = {
+                    version = "LuaJIT", -- depends which file we're editing
+                    path = vim.split(package.path, ";"),
+                },
+                diagnostics = {
+                    globals = {"vim", "love"},
+                },
+                workspace = {
+                    library = {
+                        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                    },
+                },
+            },
+        },
+        on_attach = function(client, bufnr)
+            if LSP_mappings then LSP_mappings(client, bufnr) end
+            vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+        end,
 
         flags = {
             debounce_text_changes = 150,

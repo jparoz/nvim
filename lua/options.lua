@@ -5,12 +5,6 @@ local g = vim.g
 cmd "colorscheme nofrils-dark"
 opt.background = "dark"
 
-if vim.fn.has "macunix" then
-    if vim.fn.system("scutil --get ComputerName") == "Jesse’s MacBook Air\n" then
-        -- computer-specific stuff
-    end
-end
-
 opt.textwidth = 80
 opt.colorcolumn = "+1"
 
@@ -47,8 +41,7 @@ opt.smartcase = true
 
 opt.foldmethod = "marker"
 
--- {{{ Lightline
-
+-- Lightline
 g.lightline = {
     colorscheme = "jellybeans",
     active = {
@@ -59,12 +52,22 @@ g.lightline = {
     },
 }
 
--- }}}
-
--- {{{ delimitMate
-
+-- delimitMate
 g.delimitMate_matchpairs = "(:),[:],{:}"
 g.delimitMate_quotes = ""
 g.delimitMate_expand_cr = 1
 
--- }}}
+-- Rooter
+g.rooter_cd_cmd = "lcd"
+g.rooter_resolve_links = 1
+
+-- Telescope
+require("telescope").setup {
+    defaults = {
+        layout_config = {
+            horizontal = {
+                preview_width = 0.5,
+            },
+        },
+    },
+}

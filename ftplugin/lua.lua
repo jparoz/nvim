@@ -1,3 +1,4 @@
+local cmd = vim.cmd
 -- @Todo: rewrite
 --[[
 nnoremap <buffer> <Leader><CR> :w<CR>:call deletebufline(bufadd("LOVE output"), 1, "$")<CR>
@@ -23,3 +24,5 @@ cmd [[setlocal errorformat+=Error:%*[^:]:\ %f:%l:%m]]
 cmd [[setlocal errorformat+=Error:\ %f:%l:%m]]
 cmd [[setlocal errorformat+=\	%f:%l:%m]]
 cmd [[setlocal errorformat+=%f:%l:%m]]
+
+vim.wo.signcolumn = "yes"
