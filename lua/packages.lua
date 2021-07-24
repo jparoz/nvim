@@ -21,6 +21,9 @@ require "paq" {
     -- Specific feature packages
     "neovim/nvim-lspconfig",
 
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+
     "nvim-lua/popup.nvim",
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope.nvim",

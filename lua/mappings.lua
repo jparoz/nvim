@@ -24,6 +24,46 @@ keymap("o", "<BSlash>", "<Plug>Commentary", {noremap = false})
 keymap("n", "<BSlash><BSlash>", "<Plug>CommentaryLine", {noremap = false})
 keymap("n", "<BSlash>u", "<Plug>CommentaryUndo", {noremap = false})
 
+--- Treesitter
+require("nvim-treesitter.configs").setup {
+    textobjects = {
+        select = {
+            enable = true,
+            -- lookahead = true, -- This might do nothing???
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["am"] = "@class.outer",
+                ["im"] = "@class.inner",
+            },
+        },
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+                ["]m"] = "@class.outer",
+                ["]f"] = "@function.outer",
+                ["]["] = "@function.outer",
+            },
+            goto_next_end = {
+                ["]M"] = "@class.outer",
+                ["]F"] = "@function.outer",
+                ["]]"] = "@function.outer",
+            },
+            goto_previous_start = {
+                ["[m"] = "@class.outer",
+                ["[f"] = "@function.outer",
+                ["[["] = "@function.outer",
+            },
+            goto_previous_end = {
+                ["[M"] = "@class.outer",
+                ["[F"] = "@function.outer",
+                ["[]"] = "@function.outer",
+            },
+        },
+    },
+}
+
 
 ---- Leader mappings
 
@@ -45,7 +85,7 @@ telemap("n", "<Leader>g", "live_grep")
 telemap("n", "<Leader>h", "help_tags")
 telemap("n", "<Leader>b", "buffers")
 
-telemap("n", "-", "file_browser", nil, "{hidden = true, follow = true}")
+telemap("n", "-", "file_browser", nil, "{hidden = true, follow = true, dir_icon = '📁'}")
 
 
 --- Buffer-local LSP-related mappings, run when an LSP client is started
