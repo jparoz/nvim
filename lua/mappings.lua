@@ -5,9 +5,9 @@ keymap("n", "Y", "y$")
 keymap("n", "Q", "@@")
 
 keymap("n", ";", ":")
-keymap("n", ":", ";")
+keymap("n", ":", "<Plug>Sneak_;", {noremap = false})
 keymap("x", ";", ":")
-keymap("x", ":", ";")
+keymap("x", ":", "<Plug>Sneak_;", {noremap = false})
 
 keymap("n", "<C-h>", "<C-w>h")
 keymap("n", "<C-j>", "<C-w>j")
@@ -85,7 +85,7 @@ telemap("n", "<Leader>g", "live_grep")
 telemap("n", "<Leader>h", "help_tags")
 telemap("n", "<Leader>b", "buffers")
 
-telemap("n", "-", "file_browser", nil, "{hidden = true, follow = true, dir_icon = '📁'}")
+telemap("n", "-", "file_browser", nil, "{hidden = true, follow = true, dir_icon = ''}")
 
 
 --- Buffer-local LSP-related mappings, run when an LSP client is started

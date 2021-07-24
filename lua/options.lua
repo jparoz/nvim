@@ -45,10 +45,13 @@ opt.foldmethod = "marker"
 g.lightline = {
     colorscheme = "jellybeans",
     active = {
-        right = { { "lineinfo" }, { "percent" }, { "filetype" } }
+        right = { { "lineinfo" }, { "percent" }, { "treesitter", "filetype" } }
     },
     inactive = {
         right = { { "lineinfo" }, { "percent" } }
+    },
+    component_function = {
+        treesitter = "nvim_treesitter#statusline",
     },
 }
 
