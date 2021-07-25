@@ -2,9 +2,6 @@ local cmd = vim.cmd
 local opt = vim.opt
 local g = vim.g
 
-cmd "colorscheme nofrils-dark"
-opt.background = "dark"
-
 opt.textwidth = 80
 opt.colorcolumn = "+1"
 
@@ -42,16 +39,29 @@ opt.smartcase = true
 opt.foldmethod = "marker"
 
 -- Lightline
+function TreesitterStatus()
+    local width = vim.fn.winwidth(0) - #vim.fn.expand("%:p:t") - #vim.bo.ft - 33
+    return vim.fn["nvim_treesitter#statusline"](width)
+end
+
+cmd [[
+function! TreesitterStatus()
+    return luaeval("TreesitterStatus()")
+endfunc
+]]
+
 g.lightline = {
     colorscheme = "jellybeans",
     active = {
         right = { { "lineinfo" }, { "percent" }, { "treesitter", "filetype" } }
+        -- right = { { "lineinfo" }, { "percent" }, { "synstack", "filetype" } }
     },
     inactive = {
         right = { { "lineinfo" }, { "percent" } }
     },
     component_function = {
-        treesitter = "nvim_treesitter#statusline",
+        treesitter = "TreesitterStatus",
+        synstack = "SynStack",
     },
 }
 
@@ -74,3 +84,7 @@ require("telescope").setup {
         },
     },
 }
+
+-- nvim-colorizer
+opt.termguicolors = true
+require("colorizer").setup()

@@ -16,6 +16,15 @@ function Current_dir_terminal(arg)
     fn.chansend(vim.b.terminal_job_id, " cd $VIM_CURRENT_DIR\n clear\n")
 end
 
+cmd [[
+function! SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    return join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), ", ")
+endfunc
+]]
+
 -- @Todo: rewrite if necessary
 -- Run the last command in an open terminal window in this tab
 --[[

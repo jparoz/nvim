@@ -24,7 +24,7 @@ if !exists("g:nofrils_heavylinenumbers")
 endif
 
 " Baseline
-hi Normal term=NONE cterm=NONE ctermfg=255 ctermbg=235 gui=NONE guifg=#c5c8c6 guibg=#1d1f21
+" hi Normal term=NONE cterm=NONE ctermfg=255 ctermbg=235 gui=NONE guifg=#c5c8c6 guibg=#1d1f21
 
 " Quickfix
 hi QuickFixLine term=NONE cterm=NONE ctermfg=255 ctermbg=235 gui=NONE guifg=#f0c674 guibg=#1d1f21

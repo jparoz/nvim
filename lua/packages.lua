@@ -17,6 +17,7 @@ require "paq" {
     "itchyny/lightline.vim",
     -- "ludovicchabant/vim-gutentags",
     "airblade/vim-rooter",
+    "tjdevries/colorbuddy.nvim",
 
     -- Specific feature packages
     "neovim/nvim-lspconfig",
@@ -30,4 +31,5 @@ require "paq" {
 
     -- Language-specific
     "rust-lang/rust.vim",
+    "norcalli/nvim-colorizer.lua",
 }
