@@ -5,7 +5,6 @@ require "paq" {
     -- General/smallish Vim-type upgrades
     "junegunn/vim-slash",
     "justinmk/vim-sneak",
-    -- "justinmk/vim-dirvish",
     "tpope/vim-surround",
     "tpope/vim-abolish",
     "tpope/vim-repeat",
@@ -14,10 +13,11 @@ require "paq" {
     "tpope/vim-fugitive",
     "Raimondi/delimitMate",
     "ervandew/supertab",
+    "godlygeek/tabular",
     "itchyny/lightline.vim",
-    -- "ludovicchabant/vim-gutentags",
     "airblade/vim-rooter",
     "tjdevries/colorbuddy.nvim",
+    "norcalli/nvim-colorizer.lua",
 
     -- Specific feature packages
     "neovim/nvim-lspconfig",
@@ -31,5 +31,5 @@ require "paq" {
 
     -- Language-specific
     "rust-lang/rust.vim",
-    "norcalli/nvim-colorizer.lua",
+    "teal-language/vim-teal",
 }

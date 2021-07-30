@@ -9,7 +9,7 @@ local hex = {
     yellow      = "#F4BF75",
     blue        = "#6A9FB5",
     purple      = "#AA759F",
-    pink        = "#AA759F",
+    pink        = "#DBA2BE",
     lavender    = "#5F5F87",
     teal        = "#8ABEB7",
     aqua        = "#75BFAA",
@@ -45,7 +45,7 @@ end
 vim.g.terminal_color_0  = hex.black
 vim.g.terminal_color_1  = hex.red
 vim.g.terminal_color_2  = hex.green
-vim.g.terminal_color_3  = hex.red
+vim.g.terminal_color_3  = hex.yellow
 vim.g.terminal_color_4  = hex.blue
 vim.g.terminal_color_5  = hex.purple
 vim.g.terminal_color_6  = hex.aqua
@@ -73,7 +73,7 @@ Group.new("LineNr", colors.grey2, colors.bg, styles.NONE)
 Group.new("NonText", colors.grey2, colors.none, styles.NONE)
 Group.new("SignColumn", colors.none, colors.none, styles.NONE)
 Group.new("SpecialKey", colors.grey2, colors.none, styles.NONE)
-Group.new("StatusLine", colors.black, colors.grey1, styles.NONE)
+Group.new("StatusLine", colors.grey0, colors.grey1, styles.NONE)
 Group.new("StatusLineNC", colors.black, colors.grey1, styles.NONE)
 Group.new("VertSplit", colors.black, colors.grey1, styles.NONE)
 Group.new("Virtual", colors.grey3, colors.none, styles.italic)
@@ -94,7 +94,7 @@ Group.new("IncSearch", colors.none, colors.none, styles.reverse)
 Group.new("MatchParen", colors.bg, colors.lavender, styles.NONE)
 Group.new("ModeMsg", colors.khaki, colors.none, styles.NONE)
 Group.new("MoreMsg", colors.khaki, colors.none, styles.NONE)
--- Group.new("PmenuSel", colors.black, colors.#FF00FF, styles.NONE)
+Group.new("PmenuSel", colors.black, colors.pink, styles.NONE)
 Group.new("Question", colors.khaki, colors.none, styles.NONE)
 Group.new("Search", colors.bg, colors.yellow, styles.NONE)
 Group.new("Todo", colors.yellow, colors.none, styles.NONE)

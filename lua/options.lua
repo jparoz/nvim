@@ -41,7 +41,12 @@ opt.foldmethod = "marker"
 -- Lightline
 function TreesitterStatus()
     local width = vim.fn.winwidth(0) - #vim.fn.expand("%:p:t") - #vim.bo.ft - 33
-    return vim.fn["nvim_treesitter#statusline"](width)
+    local res = vim.fn["nvim_treesitter#statusline"](width)
+    if res == vim.NIL then
+        return ""
+    else
+        return res
+    end
 end
 
 cmd [[
@@ -53,15 +58,31 @@ endfunc
 g.lightline = {
     colorscheme = "jellybeans",
     active = {
-        right = { { "lineinfo" }, { "percent" }, { "treesitter", "filetype" } }
-        -- right = { { "lineinfo" }, { "percent" }, { "synstack", "filetype" } }
+        left = {
+            -- closest to left
+            {"mode", "paste"},
+            {"readonly", "filename", "modified"},
+            {"git"},
+            -- closest to centre
+        },
+        right = {
+            -- closest to right
+            {"lineinfo"},
+            {"percent"},
+            {"treesitter", "filetype"},
+            -- closest to centre
+        },
     },
     inactive = {
-        right = { { "lineinfo" }, { "percent" } }
+        right = {
+            { "lineinfo" },
+            { "percent" },
+        },
     },
     component_function = {
         treesitter = "TreesitterStatus",
         synstack = "SynStack",
+        git = "FugitiveHead",
     },
 }
 

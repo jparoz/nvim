@@ -17,6 +17,10 @@ keymap("n", "<C-l>", "<C-w>l")
 keymap("n", "<C-Tab>", "gt")
 keymap("n", "<C-S-Tab>", "gT")
 
+--- Tabular
+keymap("n", "<Tab>", "<CMD>Tabularize /=<CR>")
+keymap("x", "<Tab>", "<CMD>Tabularize /=<CR>") -- @Fixme: doesn't work great
+
 --- Commentary
 keymap("n", "<BSlash>", "<Plug>Commentary", {noremap = false})
 keymap("x", "<BSlash>", "<Plug>Commentary", {noremap = false})
