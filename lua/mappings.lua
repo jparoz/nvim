@@ -39,6 +39,8 @@ require("nvim-treesitter.configs").setup {
                 ["if"] = "@function.inner",
                 ["am"] = "@class.outer",
                 ["im"] = "@class.inner",
+                ["aa"] = "@parameter.outer",
+                ["ia"] = "@parameter.inner",
             },
         },
         move = {
