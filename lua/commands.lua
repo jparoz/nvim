@@ -1,22 +1,23 @@
-local cmd = vim.cmd
-local fn = vim.fn
-
 -- Open a terminal in the current file's directory
-cmd [[
-command! -nargs=* Terminal lua Current_dir_terminal("<args>")
+vim.cmd [[
+command! -nargs=* Terminal lua Terminal("<args>")
 command! -nargs=* STerminal split | Terminal <args>
 command! -nargs=* VTerminal vsplit | Terminal <args>
 ]]
 
--- Open a terminal in the current file's directory
-function Current_dir_terminal(arg)
-    vim.env.VIM_CURRENT_DIR = fn.expand("%:p:h")
-    cmd(":terminal " .. arg)
+-- Open a terminal in the given dir, with escape bound to return to normal mode
+function Terminal(dir)
+    if dir == "" then
+        vim.cmd("terminal")
+    else
+        local cwd = vim.fn.getcwd()
+        vim.cmd("lcd " .. dir .. "\nterminal\nlcd " .. cwd)
+    end
+
     vim.api.nvim_buf_set_keymap(0, "t", "<Esc>", "<C-\\><C-n>", {noremap=true})
-    fn.chansend(vim.b.terminal_job_id, " cd $VIM_CURRENT_DIR\n clear\n")
 end
 
-cmd [[
+vim.cmd [[
 function! SynStack()
     if !exists("*synstack")
         return

@@ -1,8 +1,16 @@
 local M = {}
 
-M.printf = function(s, ...) return print(s:format(...)) end
+printf = function(s, ...) return print(s:format(...)) end
 
-M.printi = function(t) return print(vim.inspect(t)) end
+printi = function(t) return print(vim.inspect(t)) end
+
+M.lua2vim = function(name)
+    vim.cmd(
+"function! " .. name .. [[(...)
+    return luaeval("]] .. name .. [[(_A)", a:000)
+endfunc
+]])
+end
 
 M.each = function(t)
     local index = nil

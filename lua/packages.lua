@@ -11,6 +11,7 @@ require "paq" {
     "tpope/vim-commentary",
     "tpope/vim-speeddating",
     "tpope/vim-fugitive",
+    "tpope/vim-obsession",
     "Raimondi/delimitMate",
     "ervandew/supertab",
     "godlygeek/tabular",
@@ -27,7 +28,8 @@ require "paq" {
 
     "nvim-lua/popup.nvim",
     "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope.nvim",
+
+    "junegunn/fzf",
 
     -- Language-specific
     "rust-lang/rust.vim",

@@ -32,7 +32,7 @@ do -- sumneko Lua LSP setup
                     path = vim.split(package.path, ";"),
                 },
                 diagnostics = {
-                    globals = {"vim", "love"},
+                    globals = {"vim", "love", "hs"},
                 },
                 workspace = {
                     library = {

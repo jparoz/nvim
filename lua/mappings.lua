@@ -18,8 +18,10 @@ keymap("n", "<C-Tab>", "gt")
 keymap("n", "<C-S-Tab>", "gT")
 
 --- Tabular
-keymap("n", "<Tab>", "<CMD>Tabularize /=<CR>")
-keymap("x", "<Tab>", "<CMD>Tabularize /=<CR>") -- @Fixme: doesn't work great
+keymap("n", "<Tab>=", "<CMD>Tabularize /=<CR>")
+keymap("x", "<Tab>=", "<CMD>Tabularize /=<CR>") -- @Fixme: doesn't work great
+keymap("n", "<Tab>;", [[<CMD>Tabularize /\w\+:<CR>]])
+keymap("x", "<Tab>;", [[<CMD>Tabularize /\w\+:<CR>]]) -- @Fixme: doesn't work great
 
 --- Commentary
 keymap("n", "<BSlash>", "<Plug>Commentary", {noremap = false})
@@ -79,35 +81,32 @@ keymap("n", "<Leader>t", "<CMD>tab split<CR>")
 -- Open a terminal in the current file's directory, in a new split
 keymap("n", "<Leader>m", "<CMD>STerminal<CR>")
 
---- Telescope
-local telemap = function(mode, lhs, telename, opts, teleopts)
-    keymap(mode, lhs,
-        "<CMD>lua require('telescope.builtin')." .. telename
-            .. "(" .. (teleopts and teleopts or "") .. ")<CR>", opts)
+local luamap = function(mode, lhs, luaname, opts)
+    keymap(mode, lhs, "<CMD>lua " .. luaname .. "()<CR>", opts)
 end
 
-telemap("n", "<Leader>f", "find_files")
-telemap("n", "<Leader>g", "live_grep")
-telemap("n", "<Leader>h", "help_tags")
-telemap("n", "<Leader>b", "buffers")
+luamap("n", "<Leader>f", "FZF.find_files")
+luamap("n", "<Leader>g", "FZF.live_grep")
+luamap("n", "<Leader>h", "FZF.help_tags")
+luamap("n", "<Leader>b", "FZF.buffers")
 
-telemap("n", "-", "file_browser", nil, "{hidden = true, follow = true, dir_icon = '📁'}")
+luamap("n", "-", "FZF.file_browser")
 
 
 --- Buffer-local LSP-related mappings, run when an LSP client is started
 function LSP_mappings(client, bufnr)
     local opts = { noremap=true, silent=true, buffer = bufnr }
 
-    keymap("n", "gd", "<CMD>lua vim.lsp.buf.definition()<CR>", opts)
-    keymap("n", "<C-]>", "<CMD>lua vim.lsp.buf.definition()<CR>", opts)
-    keymap("n", "K", "<CMD>lua vim.lsp.buf.hover()<CR>", opts)
-    -- keymap("n", "gi", "<CMD>lua vim.lsp.buf.implementation()<CR>", opts)
-    telemap("n", "gi", "lsp_implementations")
-    keymap("n", "ga", "<CMD>lua vim.lsp.buf.code_action()<CR>", opts)
+    luamap("n", "gd", "vim.lsp.buf.definition", opts)
+    luamap("n", "<C-]>", "vim.lsp.buf.definition", opts)
+    luamap("n", "K", "vim.lsp.buf.hover", opts)
+    luamap("n", "gi", "vim.lsp.buf.implementation", opts)
+    -- telemap("n", "gi", "lsp_implementations")
+    luamap("n", "ga", "vim.lsp.buf.code_action", opts)
     keymap("v", "ga", ":lua vim.lsp.buf.range_code_action()<CR>", opts)
-    -- keymap("n", "gr", "<CMD>lua vim.lsp.buf.references()<CR>", opts)
-    telemap("n", "gr", "lsp_references")
-    keymap("n", "gR", "<CMD>lua vim.lsp.buf.rename()<CR>", opts)
-    keymap("n", "gn", "<CMD>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-    keymap("n", "gN", "<CMD>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
+    luamap("n", "gr", "vim.lsp.buf.references", opts)
+    -- telemap("n", "gr", "lsp_references")
+    luamap("n", "gR", "vim.lsp.buf.rename", opts)
+    luamap("n", "gn", "vim.lsp.diagnostic.goto_next", opts)
+    luamap("n", "gN", "vim.lsp.diagnostic.goto_prev", opts)
 end
