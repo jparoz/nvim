@@ -49,11 +49,50 @@ function TreesitterStatus()
         return res
     end
 end
+utils.lua2vim("TreesitterStatus")
 
-cmd [[
-function! TreesitterStatus()
-    return luaeval("TreesitterStatus()")
-endfunc
+
+GitCache = {}
+
+function UpdateGitStatusline(dir)
+    dir = dir or vim.fn.FugitiveGitDir()
+    if not GitCache[dir] then GitCache[dir] = {} end
+
+    local work = vim.fn.FugitiveWorkTree()
+
+    local handle
+
+    handle = io.popen("cd " .. work .. ";git status --porcelain")
+    GitCache[dir].status = handle:read("a")
+    handle:close()
+
+    handle = io.popen("cd " .. work .. ";git diff origin/master..HEAD --name-status")
+    GitCache[dir].diff = handle:read("a")
+    handle:close()
+end
+
+function GitStatusline()
+    local head = vim.fn.FugitiveHead()
+    if head == "" then return "" end
+
+    local dir = vim.fn.FugitiveGitDir()
+    if not GitCache[dir] then
+        UpdateGitStatusline(dir)
+    end
+
+    local dirty = GitCache[dir].status:find("^ [MADRCU]")
+    local need_push = GitCache[dir].diff:find(".")
+
+    return head .. (dirty and " *" or "") .. (need_push and " ↑" or "")
+end
+utils.lua2vim("GitStatusline")
+
+vim.cmd [[
+augroup UpdateGitStatusline
+  autocmd!
+  autocmd BufWritePost * call v:lua.UpdateGitStatusline()
+  autocmd User FugitiveChanged call v:lua.UpdateGitStatusline()
+augroup END
 ]]
 
 g.lightline = {
@@ -84,7 +123,7 @@ g.lightline = {
     component_function = {
         treesitter = "TreesitterStatus",
         synstack = "SynStack",
-        git = "FugitiveHead",
+        git = "GitStatusline",
     },
 }
 
