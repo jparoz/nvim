@@ -123,9 +123,18 @@ FZF = setmetatable({}, {__call = function(_, spec)
         vim.list_extend(spec.options, { "--preview", spec.preview })
     end
 
+    if spec.expect then
+        table.insert(spec.options, "--expect")
+        table.insert(spec.options, table.concat(spec.expect, ","))
+    end
+
     if spec.binds then
         table.insert(spec.options, "--bind")
         table.insert(spec.options, table.concat(spec.binds, ","))
+    end
+
+    if spec.print_query then
+        table.insert(spec.options, "--print-query")
     end
 
     spec = vim.fn["fzf#wrap"](spec)
@@ -146,33 +155,49 @@ function FZF.file_browser(spec)
         source = fd,
         prompt = "Browse> ",
         preview = "if test -d {}; env CLICOLOR_FORCE=1 ls -GA {}; else; cat {}; end",
+        expect = {"ctrl-e"},
+        print_query = true,
         binds = {
-            "backward-eof:reload(".. fd .." --hidden . ~)",
-            "ctrl-d:reload(" .. fd .. " -t=d)+change-prompt(Directories> )",
+            "change:unbind(-,change)",
+            "-:reload(".. fd .." --hidden . ~)",
             "ctrl-f:reload(" .. fd .. " -t=f)+change-prompt(Files> )",
             "ctrl-b:reload(" .. fd .. ")+change-prompt(Browse> )",
-            "alt-bs:reload(" .. fd .. ")+change-prompt(Browse> )+execute(rm -ir {})",
+            "ctrl-d:reload(" .. fd .. ")+execute(rm -ir {})",
         }
     })
     -- spec.options = {"--with-nth", "4..-1", "--delimiter", "/"}
 
     spec.sinklist = function(list)
-        local command, line
-        if #list == 1 then
-            line = list[1]
-        else
-            command, line = unpack(list)
-        end
+        local query, command, line = unpack(list)
+        -- if #list == 2 then
+        --     line = list[2]
+        -- else
+        --     command, line = unpack(list)
+        -- end
 
-        if not line then print("Command: " .. command) end
+        -- if not line then print("Command: " .. command) end
 
-        if vim.fn.isdirectory(line) == 1 then
-            vim.cmd("lcd " .. line)
-            if vim.fn.filereadable("Session.vim") == 1 then
-                vim.cmd("source Session.vim")
+        -- print("query: " .. vim.inspect(query))
+        -- print("command: " .. vim.inspect(command))
+        -- print("line: " .. vim.inspect(line))
+
+        if command == "ctrl-e" then
+            if not line then
+                vim.cmd("e " .. query)
+            elseif vim.fn.filereadable(line) == 1 then
+                vim.cmd("e " .. line)
+            else
+                print("bad stuff after ctrl-e, see options.lua")
             end
-        elseif vim.fn.filereadable(line) == 1 then
-            vim.cmd("e " .. line)
+        else -- command == "enter" then
+            if vim.fn.isdirectory(line) == 1 then
+                vim.cmd("lcd " .. line)
+                if vim.fn.filereadable("Session.vim") == 1 then
+                    vim.cmd("source Session.vim")
+                end
+            elseif vim.fn.filereadable(line) == 1 then
+                vim.cmd("e " .. line)
+            end
         end
     end
 
