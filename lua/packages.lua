@@ -11,7 +11,6 @@ require "paq" {
     "tpope/vim-commentary",
     "tpope/vim-speeddating",
     "tpope/vim-fugitive",
-    "tpope/vim-obsession",
     "Raimondi/delimitMate",
     "ervandew/supertab",
     "godlygeek/tabular",
@@ -19,6 +18,7 @@ require "paq" {
     "airblade/vim-rooter",
     "tjdevries/colorbuddy.nvim",
     "norcalli/nvim-colorizer.lua",
+    "editorconfig/editorconfig-vim",
 
     -- Specific feature packages
     "neovim/nvim-lspconfig",

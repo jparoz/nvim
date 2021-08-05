@@ -198,10 +198,11 @@ function FZF.file_browser(spec)
         print_query = true,
         binds = {
             "change:unbind(-,change)",
-            "-:reload(".. fd .." --hidden . ~)",
+            "-:reload(".. fd .." . ~)",
             "ctrl-f:reload(" .. fd .. " -t=f)+change-prompt(Files> )",
             "ctrl-b:reload(" .. fd .. ")+change-prompt(Browse> )",
             "ctrl-d:reload(" .. fd .. ")+execute(rm -ir {})",
+            "ctrl-h:reload(" .. fd .. " --hidden)",
         }
     })
     -- spec.options = {"--with-nth", "4..-1", "--delimiter", "/"}
