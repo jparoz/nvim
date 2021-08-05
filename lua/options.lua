@@ -1,4 +1,3 @@
-local cmd = vim.cmd
 local opt = vim.opt
 local g = vim.g
 local utils = require "utils"
@@ -187,39 +186,91 @@ end})
 
 function FZF.file_browser(spec)
     spec = spec or {}
-    local fd = spec.source or "fd"
-    fd = fd .. " --follow"  -- follow symlinked directories
+
+    FZF.fd = {}
+    FZF.fd.cwd = vim.fn.getcwd()
+    FZF.fd.searchOnly = spec.searchOnly
+
+    local escape = function(s)
+        return s:gsub('"', '\\"'):gsub("'", "\\'"):gsub("%$", "\\$")
+    end
+
+    local nvim_cb = function(cmd)
+        return
+            "nvim-cb -s " .. vim.v.servername ..
+            ' -l "' .. escape(cmd) .. '"'
+    end
+
+    local nvim_eval = function(expr)
+        return
+            "nvim-cb -s " .. vim.v.servername ..
+            " -l 'return " .. expr .. "'" ..
+            " | source"
+    end
+
+    local fd = function(searchOnly)
+        local s = "fd --follow"
+        searchOnly = searchOnly or FZF.fd.searchOnly
+
+        if searchOnly == "toggle" then
+            FZF.fd.searchOnly = FZF.fd.searchOnly == "files" and "directories" or "files"
+        elseif searchOnly == "any" then
+            FZF.fd.searchOnly = nil
+        end
+
+        if FZF.fd.searchOnly == "files" then
+            s = s .. " -t=f"
+        elseif FZF.fd.searchOnly == "directories" then
+            s = s .. " -t=d"
+        end
+
+        if FZF.fd.hidden then
+            s = s .. " --hidden"
+        end
+
+        s = s .. " . " .. FZF.fd.cwd
+
+        return s
+    end
+    FZF.fd.fd = fd
+
+    FZF.fd.cd = function(path)
+        if path == ".." then
+            local matched = FZF.fd.cwd:match("^(.*)/[^/]+/?$")
+            FZF.fd.cwd = matched == "" and "/" or matched or "/"
+        elseif path == "~" then
+            FZF.fd.cwd = os.getenv("HOME")
+        else
+            FZF.fd.cwd = path
+        end
+    end
+
+    local cd = function(path)
+        return nvim_cb("FZF.fd.cd " .. vim.inspect(path))
+    end
+
+    local toggle_hidden = nvim_cb[[FZF.fd.hidden = not FZF.fd.hidden]]
 
     spec = vim.tbl_extend("keep", spec or {}, {
-        source = fd,
-        prompt = "Browse> ",
+        source = fd(),
         preview = "if test -d {}; env CLICOLOR_FORCE=1 ls -GA {}; else; cat {}; end",
         expect = {"ctrl-e"},
         print_query = true,
         binds = {
-            "change:unbind(-,change)",
-            "-:reload(".. fd .." . ~)",
-            "ctrl-f:reload(" .. fd .. " -t=f)+change-prompt(Files> )",
-            "ctrl-b:reload(" .. fd .. ")+change-prompt(Browse> )",
-            "ctrl-d:reload(" .. fd .. ")+execute(rm -ir {})",
-            "ctrl-h:reload(" .. fd .. " --hidden)",
+            "change:unbind(-,~,/,change)",
+                 "-:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("..")..")",
+                 "~:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("~" )..")",
+                 "/:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("/" )..")",
+            "ctrl-f:reload("..nvim_eval[[FZF.fd.fd("toggle")]]..")",
+            "ctrl-b:reload("..nvim_eval[[FZF.fd.fd("any")]]..")",
+            "ctrl-d:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute(rm -ir {})",
+            "ctrl-h:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..toggle_hidden..")",
         }
     })
-    -- spec.options = {"--with-nth", "4..-1", "--delimiter", "/"}
 
     spec.sinklist = function(list)
+        printi(list)
         local query, command, line = unpack(list)
-        -- if #list == 2 then
-        --     line = list[2]
-        -- else
-        --     command, line = unpack(list)
-        -- end
-
-        -- if not line then print("Command: " .. command) end
-
-        -- print("query: " .. vim.inspect(query))
-        -- print("command: " .. vim.inspect(command))
-        -- print("line: " .. vim.inspect(line))
 
         if command == "ctrl-e" then
             if not line then
@@ -232,9 +283,6 @@ function FZF.file_browser(spec)
         else -- command == "enter" then
             if vim.fn.isdirectory(line) == 1 then
                 vim.cmd("lcd " .. line)
-                if vim.fn.filereadable("Session.vim") == 1 then
-                    vim.cmd("source Session.vim")
-                end
             elseif vim.fn.filereadable(line) == 1 then
                 vim.cmd("e " .. line)
             end
@@ -246,8 +294,7 @@ end
 
 function FZF.find_files()
     FZF.file_browser {
-        source = "fd -t=f",
-        prompt = "Files> ",
+        searchOnly = "files",
     }
 end
 
