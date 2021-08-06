@@ -235,6 +235,9 @@ function FZF.file_browser(spec)
     FZF.fd.fd = fd
 
     FZF.fd.cd = function(path)
+        local was_quoted = path:match("^'(.*)'$")
+        if was_quoted then path = was_quoted end
+
         if path == ".." then
             local matched = FZF.fd.cwd:match("^(.*)/[^/]+/?$")
             FZF.fd.cwd = matched == "" and "/" or matched or "/"
@@ -261,6 +264,7 @@ function FZF.file_browser(spec)
                  "-:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("..")..")",
                  "~:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("~" )..")",
                  "/:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("/" )..")",
+               "tab:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("{}")..")",
             "ctrl-f:reload("..nvim_eval[[FZF.fd.fd("toggle")]]..")",
             "ctrl-b:reload("..nvim_eval[[FZF.fd.fd("any")]]..")",
             "ctrl-d:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute(rm -ir {})",
