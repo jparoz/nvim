@@ -123,10 +123,10 @@ function FZF.file_browser(searchOnly)
     end
 
     local cd = function(path)
-        return nvim_cb("fzf.fd.cd " .. vim.inspect(path))
+        return nvim_cb("FZF.fd.cd " .. vim.inspect(path))
     end
 
-    local toggle_hidden = nvim_cb[[fzf.fd.hidden = not fzf.fd.hidden]]
+    local toggle_hidden = nvim_cb[[FZF.fd.hidden = not FZF.fd.hidden]]
 
     spec = vim.tbl_extend("keep", spec or {}, {
         source = fd(),
@@ -261,7 +261,7 @@ function FZF.help_tags()
         preview = table.concat({
             "rg",
             "--before-context", "1",
-            "--after-context", "22",
+            "--after-context", "22", -- @Fixme: use $FZF_PREVIEW_LINES
             "--fixed-strings",
             "{3} {2}", -- argument
         }, " "),
@@ -277,6 +277,8 @@ function FZF.help_tags()
             height = 0.9,
         },
 
+        expect = { "alt-enter" },
+
         sinklist = function(list)
             local command, line
             if #list == 1 then
@@ -284,10 +286,10 @@ function FZF.help_tags()
             else
                 command, line = unpack(list)
             end
-            if not line then print("Command: " .. command) end
 
             local name = vim.split(line, "\t", true)[1]
-            vim.cmd("help " .. name)
+            local vert = command == "alt-enter" and "vert " or ""
+            vim.cmd(vert .. "help " .. name)
         end,
     }
 end
@@ -328,6 +330,27 @@ function FZF.buffers()
             height = 0.6,
         },
     }
+end
+
+function FZF.highlights()
+    print("@NOTE: Broken!!!\n")
+    local lines = vim.split(vim.fn.execute("highlight"), "\n", true)
+    FZF { source = lines }
+
+-- -- This function actually works somewhat with the following header,
+-- -- instead of the above:
+-- function HighlightHighlights()
+--     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
+
+    local ns = vim.api.nvim_create_namespace("FZF.highlights")
+    for line_nr, line in ipairs(lines) do
+        local higroup = line:match("^%S+")
+        local xxx_start, xxx_end = line:find("xxx")
+        if higroup and xxx_start and xxx_end then
+            local start, finish = {line_nr-1, xxx_start-1}, {line_nr-1, xxx_end-1}
+            vim.highlight.range(0, ns, higroup, start, finish, "c", true)
+        end
+    end
 end
 
 function FZF.i(t)
