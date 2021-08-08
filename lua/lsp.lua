@@ -1,5 +1,6 @@
 local servers = {
-    "rust_analyzer",
+    -- "rust_analyzer",
+    "rls",
 }
 
 -- Use a loop to conveniently call 'setup' on multiple servers and

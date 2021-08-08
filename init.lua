@@ -6,6 +6,8 @@ require "packages"
 
 require "lsp"
 
+require "fzf"
+
 require "options"
 
 require "mappings"
