@@ -329,7 +329,7 @@ function FZF.buffers()
         end,
 
         window = {
-            width = 0.4,
+            width = 70,
             height = 0.6,
         },
     }
