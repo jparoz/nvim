@@ -75,11 +75,14 @@ require("nvim-treesitter.configs").setup {
 
 ---- Leader mappings
 
--- Open the current buffer in a new tab
-keymap("n", "<Leader>t", "<CMD>tab split<CR>")
+-- Open a terminal in the current file's directory
+keymap("n", "<Leader>t", "<CMD>Terminal<CR>")  -- in current window
+keymap("n", "<Leader>s", "<CMD>STerminal<CR>") -- horizontal split
+keymap("n", "<Leader>v", "<CMD>VTerminal<CR>") -- vertical split
 
--- Open a terminal in the current file's directory, in a new split
-keymap("n", "<Leader>m", "<CMD>STerminal<CR>")
+-- Redo the action in a terminal open in the current tab
+-- nnoremap <Enter> :call RedoTerminal()<CR>
+keymap("n", "<Leader><Enter>", "<CMD>call RedoTerminal()<CR>")
 
 local luamap = function(mode, lhs, luaname, opts)
     keymap(mode, lhs, "<CMD>lua " .. luaname .. "()<CR>", opts)

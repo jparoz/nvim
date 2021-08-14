@@ -70,6 +70,9 @@ function FZF.file_browser(searchOnly)
     end
 
     local nvim_cb = function(cmd)
+        if cmd == "" or cmd == nil then
+            return print("BANANANANANANA BAD STUFF")
+        end
         return
             "nvim-cb -s " .. vim.v.servername ..
             ' -l "' .. escape(cmd) .. '"'

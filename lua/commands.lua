@@ -28,7 +28,7 @@ endfunc
 
 -- @Todo: rewrite if necessary
 -- Run the last command in an open terminal window in this tab
---[[
+vim.cmd [[
 function! RedoTerminal()
     let found = 0
     let current_win = win_getid()
@@ -37,8 +37,7 @@ function! RedoTerminal()
             let found = 1
             if !(empty(win_findbuf(buf)))
                 let job_id = getbufvar(buf, "terminal_job_id")
-                -- <Up><Enter>
-                call chansend(job_id, "[A")
+                call chansend(job_id, "\x1B[A\x0D")
 
                 let wins = win_findbuf(buf)
                 if !empty(wins)
@@ -56,7 +55,4 @@ function! RedoTerminal()
         echo ""
     endif
 endfunction
-
--- @Todo: move to mappings.lua
--- nnoremap <Enter> :call RedoTerminal()<CR>
 ]]

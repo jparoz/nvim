@@ -10,9 +10,9 @@ require "fzf"
 
 require "options"
 
-require "mappings"
-
 require "commands"
+
+require "mappings"
 
 require "autocommands"
 
