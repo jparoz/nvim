@@ -1,13 +1,29 @@
 local keymap = require("utils").keymap
 
+local cmdmap = function(mode, lhs, cmd, opts)
+    keymap(mode, lhs, "<CMD>" .. cmd .. "<CR>", opts)
+end
+
+local luamap = function(mode, lhs, luaname, opts, arg)
+    if type(arg) == "nil" then
+        arg = ""
+    elseif type(arg) == "string" then
+        -- do nothing
+    elseif type(arg) == "table" then
+        arg = table.concat(arg, ", ")
+    else
+        print("unexpected argument type given to luamap")
+    end
+
+    cmdmap(mode, lhs, "lua " .. luaname .. "(" .. arg .. ")", opts)
+end
+
 keymap("", "U", "<C-r>")
 keymap("n", "Y", "y$")
 keymap("n", "Q", "@@")
 
-keymap("n", ";", ":")
-keymap("n", ":", "<Plug>Sneak_;", {noremap = false})
-keymap("x", ";", ":")
-keymap("x", ":", "<Plug>Sneak_;", {noremap = false})
+keymap("nx", ";", ":")
+keymap("nx", ":", "<Plug>Sneak_;", {noremap = false})
 
 keymap("n", "<C-h>", "<C-w>h")
 keymap("n", "<C-j>", "<C-w>j")
@@ -18,75 +34,54 @@ keymap("n", "<C-Tab>", "gt")
 keymap("n", "<C-S-Tab>", "gT")
 
 --- Tabular
-keymap("n", "<Tab>=", "<CMD>Tabularize /=<CR>")
-keymap("x", "<Tab>=", "<CMD>Tabularize /=<CR>") -- @Fixme: doesn't work great
-keymap("n", "<Tab>;", [[<CMD>Tabularize /\w\+:<CR>]])
-keymap("x", "<Tab>;", [[<CMD>Tabularize /\w\+:<CR>]]) -- @Fixme: doesn't work great
+cmdmap("nx", "<Tab>=", "Tabularize /=") -- @Fixme: x-mode doesn't work great
+cmdmap("nx", "<Tab>;", [[Tabularize /\w\+:]]) -- @Fixme: x-mode doesn't work great
 
 --- Commentary
-keymap("n", "<BSlash>", "<Plug>Commentary", {noremap = false})
-keymap("x", "<BSlash>", "<Plug>Commentary", {noremap = false})
-keymap("o", "<BSlash>", "<Plug>Commentary", {noremap = false})
+keymap("onx", "<BSlash>", "<Plug>Commentary", {noremap = false})
 keymap("n", "<BSlash><BSlash>", "<Plug>CommentaryLine", {noremap = false})
-keymap("n", "<BSlash>u", "<Plug>CommentaryUndo", {noremap = false})
 
---- Treesitter
-require("nvim-treesitter.configs").setup {
-    textobjects = {
-        select = {
-            enable = true,
-            -- lookahead = true, -- This might do nothing???
-            keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["am"] = "@class.outer",
-                ["im"] = "@class.inner",
-                ["aa"] = "@parameter.outer",
-                ["ia"] = "@parameter.inner",
-            },
-        },
-        move = {
-            enable = true,
-            set_jumps = true,
-            goto_next_start = {
-                ["]m"] = "@class.outer",
-                ["]f"] = "@function.outer",
-                ["]["] = "@function.outer",
-            },
-            goto_next_end = {
-                ["]M"] = "@class.outer",
-                ["]F"] = "@function.outer",
-                ["]]"] = "@function.outer",
-            },
-            goto_previous_start = {
-                ["[m"] = "@class.outer",
-                ["[f"] = "@function.outer",
-                ["[["] = "@function.outer",
-            },
-            goto_previous_end = {
-                ["[M"] = "@class.outer",
-                ["[F"] = "@function.outer",
-                ["[]"] = "@function.outer",
-            },
-        },
-    },
-}
+--- Treesitter text objects
+luamap("o", "af", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@function.outer", "o"})
+luamap("o", "if", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@function.inner", "o"})
+luamap("o", "am", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@class.outer", "o"})
+luamap("o", "im", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@class.inner", "o"})
+luamap("o", "aa", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@parameter.outer", "o"})
+luamap("o", "ia", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@parameter.inner", "o"})
 
+luamap("x", "af", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@function.outer", "x"})
+luamap("x", "if", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@function.inner", "x"})
+luamap("x", "am", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@class.outer", "x"})
+luamap("x", "im", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@class.inner", "x"})
+luamap("x", "aa", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@parameter.outer", "x"})
+luamap("x", "ia", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@parameter.inner", "x"})
+
+cmdmap("n", "]m", "TSTextobjectGotoNextStart @class.outer")
+cmdmap("n", "]f", "TSTextobjectGotoNextStart @function.outer")
+cmdmap("n", "][", "TSTextobjectGotoNextStart @function.outer")
+
+cmdmap("n", "]M", "TSTextobjectGotoNextEnd @class.outer")
+cmdmap("n", "]F", "TSTextobjectGotoNextEnd @function.outer")
+cmdmap("n", "]]", "TSTextobjectGotoNextEnd @function.outer")
+
+cmdmap("n", "[m", "TSTextobjectGotoPreviousStart @class.outer")
+cmdmap("n", "[f", "TSTextobjectGotoPreviousStart @function.outer")
+cmdmap("n", "[[", "TSTextobjectGotoPreviousStart @function.outer")
+
+cmdmap("n", "[M", "TSTextobjectGotoPreviousEnd @class.outer")
+cmdmap("n", "[F", "TSTextobjectGotoPreviousEnd @function.outer")
+cmdmap("n", "[]", "TSTextobjectGotoPreviousEnd @function.outer")
 
 ---- Leader mappings
 
 -- Open a terminal in the current file's directory
-keymap("n", "<Leader>t", "<CMD>Terminal<CR>")  -- in current window
-keymap("n", "<Leader>s", "<CMD>STerminal<CR>") -- horizontal split
-keymap("n", "<Leader>v", "<CMD>VTerminal<CR>") -- vertical split
+cmdmap("n", "<Leader>t", "Terminal")  -- in current window
+cmdmap("n", "<Leader>s", "STerminal") -- horizontal split
+cmdmap("n", "<Leader>v", "VTerminal") -- vertical split
 
 -- Redo the action in a terminal open in the current tab
 -- nnoremap <Enter> :call RedoTerminal()<CR>
-keymap("n", "<Leader><Enter>", "<CMD>call RedoTerminal()<CR>")
-
-local luamap = function(mode, lhs, luaname, opts)
-    keymap(mode, lhs, "<CMD>lua " .. luaname .. "()<CR>", opts)
-end
+cmdmap("n", "<Leader><Enter>", "call RedoTerminal()")
 
 luamap("n", "<Leader>f", "FZF.find_files")
 luamap("n", "<Leader>g", "FZF.live_grep")
@@ -106,7 +101,7 @@ function LSP_mappings(client, bufnr)
     luamap("n", "gi", "vim.lsp.buf.implementation", opts)
     -- telemap("n", "gi", "lsp_implementations")
     luamap("n", "ga", "vim.lsp.buf.code_action", opts)
-    keymap("v", "ga", ":lua vim.lsp.buf.range_code_action()<CR>", opts)
+    luamap("v", "ga", "vim.lsp.buf.range_code_action", opts)
     luamap("n", "gr", "vim.lsp.buf.references", opts)
     -- telemap("n", "gr", "lsp_references")
     luamap("n", "gR", "vim.lsp.buf.rename", opts)

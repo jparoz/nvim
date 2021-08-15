@@ -5,8 +5,8 @@ local has = require("utils").has
 require "packages"
 
 require "lsp"
-
 require "fzf"
+require "treesitter"
 
 require "options"
 

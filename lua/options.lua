@@ -109,6 +109,7 @@ g.lightline = {
             {"lineinfo"},
             {"percent"},
             -- {"treesitter", "filetype"},
+            -- {"synstack", "filetype"},
             {"filetype"},
             -- closest to centre
         },
