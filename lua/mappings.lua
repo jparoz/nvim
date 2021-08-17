@@ -5,20 +5,12 @@ local cmdmap = function(mode, lhs, cmd, opts)
 end
 
 local luamap = function(mode, lhs, luaname, opts, arg)
-    if type(arg) == "nil" then
-        arg = ""
-    elseif type(arg) == "string" then
-        -- do nothing
-    elseif type(arg) == "table" then
-        arg = table.concat(arg, ", ")
-    else
-        print("unexpected argument type given to luamap")
-    end
+    arg = arg or ""
 
     cmdmap(mode, lhs, "lua " .. luaname .. "(" .. arg .. ")", opts)
 end
 
-keymap("", "U", "<C-r>")
+keymap("n", "U", "<C-r>")
 keymap("n", "Y", "y$")
 keymap("n", "Q", "@@")
 
@@ -42,19 +34,19 @@ keymap("onx", "<BSlash>", "<Plug>Commentary", {noremap = false})
 keymap("n", "<BSlash><BSlash>", "<Plug>CommentaryLine", {noremap = false})
 
 --- Treesitter text objects
-luamap("o", "af", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@function.outer", "o"})
-luamap("o", "if", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@function.inner", "o"})
-luamap("o", "am", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@class.outer", "o"})
-luamap("o", "im", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@class.inner", "o"})
-luamap("o", "aa", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@parameter.outer", "o"})
-luamap("o", "ia", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@parameter.inner", "o"})
+luamap("o", "af", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@function.outer", "o"')
+luamap("o", "if", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@function.inner", "o"')
+luamap("o", "am", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@class.outer", "o"')
+luamap("o", "im", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@class.inner", "o"')
+luamap("o", "aa", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@parameter.outer", "o"')
+luamap("o", "ia", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@parameter.inner", "o"')
 
-luamap("x", "af", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@function.outer", "x"})
-luamap("x", "if", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@function.inner", "x"})
-luamap("x", "am", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@class.outer", "x"})
-luamap("x", "im", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@class.inner", "x"})
-luamap("x", "aa", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@parameter.outer", "x"})
-luamap("x", "ia", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, {"@parameter.inner", "x"})
+luamap("x", "af", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@function.outer", "x"')
+luamap("x", "if", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@function.inner", "x"')
+luamap("x", "am", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@class.outer", "x"')
+luamap("x", "im", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@class.inner", "x"')
+luamap("x", "aa", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@parameter.outer", "x"')
+luamap("x", "ia", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@parameter.inner", "x"')
 
 cmdmap("n", "]m", "TSTextobjectGotoNextStart @class.outer")
 cmdmap("n", "]f", "TSTextobjectGotoNextStart @function.outer")
