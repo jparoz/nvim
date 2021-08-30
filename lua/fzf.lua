@@ -105,7 +105,7 @@ function FZF.file_browser(searchOnly)
             s = s .. " --hidden"
         end
 
-        s = s .. " . " .. FZF.fd.cwd
+        s = s .. ' . "' .. FZF.fd.cwd .. '"'
 
         return s
     end
