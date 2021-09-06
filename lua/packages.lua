@@ -37,6 +37,8 @@ require "paq" {
 
     "junegunn/fzf",
 
+    "subnut/nvim-ghost.nvim", -- GhostText browser extension
+
     -- Language-specific
     "rust-lang/rust.vim",
     "teal-language/vim-teal",
