@@ -56,3 +56,36 @@ function! RedoTerminal()
     endif
 endfunction
 ]]
+
+-- Convert the current buffer containing an SBV file into SRT format.
+vim.cmd [[command! -nargs=* SBV2SRT lua SBV2SRT("<args>")]]
+function SBV2SRT()
+    local caption_count = 1
+    local line_nr = 1
+
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
+    for i, line in ipairs(lines) do
+        local pat = "(%d%d?):(%d%d:%d%d%.%d%d%d),(%d%d?):(%d%d:%d%d%.%d%d%d)"
+        if line:find(pat) then
+            vim.api.nvim_buf_set_lines(0, line_nr-1, line_nr, true, {
+                tostring(caption_count),
+                ("%02d:%s --> %02d:%s"):format(line:match(pat)),
+            })
+            caption_count = caption_count + 1
+            line_nr = line_nr + 1
+        elseif i < #lines and line ~= "" and lines[i+1] ~= "" then
+            vim.api.nvim_buf_set_lines(0, line_nr-1, line_nr, true, {
+                line .. "\r"
+            })
+        elseif i == #lines then
+            vim.api.nvim_buf_set_lines(0, line_nr, line_nr, true, {""})
+        end
+        line_nr = line_nr + 1
+    end
+
+    local filename = vim.api.nvim_buf_get_name(0)
+    local newname = filename:gsub("%.sbv$", ".srt")
+    print(newname)
+    vim.api.nvim_buf_set_name(0, newname)
+    -- vim.cmd [[write]]
+end
