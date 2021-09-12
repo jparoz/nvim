@@ -25,6 +25,9 @@ keymap("n", "<C-l>", "<C-w>l")
 keymap("n", "<C-Tab>", "gt")
 keymap("n", "<C-S-Tab>", "gT")
 
+-- This is to help stop a common mistake with current Hammerspoon config
+keymap("i", "<C-;>", "<ESC>:")
+
 --- Tabular
 cmdmap("nx", "<Tab>=", "Tabularize /=") -- @Fixme: x-mode doesn't work great
 cmdmap("nx", "<Tab>;", [[Tabularize /\w\+:]]) -- @Fixme: x-mode doesn't work great
