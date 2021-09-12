@@ -82,6 +82,8 @@ luamap("n", "<Leader>b", "FZF.buffers")
 
 luamap("n", "-", "FZF.file_browser")
 
+--- Resize window to 100 wide
+cmdmap("n", "<Leader>=", "vertical resize 100")
 
 --- Buffer-local LSP-related mappings, run when an LSP client is started
 function LSP_mappings(client, bufnr)
