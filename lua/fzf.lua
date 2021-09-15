@@ -142,7 +142,7 @@ function FZF.file_browser(searchOnly)
                  "-:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("..")..")",
                  "~:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("~" )..")",
                  "/:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("/" )..")",
-               "tab:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("{}")..")",
+               "tab:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute-silent("..cd("{}")..")+clear-query",
             "ctrl-f:reload("..nvim_eval[[FZF.fd.fd("toggle")]]..")",
             "ctrl-b:reload("..nvim_eval[[FZF.fd.fd("any")]]..")",
             "ctrl-d:reload("..nvim_eval[[FZF.fd.fd()]]..")+execute(rm -ir {})",
