@@ -31,12 +31,12 @@ local hex = {
 
     error       = "#CC6666",
     warning     = "#FFB470",
-
-    diff_add    = "#008000",
-    diff_change = "#808000",
-    diff_delete = "#800000",
-    diff_text   = "#000080",
 }
+
+hex.diff_add    = hex.green
+hex.diff_change = hex.yellow
+hex.diff_delete = hex.red
+hex.diff_text   = hex.blue
 
 for k, v in pairs(hex) do
     Color.new(k, v)
