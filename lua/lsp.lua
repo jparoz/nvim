@@ -48,6 +48,18 @@ do -- sumneko Lua LSP setup
             vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
         end,
 
+        on_init = function(client)
+            local pwd = vim.fn.getcwd()
+            local lua_version = "LuaJIT"
+            if pwd:find(".hammerspoon") then
+                lua_version = "Lua 5.4"
+            end
+
+            client.config.settings.Lua.runtime.version = lua_version
+            client.notify("workspace/didChangeConfiguration")
+            return true
+        end,
+
         flags = {
             debounce_text_changes = 150,
         }
