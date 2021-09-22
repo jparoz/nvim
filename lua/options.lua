@@ -38,6 +38,10 @@ opt.smartcase = true
 
 opt.foldmethod = "marker"
 
+-- SuperTab
+g.SuperTabDefaultCompletionType = "<c-x><c-o>"
+g.SuperTabClosePreviewOnPopupClose = 1
+
 -- Lightline
 function TreesitterStatus()
     local width = vim.fn.winwidth(0) - #vim.fn.expand("%:p:t") - #vim.bo.ft - 33
