@@ -74,6 +74,9 @@ cmdmap("n", "<Leader>t", "Terminal")  -- in current window
 cmdmap("n", "<Leader>s", "STerminal") -- horizontal split
 cmdmap("n", "<Leader>v", "VTerminal") -- vertical split
 
+-- open Fugitive status window
+cmdmap("n", "<Leader>-", "below Git")
+
 -- Redo the action in a terminal open in the current tab
 -- nnoremap <Enter> :call RedoTerminal()<CR>
 cmdmap("n", "<Leader><Enter>", "call RedoTerminal()")
