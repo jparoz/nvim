@@ -17,6 +17,7 @@ require "paq" {
     "tpope/vim-commentary",
     "tpope/vim-speeddating",
     "tpope/vim-fugitive",
+    "tpope/vim-rhubarb",
     "Raimondi/delimitMate",
     "ervandew/supertab",
     "godlygeek/tabular",
