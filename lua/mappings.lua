@@ -90,7 +90,10 @@ luamap("n", "-", "FZF.file_browser")
 
 --- Resize window to exactly 'textwidth'
 cmdmap("n", "<Leader>=", 'exec "vertical resize " . ' ..
-    '(&textwidth + &numberwidth + (&signcolumn == "yes" ? 2 : 0))')
+    '(' ..
+        '(&textwidth > 0 ? &textwidth : 80)' ..
+        ' + &numberwidth + (&signcolumn == "yes" ? 2 : 0)' ..
+    ')')
 
 --- Buffer-local LSP-related mappings, run when an LSP client is started
 function LSP_mappings(client, bufnr)
