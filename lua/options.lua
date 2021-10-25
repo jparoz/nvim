@@ -38,6 +38,8 @@ opt.smartcase = true
 
 opt.foldmethod = "marker"
 
+opt.grepprg = "rg --vimgrep --no-heading --smart-case"
+
 -- SuperTab
 g.SuperTabDefaultCompletionType = "<c-x><c-o>"
 g.SuperTabClosePreviewOnPopupClose = 1
