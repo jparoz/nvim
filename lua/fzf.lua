@@ -70,9 +70,10 @@ function FZF.file_browser(searchOnly)
     end
 
     local nvim_cb = function(cmd)
-        if cmd == "" or cmd == nil then
-            return print("BANANANANANANA BAD STUFF")
+        if cmd == nil or cmd:find("^%s*$") then
+            error("BANANANANANANA BAD STUFF")
         end
+
         return
             "nvim-cb -s " .. vim.v.servername ..
             ' -l "' .. escape(cmd) .. '"'
@@ -112,6 +113,7 @@ function FZF.file_browser(searchOnly)
     FZF.fd.fd = fd
 
     FZF.fd.cd = function(path)
+        assert(path, "Path wasn't good in FZF.fd.cd! " .. path)
         local was_quoted = path:match("^'(.*)'$")
         if was_quoted then path = was_quoted end
 
@@ -126,6 +128,7 @@ function FZF.file_browser(searchOnly)
     end
 
     local cd = function(path)
+        assert(path, "Path wasn't good in local cd! " .. path)
         return nvim_cb("FZF.fd.cd " .. vim.inspect(path))
     end
 
@@ -151,17 +154,10 @@ function FZF.file_browser(searchOnly)
     })
 
     spec.sinklist = function(list)
-        printi(list)
         local query, command, line = unpack(list)
 
         if command == "ctrl-e" then
-            if not line then
-                vim.cmd("e " .. query)
-            elseif vim.fn.filereadable(line) == 1 then
-                vim.cmd("e " .. line)
-            else
-                print("bad stuff after ctrl-e, see options.lua")
-            end
+            vim.cmd("e " .. FZF.fd.cwd .. "/" .. query)
         else -- command is enter
             if vim.fn.isdirectory(line) == 1 then
                 vim.cmd("lcd " .. line)
@@ -335,15 +331,15 @@ function FZF.buffers()
     }
 end
 
-function FZF.highlights()
-    print("@NOTE: Broken!!!\n")
-    local lines = vim.split(vim.fn.execute("highlight"), "\n", true)
-    FZF { source = lines }
+-- function FZF.highlights()
+--     print("@NOTE: Broken!!!\n")
+--     local lines = vim.split(vim.fn.execute("highlight"), "\n", true)
+--     FZF { source = lines }
 
--- -- This function actually works somewhat with the following header,
--- -- instead of the above:
--- function HighlightHighlights()
---     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
+-- This function actually works somewhat with the following header,
+-- instead of the above:
+function HighlightHighlights()
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
     local ns = vim.api.nvim_create_namespace("FZF.highlights")
     for line_nr, line in ipairs(lines) do
