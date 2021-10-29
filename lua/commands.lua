@@ -109,3 +109,8 @@ augroup BetterGrep
 	autocmd QuickFixCmdPost lgetexpr lwindow
 augroup END
 ]]
+
+-- Better :make
+vim.cmd [[
+cnoreabbrev <expr> make (getcmdtype() ==# ':' && getcmdline() ==# 'make') ? 'silent make!' : 'make'
+]]

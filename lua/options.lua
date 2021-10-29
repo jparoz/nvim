@@ -101,6 +101,43 @@ augroup UpdateGitStatusline
 augroup END
 ]]
 
+function QFStatusline()
+    local counts = {}
+
+    for _, entry in ipairs(vim.fn.getqflist()) do
+        if not counts[entry.type] then
+            counts[entry.type] = 0
+        end
+        counts[entry.type] = counts[entry.type] + 1
+    end
+
+    local list = {}
+
+    for key, count in pairs(counts) do
+        table.insert(list, {key, count})
+    end
+
+    vim.fn.sort(list, function(a, b)
+        if a[1] < b[1] then
+            return -1
+        elseif a[1] > b[1] then
+            return 1
+        else
+            return 0
+        end
+    end)
+
+    local strings = {}
+    for _, pair in ipairs(list) do
+        if pair[1] ~= "" then
+            table.insert(strings, pair[1] .. ": " .. pair[2])
+        end
+    end
+
+    return vim.fn.join(strings, ", ")
+end
+utils.lua2vim("QFStatusline")
+
 g.lightline = {
     colorscheme = "jellybeans",
     active = {
@@ -108,7 +145,7 @@ g.lightline = {
             -- closest to left
             {"mode", "paste"},
             {"readonly", "filename", "modified"},
-            {"git"},
+            {"git", "quickfix"},
             -- closest to centre
         },
         right = {
@@ -131,6 +168,7 @@ g.lightline = {
         treesitter = "TreesitterStatus",
         synstack = "SynStack",
         git = "GitStatusline",
+        quickfix = "QFStatusline",
     },
 }
 
