@@ -90,6 +90,20 @@ function SBV2SRT()
     -- vim.cmd [[write]]
 end
 
+-- Convert the current buffer containing markers exported from Premiere Pro as a
+-- .txt file into YouTube Chapters format.
+vim.cmd [[command! -nargs=* YTChapters lua YTChapters("<args>")]]
+function YTChapters()
+    -- delete the first line
+    vim.cmd [[normal! ggdd]]
+
+    -- substitute to achieve the correct format
+    vim.cmd [[silent %sub/^[^\t]\+\t\t\t\d\d[;:]\(\d\d\)[;:]\(\d\d\)[;:]\d\d\t\t\t\([^\t]\+\).*$/\1:\2 \3]]
+
+    -- delete leading zeroes
+    vim.cmd [[silent %sub/^0\(\d\)/\1]]
+end
+
 -- Better :grep
 -- From: https://gist.github.com/romainl/56f0c28ef953ffc157f36cc495947ab3
 vim.cmd [[
