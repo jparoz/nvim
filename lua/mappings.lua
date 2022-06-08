@@ -95,6 +95,13 @@ cmdmap("n", "<Leader>=", 'exec "vertical resize " . ' ..
         ' + &numberwidth + (&signcolumn == "yes" ? 2 : 0)' ..
     ')')
 
+--- Swap the buffers of two windows
+luamap("n", "<Leader>1", "require('windows').swapBuffers", nil, 1)
+luamap("n", "<Leader>2", "require('windows').swapBuffers", nil, 2)
+luamap("n", "<Leader>3", "require('windows').swapBuffers", nil, 3)
+luamap("n", "<Leader>4", "require('windows').swapBuffers", nil, 4)
+luamap("n", "<Leader>5", "require('windows').swapBuffers", nil, 5)
+
 --- Buffer-local LSP-related mappings, run when an LSP client is started
 function LSP_mappings(client, bufnr)
     local opts = { noremap=true, silent=true, buffer = bufnr }
