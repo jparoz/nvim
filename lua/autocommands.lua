@@ -23,3 +23,13 @@ augroup LastPositionJump
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
 augroup END
 ]]
+
+
+-- Automatically open quickfix window when a command runs
+-- currently commented because we don't want this right now
+vim.cmd ""--[[
+augroup AutoOpenQuickFix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+augroup END
+]]
