@@ -25,30 +25,6 @@ M.has = function(s)
     return vim.fn.has(s) == 1
 end
 
-M.keymap = function(modes, lhs, rhs, opts)
-    local options = {noremap = true}
-    if opts then options = vim.tbl_extend('force', options, opts) end
-
-    local buffer
-    if options.buffer then
-        buffer = options.buffer
-        options.buffer = nil
-    end
-
-    for mode in modes:gmatch(".") do
-        local mode_rhs = rhs
-        if mode == "v" or mode == "x" then
-            mode_rhs = rhs:gsub("^<CMD>", ":")
-        end
-
-        if buffer then
-            vim.api.nvim_buf_set_keymap(buffer, mode, lhs, mode_rhs, options)
-        else
-            vim.api.nvim_set_keymap(mode, lhs, mode_rhs, options)
-        end
-    end
-end
-
 return setmetatable(M, {
     __index = function(t, name)
         return function()

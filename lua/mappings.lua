@@ -1,55 +1,47 @@
-local keymap = require("utils").keymap
-
 local cmdmap = function(mode, lhs, cmd, opts)
-    keymap(mode, lhs, "<CMD>" .. cmd .. "<CR>", opts)
+    vim.keymap.set(mode, lhs, "<CMD>" .. cmd .. "<CR>", opts)
 end
 
-local luamap = function(mode, lhs, luaname, opts, arg)
-    arg = arg or ""
+vim.keymap.set("n", "U", "<C-r>")
+vim.keymap.set("n", "Y", "y$")
+vim.keymap.set("n", "Q", "@@")
 
-    cmdmap(mode, lhs, "lua " .. luaname .. "(" .. arg .. ")", opts)
-end
+vim.keymap.set({"n", "x"}, ";", ":")
+vim.keymap.set({"n", "x"}, ":", "<Plug>Sneak_;", {remap = true})
 
-keymap("n", "U", "<C-r>")
-keymap("n", "Y", "y$")
-keymap("n", "Q", "@@")
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
 
-keymap("nx", ";", ":")
-keymap("nx", ":", "<Plug>Sneak_;", {noremap = false})
-
-keymap("n", "<C-h>", "<C-w>h")
-keymap("n", "<C-j>", "<C-w>j")
-keymap("n", "<C-k>", "<C-w>k")
-keymap("n", "<C-l>", "<C-w>l")
-
-keymap("n", "<C-Tab>", "gt")
-keymap("n", "<C-S-Tab>", "gT")
+vim.keymap.set("n", "<C-Tab>", "gt")
+vim.keymap.set("n", "<C-S-Tab>", "gT")
 
 -- This is to help stop a common mistake with current Hammerspoon config
-keymap("i", "<C-;>", "<ESC>:")
+vim.keymap.set("i", "<C-;>", "<ESC>:")
+
 
 --- Tabular
-cmdmap("nx", "<Tab>=", "Tabularize /=") -- @Fixme: x-mode doesn't work great
-cmdmap("nx", "<Tab>;", [[Tabularize /\w\+:]]) -- @Fixme: x-mode doesn't work great
+-- @Fixme: x-mode doesn't work great
+cmdmap({"n", "x"}, "<Tab>=", "Tabularize /=")
+cmdmap({"n", "x"}, "<Tab>;", [[Tabularize /\w\+:]])
+
 
 --- Commentary
-keymap("onx", "<BSlash>", "<Plug>Commentary", {noremap = false})
-keymap("n", "<BSlash><BSlash>", "<Plug>CommentaryLine", {noremap = false})
+vim.keymap.set({"o", "n", "x"}, "<BSlash>", "<Plug>Commentary", {remap = true})
+vim.keymap.set("n", "<BSlash><BSlash>", "<Plug>CommentaryLine", {remap = true})
+
 
 --- Treesitter text objects
-luamap("o", "af", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@function.outer", "o"')
-luamap("o", "if", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@function.inner", "o"')
-luamap("o", "am", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@class.outer", "o"')
-luamap("o", "im", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@class.inner", "o"')
-luamap("o", "aa", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@parameter.outer", "o"')
-luamap("o", "ia", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@parameter.inner", "o"')
-
-luamap("x", "af", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@function.outer", "x"')
-luamap("x", "if", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@function.inner", "x"')
-luamap("x", "am", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@class.outer", "x"')
-luamap("x", "im", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@class.inner", "x"')
-luamap("x", "aa", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@parameter.outer", "x"')
-luamap("x", "ia", "require'nvim-treesitter.textobjects.select'.select_textobject", {silent = true}, '"@parameter.inner", "x"')
+local select_textobject = require("nvim-treesitter.textobjects.select").select_textobject
+for _, mode in ipairs({"o", "x"}) do
+    vim.keymap.set(mode, "af", function() select_textobject("@function.outer", mode) end, {silent = true})
+    vim.keymap.set(mode, "if", function() select_textobject("@function.inner", mode) end, {silent = true})
+    vim.keymap.set(mode, "am", function() select_textobject("@class.outer", mode) end, {silent = true})
+    vim.keymap.set(mode, "im", function() select_textobject("@class.inner", mode) end, {silent = true})
+    vim.keymap.set(mode, "aa", function() select_textobject("@parameter.outer", mode) end, {silent = true})
+    vim.keymap.set(mode, "ia", function() select_textobject("@parameter.inner", mode) end, {silent = true})
+end
 
 cmdmap("n", "]m", "TSTextobjectGotoNextStart @class.outer")
 cmdmap("n", "]f", "TSTextobjectGotoNextStart @function.outer")
@@ -67,6 +59,7 @@ cmdmap("n", "[M", "TSTextobjectGotoPreviousEnd @class.outer")
 cmdmap("n", "[F", "TSTextobjectGotoPreviousEnd @function.outer")
 cmdmap("n", "[]", "TSTextobjectGotoPreviousEnd @function.outer")
 
+
 ---- Leader mappings
 
 -- Open a terminal in the current file's directory
@@ -81,12 +74,13 @@ cmdmap("n", "<Leader>-", "below Git")
 -- nnoremap <Enter> :call RedoTerminal()<CR>
 cmdmap("n", "<Leader><Enter>", "call RedoTerminal()")
 
-luamap("n", "<Leader>f", "FZF.find_files")
-luamap("n", "<Leader>g", "FZF.live_grep")
-luamap("n", "<Leader>h", "FZF.help_tags")
-luamap("n", "<Leader>b", "FZF.buffers")
+vim.keymap.set("n", "<Leader>f", FZF.find_files)
+vim.keymap.set("n", "<Leader>g", FZF.live_grep)
+vim.keymap.set("n", "<Leader>h", FZF.help_tags)
+vim.keymap.set("n", "<Leader>b", FZF.buffers)
 
-luamap("n", "-", "FZF.file_browser")
+vim.keymap.set("n", "-", FZF.file_browser)
+
 
 --- Resize window to exactly 'textwidth'
 cmdmap("n", "<Leader>=", 'exec "vertical resize " . ' ..
@@ -95,27 +89,28 @@ cmdmap("n", "<Leader>=", 'exec "vertical resize " . ' ..
         ' + &numberwidth + (&signcolumn == "yes" ? 2 : 0)' ..
     ')')
 
+
 --- Swap the buffers of two windows
-luamap("n", "<Leader>1", "require('windows').swapBuffers", nil, 1)
-luamap("n", "<Leader>2", "require('windows').swapBuffers", nil, 2)
-luamap("n", "<Leader>3", "require('windows').swapBuffers", nil, 3)
-luamap("n", "<Leader>4", "require('windows').swapBuffers", nil, 4)
-luamap("n", "<Leader>5", "require('windows').swapBuffers", nil, 5)
+local swapBuffers = require("windows").swapBuffers
+for i=1, 9 do
+    vim.keymap.set("n", "<Leader>"..i, function() swapBuffers(i) end)
+end
+
 
 --- Buffer-local LSP-related mappings, run when an LSP client is started
 function LSP_mappings(client, bufnr)
     local opts = { noremap=true, silent=true, buffer = bufnr }
 
-    luamap("n", "gd", "vim.lsp.buf.definition", opts)
-    luamap("n", "<C-]>", "vim.lsp.buf.definition", opts)
-    luamap("n", "K", "vim.lsp.buf.hover", opts)
-    luamap("n", "gi", "vim.lsp.buf.implementation", opts)
-    -- telemap("n", "gi", "lsp_implementations")
-    luamap("n", "ga", "vim.lsp.buf.code_action", opts)
-    luamap("v", "ga", "vim.lsp.buf.range_code_action", opts)
-    luamap("n", "gr", "vim.lsp.buf.references", opts)
-    -- telemap("n", "gr", "lsp_references")
-    luamap("n", "gR", "vim.lsp.buf.rename", opts)
-    luamap("n", "gn", "vim.lsp.diagnostic.goto_next", opts)
-    luamap("n", "gN", "vim.lsp.diagnostic.goto_prev", opts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+    -- vim.keymap.set("n", "gi", lsp_implementations, opts)
+    vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("v", "ga", vim.lsp.buf.range_code_action, opts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    -- vim.keymap.set("n", "gr", lsp_references, opts)
+    vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
+    vim.keymap.set("n", "gn", vim.lsp.diagnostic.goto_next, opts)
+    vim.keymap.set("n", "gN", vim.lsp.diagnostic.goto_prev, opts)
 end
