@@ -45,8 +45,18 @@ opt.grepprg = "rg --vimgrep --no-heading --smart-case"
 opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 
 -- SuperTab
-g.SuperTabDefaultCompletionType = "<c-x><c-o>"
 g.SuperTabClosePreviewOnPopupClose = 1
+
+-- Sets <c-p> completion as fallback when omnifunc isn't set
+function SuperTabFix()
+    if opt.omnifunc:get() == "" then
+        g.SuperTabDefaultCompletionType = "<c-p>"
+    else
+        g.SuperTabDefaultCompletionType = "<c-x><c-o>"
+        vim.fn.SuperTabChain(opt.omnifunc:get(), "<c-p>")
+    end
+end
+vim.cmd [[ autocmd FileType * lua SuperTabFix() ]]
 
 -- Lightline
 function TreesitterStatus()
