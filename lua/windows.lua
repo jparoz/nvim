@@ -9,8 +9,6 @@ M.swapBuffers = function(a, b)
     local a_buf = vim.api.nvim_win_get_buf(a)
     local b_buf = vim.api.nvim_win_get_buf(b)
 
-    print(a_buf, b_buf)
-
     vim.api.nvim_win_set_buf(a, b_buf)
     vim.api.nvim_win_set_buf(b, a_buf)
 
