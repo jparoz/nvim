@@ -20,7 +20,9 @@ for _, lsp in ipairs(servers) do
     }
 end
 
-do -- sumneko Lua LSP setup
+-- @Note: Sumneko Lua has been performing really poorly, mostly not working,
+--        and just making my laptop whir. For now, just disabling.
+if false then -- sumneko Lua LSP setup
     local sumneko_root_path = vim.env.HOME .. "/dev/projects/lua-language-server"
     local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
 
