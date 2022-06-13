@@ -13,6 +13,9 @@ opt.number = true
 opt.scrolloff = 2
 
 opt.showmode = false
+opt.showcmd = false
+
+opt.updatetime = 100
 
 opt.tabstop = 4
 opt.shiftwidth=4

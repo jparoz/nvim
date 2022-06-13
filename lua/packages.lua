@@ -27,6 +27,8 @@ require "paq" {
     "norcalli/nvim-colorizer.lua",
     "editorconfig/editorconfig-vim",
 
+    "airblade/vim-gitgutter",
+
     -- Specific feature packages
     "neovim/nvim-lspconfig",
 
