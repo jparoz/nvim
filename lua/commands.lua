@@ -116,15 +116,75 @@ command! -nargs=+ -complete=file_in_path -bar LGrep lgetexpr Grep(<f-args>)
 
 cnoreabbrev <expr> grep  (getcmdtype() ==# ':' && getcmdline() ==# 'grep')  ? 'Grep'  : 'grep'
 cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'LGrep' : 'lgrep'
-
-augroup BetterGrep
-	autocmd!
-	autocmd QuickFixCmdPost cgetexpr cwindow
-	autocmd QuickFixCmdPost lgetexpr lwindow
-augroup END
 ]]
 
+
 -- Better :make
+
+-- Based on: https://phelipetls.github.io/posts/async-make-in-nvim-with-lua/
+MakeIgnoreLines = MakeIgnoreLines or {}
+function Make(args)
+    local lines = {""}
+    local winnr = vim.fn.win_getid()
+    local bufnr = vim.api.nvim_win_get_buf(winnr)
+
+
+    local makeprg = vim.api.nvim_buf_get_option(bufnr, "makeprg")
+    if not makeprg then return end
+
+    local ignore_pats = MakeIgnoreLines[makeprg]
+
+    if args then
+        makeprg = makeprg .. " " .. args
+    end
+
+    local cmd = vim.fn.expandcmd(makeprg)
+
+    local function on_event(job_id, data, event)
+        if event == "stdout" or event == "stderr" then
+            if data then
+                vim.list_extend(lines, data)
+            end
+        end
+
+        if event == "exit" then
+            vim.g.MakeJobID = nil
+
+            -- Filter out makeprg-specific lines
+            if ignore_pats then
+                lines = vim.fn.filter(lines, function(_, line)
+                    for _, pat in ipairs(ignore_pats) do
+                        if line:find(pat) then
+                            -- delete the line if we got a match
+                            return false
+                        end
+                    end
+                    -- otherwise, don't delete the line
+                    return true
+                end)
+            end
+
+            vim.fn.setqflist({}, " ", {
+                title = cmd,
+                lines = lines,
+                efm = vim.api.nvim_buf_get_option(bufnr, "errorformat")
+            })
+            vim.api.nvim_command("doautocmd QuickFixCmdPost")
+        end
+    end
+
+    local job_id = vim.fn.jobstart(cmd, {
+        on_stderr = on_event,
+        on_stdout = on_event,
+        on_exit = on_event,
+        stdout_buffered = true,
+        stderr_buffered = true,
+    })
+
+    vim.g.MakeJobID = job_id
+end
+
 vim.cmd [[
-cnoreabbrev <expr> make (getcmdtype() ==# ':' && getcmdline() ==# 'make') ? 'silent make!' : 'make'
+command! -nargs=* Make lua Make("<args>")
+cnoreabbrev <expr> make (getcmdtype() ==# ':' && getcmdline() ==# 'make') ? 'Make' : 'make'
 ]]
