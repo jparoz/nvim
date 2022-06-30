@@ -141,15 +141,15 @@ hi String term=NONE cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#ffffff 
 hi DirvishSuffix guifg=#b5b8b6 guibg=#1d1f21
 
 " LSP
-hi link LspDiagnosticsDefaultError Error
-hi link LspDiagnosticsDefaultWarning WarningMsg
-hi link LspDiagnosticsDefaultInformation WarningMsg
-hi link LspDiagnosticsDefaultHint WarningMsg
+hi link DiagnosticsDefaultError Error
+hi link DiagnosticsDefaultWarning WarningMsg
+hi link DiagnosticsDefaultInformation WarningMsg
+hi link DiagnosticsDefaultHint WarningMsg
 
-hi link LspDiagnosticsVirtualTextError Virtual
-hi link LspDiagnosticsVirtualTextWarning Virtual
-hi link LspDiagnosticsVirtualTextInformation Virtual
-hi link LspDiagnosticsVirtualTextHint Virtual
+hi link DiagnosticsVirtualTextError Virtual
+hi link DiagnosticsVirtualTextWarning Virtual
+hi link DiagnosticsVirtualTextInformation Virtual
+hi link DiagnosticsVirtualTextHint Virtual
 
 let g:terminal_color_0  = "#151515"
 let g:terminal_color_1  = "#AC4142"
