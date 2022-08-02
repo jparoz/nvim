@@ -33,11 +33,3 @@ augroup AutoOpenQuickFix
     autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
 ]]
-
-
--- Only show the first line of diagnostics
-vim.api.nvim_create_autocmd("DiagnosticChanged", {callback = function()
-    for _, diag in ipairs(vim.diagnostic.get()) do
-        diag.message = diag.message:match("[^\n]+")
-    end
-end})

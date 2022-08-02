@@ -80,3 +80,8 @@ vim.fn.sign_define("DiagnosticSignInfo",
     { text = "ℹ", texthl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint",
     { text = "➤", texthl = "DiagnosticSignHint" })
+
+-- Only show the first line of diagnostics as virtual text
+vim.diagnostic.config({virtual_text = {format = function(diag)
+    return diag.message:match("[^\n]+")
+end}})
