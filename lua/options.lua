@@ -18,9 +18,9 @@ opt.showcmd = false
 opt.updatetime = 100
 
 opt.tabstop = 4
-opt.shiftwidth=4
-opt.shiftround = true
+opt.shiftwidth = 4
 opt.expandtab = true
+opt.shiftround = true
 opt.smarttab = true
 opt.autoindent = true
 
