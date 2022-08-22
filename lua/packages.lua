@@ -47,4 +47,6 @@ require "paq" {
 
     {"iamcco/markdown-preview.nvim", run=function() vim.fn["mkdp#util#install"]() end},
     "preservim/vim-markdown",
+
+    "f3fora/nvim-texlabconfig",
 }

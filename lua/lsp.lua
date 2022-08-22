@@ -1,24 +1,52 @@
-local servers = {
-    -- "rust_analyzer",
-    "rls",
+local lspconfig = require('lspconfig')
+
+-- Flags common to all LSPs
+local flags = {
+    debounce_text_changes = 150,
 }
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-for _, lsp in ipairs(servers) do
-    local nvim_lsp = require('lspconfig')
 
-    nvim_lsp[lsp].setup {
-        on_attach = function(client, bufnr)
-            if LSP_mappings then LSP_mappings(client, bufnr) end
-            vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
-        end,
+-- RLS
+lspconfig.rls.setup {
+    on_attach = function(client, bufnr)
+        -- map buffer local keybindings when the language server attaches
+        if LSP_mappings then LSP_mappings(client, bufnr) end
+        vim.wo.signcolumn = "yes"
+        vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+    end,
 
-        flags = {
-            debounce_text_changes = 150,
+    flags = flags,
+}
+
+-- TeXLab
+lspconfig.texlab.setup {
+    on_attach = function(client, bufnr)
+        -- map buffer local keybindings when the language server attaches
+        if LSP_mappings then LSP_mappings(client, bufnr) end
+        vim.wo.signcolumn = "yes"
+        vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+    end,
+
+    settings = {
+        texlab = {
+            build = {
+                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "-outdir=output", "%f" },
+                executable = "latexmk",
+                forwardSearchAfter = true,
+                onSave = false,
+            },
+            chktex = {
+                -- onOpenAndSave = true,
+            },
+            forwardSearch = {
+                executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
+                args = {"%l", "%p", "%f", "-g"},
+            },
         },
-    }
-end
+    },
+
+    flags = flags,
+}
 
 -- @Note: Sumneko Lua has been performing really poorly, mostly not working,
 --        and just making my laptop whir. For now, just disabling.
@@ -62,9 +90,7 @@ if false then -- sumneko Lua LSP setup
             return true
         end,
 
-        flags = {
-            debounce_text_changes = 150,
-        }
+        flags = flags,
     }
 end
 
