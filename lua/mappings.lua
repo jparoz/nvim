@@ -111,6 +111,6 @@ function LSP_mappings(client, bufnr)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
     -- vim.keymap.set("n", "gr", lsp_references, opts)
     vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
-    vim.keymap.set("n", "gn", vim.lsp.diagnostic.goto_next, opts)
-    vim.keymap.set("n", "gN", vim.lsp.diagnostic.goto_prev, opts)
+    vim.keymap.set("n", "gn", vim.diagnostic.goto_next, opts)
+    vim.keymap.set("n", "gN", vim.diagnostic.goto_prev, opts)
 end

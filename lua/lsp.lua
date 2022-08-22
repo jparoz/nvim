@@ -72,11 +72,16 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     { severity_sort = true })
 
-vim.fn.sign_define("LspDiagnosticsSignError",
-    { text = "●", texthl = "LspDiagnosticsSignError" })
-vim.fn.sign_define("LspDiagnosticsSignWarning",
-    { text = "○", texthl = "LspDiagnosticsSignWarning" })
-vim.fn.sign_define("LspDiagnosticsSignInformation",
-    { text = "ℹ", texthl = "LspDiagnosticsSignInformation" })
-vim.fn.sign_define("LspDiagnosticsSignHint",
-    { text = "➤", texthl = "LspDiagnosticsSignHint" })
+vim.fn.sign_define("DiagnosticSignError",
+    { text = "●", texthl = "DiagnosticSignError" })
+vim.fn.sign_define("DiagnosticSignWarn",
+    { text = "○", texthl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignInfo",
+    { text = "ℹ", texthl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignHint",
+    { text = "➤", texthl = "DiagnosticSignHint" })
+
+-- Only show the first line of diagnostics as virtual text
+vim.diagnostic.config({virtual_text = {format = function(diag)
+    return diag.message:match("[^\n]+")
+end}})

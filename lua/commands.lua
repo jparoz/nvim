@@ -2,7 +2,7 @@
 vim.cmd [[
 command! -nargs=* Terminal lua Terminal("<args>")
 command! -nargs=* STerminal split | Terminal <args>
-command! -nargs=* VTerminal aboveleft vsplit | Terminal <args>
+command! -nargs=* VTerminal vsplit | Terminal <args>
 ]]
 
 -- Open a terminal in the given dir, with escape bound to return to normal mode
