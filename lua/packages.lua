@@ -26,7 +26,6 @@ require "paq" {
     "tjdevries/colorbuddy.nvim",
     "norcalli/nvim-colorizer.lua",
     "editorconfig/editorconfig-vim",
-
     "airblade/vim-gitgutter",
 
     -- Specific feature packages
@@ -45,4 +44,7 @@ require "paq" {
     -- Language-specific
     "rust-lang/rust.vim",
     "teal-language/vim-teal",
+
+    {"iamcco/markdown-preview.nvim", run=function() vim.fn["mkdp#util#install"]() end},
+    "preservim/vim-markdown",
 }

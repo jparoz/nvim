@@ -198,3 +198,7 @@ g.rooter_patterns = {".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "packa
 -- nvim-colorizer
 opt.termguicolors = true
 require("colorizer").setup()
+
+-- Vim-Markdown
+g.vim_markdown_folding_disabled = 1
+g.vim_markdown_no_default_key_mappings = 1
