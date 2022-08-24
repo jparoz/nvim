@@ -193,7 +193,16 @@ g.delimitMate_expand_cr = 1
 -- Rooter
 g.rooter_cd_cmd = "lcd"
 g.rooter_resolve_links = 1
-g.rooter_patterns = {".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "output/*.log"}
+g.rooter_patterns = {
+    -- Defaults
+    ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json",
+
+    -- My LaTeX build directory convention
+    "output/*.log",
+
+    -- Stack/hpack config file
+    "package.yaml",
+}
 
 -- nvim-colorizer
 opt.termguicolors = true
