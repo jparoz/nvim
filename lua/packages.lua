@@ -19,7 +19,7 @@ require "paq" {
     "tpope/vim-fugitive",
     "tpope/vim-rhubarb",
     "Raimondi/delimitMate",
-    "ervandew/supertab",
+    "lifepillar/vim-mucomplete",
     "godlygeek/tabular",
     "itchyny/lightline.vim",
     "airblade/vim-rooter",

@@ -33,3 +33,11 @@ augroup AutoOpenQuickFix
     autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
 ]]
+
+-- Automatically close the preview window when completion is finished
+vim.api.nvim_create_autocmd("CompleteDone", {
+    pattern = "*",
+    callback = function()
+        vim.cmd "pclose"
+    end,
+})

@@ -44,19 +44,15 @@ opt.foldmethod = "marker"
 opt.grepprg = "rg --vimgrep --no-heading --smart-case"
 opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 
--- SuperTab
-g.SuperTabClosePreviewOnPopupClose = 1
+-- mucomplete
+g["mucomplete#chains"] = {
+    default = {'omni', 'path', 'keyn', 'dict', 'uspl'},
+    vim = {'path', 'cmd', 'keyn'},
 
--- Sets <c-p> completion as fallback when omnifunc isn't set
-function SuperTabFix()
-    if opt.omnifunc:get() == "" then
-        g.SuperTabDefaultCompletionType = "<c-p>"
-    else
-        g.SuperTabDefaultCompletionType = "<c-x><c-o>"
-        vim.fn.SuperTabChain(opt.omnifunc:get(), "<c-p>")
-    end
-end
-vim.cmd [[ autocmd FileType * lua SuperTabFix() ]]
+    -- Having 'omni' and 'keyn' breaks the ordering for some reason.
+    -- See https://github.com/lifepillar/vim-mucomplete/issues/180#issuecomment-939507716
+    rust = {'omni', 'path', 'dict', 'uspl'},
+}
 
 -- Lightline
 function TreesitterStatus()
