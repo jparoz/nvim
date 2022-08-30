@@ -6,8 +6,8 @@ local flags = {
 }
 
 
--- RLS
-lspconfig.rls.setup {
+-- rust-analyzer
+lspconfig.rust_analyzer.setup {
     on_attach = function(client, bufnr)
         -- map buffer local keybindings when the language server attaches
         if LSP_mappings then LSP_mappings(client, bufnr) end
