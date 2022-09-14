@@ -40,7 +40,7 @@ lspconfig.texlab.setup {
             },
             forwardSearch = {
                 executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
-                args = {"%l", "%p", "%f", "-g"},
+                args = {"-g", "%l", "%p", "%f"},
             },
         },
     },
