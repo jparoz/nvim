@@ -87,7 +87,10 @@ function UpdateGitStatusline(dir)
         return
     end
 
-    handle = io.popen("cd " .. work .. ";git diff origin/master..HEAD --name-status")
+    -- Get the name of the current branch
+    local branch = vim.fn["fugitive#Head"]()
+
+    handle = io.popen("cd " .. work .. ";git diff origin/"..branch.."..HEAD --name-status")
     GitCache[dir].diff = handle:read("a")
     handle:close()
 end
