@@ -41,6 +41,8 @@ require "paq" {
 
     "subnut/nvim-ghost.nvim", -- GhostText browser extension
 
+    "lewis6991/impatient.nvim", -- caching for Neovim config
+
     -- Language-specific
     "rust-lang/rust.vim",
     "teal-language/vim-teal",
