@@ -43,7 +43,11 @@ require "paq" {
 
     "lewis6991/impatient.nvim", -- caching for Neovim config
 
+    -- "knubie/vim-kitty-navigator", -- move between vim windows and kitty windows
+    "jparoz/vim-kitty-navigator", -- fork until knubie/vim-kitty-navigator#38 is merged
+
     -- Language-specific
     "rust-lang/rust.vim",
     "teal-language/vim-teal",
+    "fladson/vim-kitty",
 }

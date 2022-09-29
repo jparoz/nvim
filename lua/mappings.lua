@@ -62,17 +62,17 @@ cmdmap("n", "[]", "TSTextobjectGotoPreviousEnd @function.outer")
 
 ---- Leader mappings
 
--- Open a terminal in the current file's directory
-cmdmap("n", "<Leader>t", "Terminal")  -- in current window
-cmdmap("n", "<Leader>s", "STerminal") -- horizontal split
-cmdmap("n", "<Leader>v", "VTerminal") -- vertical split
+-- -- Open a terminal in the current file's directory
+-- cmdmap("n", "<Leader>t", "Terminal")  -- in current window
+-- cmdmap("n", "<Leader>s", "STerminal") -- horizontal split
+-- cmdmap("n", "<Leader>v", "VTerminal") -- vertical split
 
 -- open Fugitive status window
 cmdmap("n", "<Leader>-", "below Git")
 
--- Redo the action in a terminal open in the current tab
--- nnoremap <Enter> :call RedoTerminal()<CR>
-cmdmap("n", "<Leader><Enter>", "call RedoTerminal()")
+-- -- Redo the action in a terminal open in the current tab
+-- -- nnoremap <Enter> :call RedoTerminal()<CR>
+-- cmdmap("n", "<Leader><Enter>", "call RedoTerminal()")
 
 vim.keymap.set("n", "<Leader>f", FZF.find_files)
 vim.keymap.set("n", "<Leader>g", FZF.live_grep)

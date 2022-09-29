@@ -227,3 +227,6 @@ require("colorizer").setup()
 -- Vim-Markdown
 g.vim_markdown_folding_disabled = 1
 g.vim_markdown_no_default_key_mappings = 1
+
+-- vim-kitty-navigator
+g.kitty_navigator_password = "vim-kitty-navigator"
