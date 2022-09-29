@@ -71,7 +71,7 @@ GitCache = {}
 
 function UpdateGitStatusline(dir)
     dir = dir or vim.fn.FugitiveGitDir()
-    if not GitCache[dir] then GitCache[dir] = {} end
+    if not GitCache[dir] then GitCache[dir] = {diff = ""} end
 
     local work = vim.fn.FugitiveWorkTree()
 
@@ -80,6 +80,12 @@ function UpdateGitStatusline(dir)
     handle = io.popen("cd " .. work .. ";git status --porcelain")
     GitCache[dir].status = handle:read("a")
     handle:close()
+
+    -- Check if we have a remote
+    if os.execute("git config remote.origin.url") > 0 then
+        -- there is no origin
+        return
+    end
 
     handle = io.popen("cd " .. work .. ";git diff origin/master..HEAD --name-status")
     GitCache[dir].diff = handle:read("a")
