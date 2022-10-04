@@ -13,6 +13,8 @@ g.loaded_netrwPlugin = 1
 -- g.loaded_matchit = 1
 -- g.loaded_matchparen = 1
 
+opt.mouse = "nvi"
+
 opt.textwidth = 80
 opt.colorcolumn = "+1"
 
@@ -88,7 +90,7 @@ function UpdateGitStatusline(dir)
 
     local handle
 
-    handle = io.popen("cd " .. work .. ";git status --porcelain")
+    handle = io.popen("cd " .. work .. ";git status --porcelain 2>/dev/null")
     GitCache[dir].status = handle:read("a")
     handle:close()
 
