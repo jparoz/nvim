@@ -8,6 +8,9 @@ require "paq" {
     -- Package manager manages itself
     "savq/paq-nvim",
 
+    -- caching for Neovim config
+    "lewis6991/impatient.nvim",
+
     -- General/smallish Vim-type upgrades
     "junegunn/vim-slash",
     "justinmk/vim-sneak",
@@ -41,8 +44,6 @@ require "paq" {
 
     "subnut/nvim-ghost.nvim", -- GhostText browser extension
 
-    "lewis6991/impatient.nvim", -- caching for Neovim config
-
     -- "knubie/vim-kitty-navigator", -- move between vim windows and kitty windows
     "jparoz/vim-kitty-navigator", -- fork until knubie/vim-kitty-navigator#38 is merged
 
@@ -51,3 +52,5 @@ require "paq" {
     "teal-language/vim-teal",
     "fladson/vim-kitty",
 }
+
+require "impatient"

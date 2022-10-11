@@ -1,5 +1,3 @@
-require "impatient"
-
 vim.g.mapleader = " "
 
 local has = require("utils").has
