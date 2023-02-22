@@ -3,8 +3,6 @@ vim.cmd "syntax on"
 
 vim.g.mapleader = " "
 
-local has = require("utils").has
-
 require "packages"
 
 require "lsp"
