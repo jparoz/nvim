@@ -57,6 +57,11 @@ opt.foldmethod = "marker"
 opt.grepprg = "rg --vimgrep --no-heading --smart-case"
 opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 
+-- Diagnostics
+vim.diagnostic.config {
+    underline = false,
+}
+
 -- mucomplete
 g["mucomplete#chains"] = {
     default = {'omni', 'path', 'keyn', 'dict', 'uspl'},
@@ -170,7 +175,22 @@ end
 utils.lua2vim("QFStatusline")
 
 g.lightline = {
-    colorscheme = "jellybeans",
+    colorscheme = "seethru",
+    mode_map = {
+        n        = 'normal',
+        i        = 'insert',
+        R        = 'replace',
+        v        = 'visual',
+        V        = 'v-line',
+        -- <C-v>
+        ["\x16"] = 'v-block',
+        c        = 'command',
+        s        = 'select',
+        S        = 's-line',
+        -- <C-s>
+        ["\x13"] = 's-block',
+        t        = 'terminal',
+    },
     active = {
         left = {
             -- closest to left
@@ -201,6 +221,9 @@ g.lightline = {
         git = "GitStatusline",
         quickfix = "QFStatusline",
     },
+    component = {
+        filename = "%f",
+    },
 }
 
 -- delimitMate
@@ -223,8 +246,8 @@ g.rooter_patterns = {
 }
 
 -- nvim-colorizer
-opt.termguicolors = true
-require("colorizer").setup()
+-- opt.termguicolors = true
+-- require("colorizer").setup()
 
 -- Vim-Markdown
 g.vim_markdown_folding_disabled = 1

@@ -23,8 +23,6 @@ require "paq" {
     "godlygeek/tabular",
     "itchyny/lightline.vim",
     "airblade/vim-rooter",
-    "tjdevries/colorbuddy.nvim",
-    "norcalli/nvim-colorizer.lua",
     "editorconfig/editorconfig-vim",
     "airblade/vim-gitgutter",
 
