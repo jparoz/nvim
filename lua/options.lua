@@ -230,6 +230,7 @@ g.delimitMate_expand_cr = 1
 -- Rooter
 g.rooter_cd_cmd = "lcd"
 g.rooter_resolve_links = 1
+g.rooter_buftypes = {""} -- don't trigger on nofile, nowrite, or acwrite
 g.rooter_patterns = {
     -- Defaults
     ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json",
