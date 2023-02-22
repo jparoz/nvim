@@ -110,6 +110,9 @@ function LSP_mappings(client, bufnr)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
     end
 
+    -- Search workspace symbols and insert into quickfix list
+    vim.keymap.set("n", "<Leader>/", vim.lsp.buf.workspace_symbol, opts)
+
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
     -- vim.keymap.set("n", "gi", lsp_implementations, opts)
     vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
