@@ -15,6 +15,19 @@ lspconfig.rust_analyzer.setup {
         vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
     end,
 
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                allFeatures = true,
+                -- Show clippy messages
+                overrideCommand = {
+                    "cargo", "clippy", "--workspace", "--message-format=json",
+                    "--all-targets", "--all-features",
+                }
+            }
+        }
+    },
+
     flags = flags,
 }
 
