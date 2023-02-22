@@ -45,3 +45,5 @@ require "paq" {
     "KeitaNakamura/tex-conceal.vim",
     "gi1242/vim-tex-syntax",
 }
+
+require "impatient"
