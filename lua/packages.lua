@@ -50,4 +50,7 @@ require "paq" {
     "rust-lang/rust.vim",
     "teal-language/vim-teal",
     "fladson/vim-kitty",
+
+    "KeitaNakamura/tex-conceal.vim",
+    "gi1242/vim-tex-syntax",
 }
