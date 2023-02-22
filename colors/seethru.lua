@@ -1,23 +1,64 @@
 vim.g.colors_name = "seethru"
 
+-- Try to get the terminal's colour scheme, if the terminal is kitty
+local colors = {}
+local kitty_colors = vim.fn.system("kitty @ --password colors get-colors")
+if vim.v.shell_error == 0 then
+    -- we got the colours!
+    local colors_array = {}
+    for name, color in kitty_colors:gmatch("(%S+)%s+(#%x+)\n") do
+        colors[name] = color
+
+        local num = name:match("color(%d%d?%d?)")
+        if num then
+            local n = tonumber(num)
+            colors[n] = color
+            colors_array[n+1] = color
+        end
+
+        if name == "foreground" then
+            colors.fg = color
+        elseif name == "background" then
+            colors.bg = color
+        end
+    end
+    vim.g.colors = colors_array
+else
+    -- we didn't get the colours.
+end
+
 local hi = function(group, opts)
     local cmd = "hi " .. group
 
-    cmd = cmd .. " ctermfg=" .. (opts.fg or "NONE")
-    opts.fg = nil
+    if opts.fg then
+        cmd = cmd .. " ctermfg=" .. opts.fg
+        cmd = cmd .. " guifg=" .. (colors[opts.fg] or "NONE")
+        opts.fg = nil
+    else
+        cmd = cmd .. " ctermfg=NONE"
+        cmd = cmd .. " guifg=NONE"
+    end
 
-    cmd = cmd .. " ctermbg=" .. (opts.bg or "NONE")
-    opts.bg = nil
+    if opts.bg then
+        cmd = cmd .. " ctermbg=" .. opts.bg
+        cmd = cmd .. " guibg=" .. (colors[opts.bg] or "NONE")
+        opts.bg = nil
+    else
+        cmd = cmd .. " ctermbg=NONE"
+        cmd = cmd .. " guibg=NONE"
+    end
 
     local any = false
     for k, v in pairs(opts) do
         if v then  -- i.e. if style `k` is true, e.g. reverse = true
             cmd = cmd .. " cterm=" .. k
+            cmd = cmd .. " gui=" .. k
             any = true
         end
     end
     if not any then
         cmd = cmd .. " cterm=NONE"
+        cmd = cmd .. " gui=NONE"
     end
 
     vim.cmd(cmd)
@@ -36,7 +77,7 @@ hi("NonText", {fg = 8})
 hi("SignColumn", {})
 hi("SpecialKey", {fg = 8})
 hi("StatusLine", {fg = 0, bg = 0})
-hi("StatusLineNC", {fg = 0, bg = 0})
+hi("StatusLineNC", {fg = 8, bg = 0})
 hi("WinSeparator", {fg = 0, bg = 0})
 hi("Virtual", {fg = 8, italic = true})
 

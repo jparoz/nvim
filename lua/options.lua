@@ -243,8 +243,8 @@ g.rooter_patterns = {
 }
 
 -- nvim-colorizer
--- opt.termguicolors = true
--- require("colorizer").setup()
+opt.termguicolors = true
+require("colorizer").setup()
 
 -- Vim-Markdown
 g.vim_markdown_folding_disabled = 1
