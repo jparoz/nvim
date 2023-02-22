@@ -8,7 +8,7 @@ require "paq" {
     -- Package manager manages itself
     "savq/paq-nvim",
 
-    -- General/smallish Vim-type upgrades
+    -- Core (obvious improvements, or couldn't live without)
     "junegunn/vim-slash",
     "justinmk/vim-sneak",
     "tpope/vim-surround",
@@ -18,31 +18,23 @@ require "paq" {
     "tpope/vim-speeddating",
     "tpope/vim-fugitive",
     "tpope/vim-rhubarb",
-    "Raimondi/delimitMate",
-    "lifepillar/vim-mucomplete",
-    "godlygeek/tabular",
-    "itchyny/lightline.vim",
-    "airblade/vim-rooter",
-    "editorconfig/editorconfig-vim",
-    "airblade/vim-gitgutter",
-
-    -- Specific feature packages
     "neovim/nvim-lspconfig",
-
+    "itchyny/lightline.vim",
     "nvim-treesitter/nvim-treesitter",
     "nvim-treesitter/nvim-treesitter-textobjects",
-
-    "nvim-lua/popup.nvim",
-    "nvim-lua/plenary.nvim",
-
+    "lewis6991/impatient.nvim", -- caching for Neovim config
     "junegunn/fzf",
 
+    -- Good (very useful function, but could be better designed or implemented)
+    "lifepillar/vim-mucomplete",
+    "airblade/vim-rooter",
+    "Raimondi/delimitMate",
+
+    -- Medium (could live without these, but nice to have sometimes)
+    "norcalli/nvim-colorizer.lua",
+    "godlygeek/tabular",
+    "airblade/vim-gitgutter",
     "subnut/nvim-ghost.nvim", -- GhostText browser extension
-
-    "lewis6991/impatient.nvim", -- caching for Neovim config
-
-    -- "knubie/vim-kitty-navigator", -- move between vim windows and kitty windows
-    "jparoz/vim-kitty-navigator", -- fork until knubie/vim-kitty-navigator#38 is merged
 
     -- Language-specific
     "rust-lang/rust.vim",

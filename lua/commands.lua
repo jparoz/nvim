@@ -120,7 +120,6 @@ cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'L
 
 
 -- Better :make
-
 -- Based on: https://phelipetls.github.io/posts/async-make-in-nvim-with-lua/
 MakeIgnoreLines = MakeIgnoreLines or {}
 function Make(args)

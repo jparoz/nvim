@@ -1,5 +1,8 @@
 require "impatient"
 
+vim.cmd "filetype plugin on"
+vim.cmd "syntax on"
+
 vim.g.mapleader = " "
 
 local has = require("utils").has
