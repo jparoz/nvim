@@ -58,7 +58,17 @@ vim.diagnostic.config {
     underline = false,
 }
 
+
 -- mucomplete
+opt.completeopt:append("menuone")
+opt.shortmess:append("c")
+
+vim.cmd [[
+let s:rust_cond = { t -> t =~# '\%(\i\|\|::\)$' }
+let g:mucomplete#can_complete = {}
+let g:mucomplete#can_complete.rust = { 'omni': s:rust_cond }
+]]
+
 g["mucomplete#chains"] = {
     default = {'omni', 'path', 'keyn', 'dict', 'uspl'},
     vim = {'path', 'cmd', 'keyn'},
@@ -67,6 +77,7 @@ g["mucomplete#chains"] = {
     -- See https://github.com/lifepillar/vim-mucomplete/issues/180#issuecomment-939507716
     rust = {'omni', 'path', 'dict', 'uspl'},
 }
+
 
 -- Lightline
 function TreesitterStatus()

@@ -27,12 +27,6 @@ cmdmap({"n", "x"}, "<Tab>=", "Tabularize /=")
 cmdmap({"n", "x"}, "<Tab>;", [[Tabularize /\w\+:]])
 
 
--- MU Complete
-vim.g["mucomplete#no_mappings"] = true
-vim.keymap.set("i", "<Tab>", "<Plug>(MUCompleteFwd)")
-vim.keymap.set("i", "<S-Tab>", "<Plug>(MUCompleteBwd)")
-
-
 --- Commentary
 vim.keymap.set({"o", "n", "x"}, "<BSlash>", "<Plug>Commentary", {remap = true})
 vim.keymap.set("n", "<BSlash><BSlash>", "<Plug>CommentaryLine", {remap = true})
