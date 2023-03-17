@@ -102,7 +102,7 @@ function UpdateGitStatusline(dir)
 
     local handle
 
-    handle = io.popen("cd " .. work .. ";git status --porcelain 2>/dev/null")
+    handle = io.popen("cd '" .. work .. "'; git status --porcelain 2>/dev/null")
     GitCache[dir].status = handle:read("a")
     handle:close()
 
@@ -115,7 +115,7 @@ function UpdateGitStatusline(dir)
     -- Get the name of the current branch
     local branch = vim.fn["fugitive#Head"]()
 
-    handle = io.popen("cd " .. work .. ";git diff origin/"..branch.."..HEAD --name-status")
+    handle = io.popen("cd '" .. work .. "'; git diff origin/"..branch.."..HEAD --name-status")
     GitCache[dir].diff = handle:read("a")
     handle:close()
 end
