@@ -131,7 +131,7 @@ hi("Tooltip", {})
 
 -- Floating windows
 hi("NormalFloat", {})
--- FloatBorder
+hi("FloatBorder", {fg = 8})
 -- FloatShadow
 -- FloatShadowThrough
 
