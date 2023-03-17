@@ -41,6 +41,7 @@ require "paq" {
     "teal-language/vim-teal",
     "fladson/vim-kitty",
     "evanleck/vim-svelte",
+    "iamcco/markdown-preview.nvim",
 
     "KeitaNakamura/tex-conceal.vim",
     "gi1242/vim-tex-syntax",
