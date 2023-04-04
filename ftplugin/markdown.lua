@@ -2,6 +2,7 @@ vim.bo.tabstop = 2
 vim.bo.shiftwidth = 2
 vim.wo.linebreak = true
 vim.wo.conceallevel = 2
+vim.wo.concealcursor = "nc"
 vim.bo.textwidth = 0
 vim.wo.signcolumn = "yes"
 vim.o.showtabline = 2  -- always
