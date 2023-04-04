@@ -29,12 +29,14 @@ require "paq" {
     "lifepillar/vim-mucomplete",
     "airblade/vim-rooter",
     "Raimondi/delimitMate",
+    "airblade/vim-gitgutter",
+
+    "folke/trouble.nvim",
 
     -- Medium (could live without these, but nice to have sometimes)
     "norcalli/nvim-colorizer.lua",
     "godlygeek/tabular",
-    "airblade/vim-gitgutter",
-    "subnut/nvim-ghost.nvim", -- GhostText browser extension
+    -- "subnut/nvim-ghost.nvim", -- GhostText browser extension
 
     -- Language-specific
     "rust-lang/rust.vim",

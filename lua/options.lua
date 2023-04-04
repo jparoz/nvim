@@ -238,6 +238,16 @@ g.delimitMate_matchpairs = "(:),[:],{:}"
 g.delimitMate_quotes = ""
 g.delimitMate_expand_cr = 1
 
+-- Trouble.nvim
+require("trouble").setup{
+    icons = false,
+    padding = false,
+    fold_open = "▼",
+    fold_closed = "►",
+    indent_lines = false,
+    use_diagnostic_signs = true,
+}
+
 -- Rooter
 g.rooter_cd_cmd = "lcd"
 g.rooter_resolve_links = 1

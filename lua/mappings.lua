@@ -58,9 +58,6 @@ end
 function LSP_mappings(client, bufnr)
     local opts = { noremap=true, silent=true, buffer = bufnr }
 
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
-
     if client.name == "texlab" then
         vim.keymap.set("n", "K", function() vim.cmd("TexlabForward") end, opts)
     else
@@ -70,17 +67,22 @@ function LSP_mappings(client, bufnr)
     -- Search workspace symbols and insert into quickfix list
     vim.keymap.set("n", "<Leader>/", vim.lsp.buf.workspace_symbol, opts)
 
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-    -- vim.keymap.set("n", "gi", lsp_implementations, opts)
+    cmdmap("n", "<Leader>n", "TroubleToggle", opts)
+
+    -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    -- vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
+    cmdmap("n", "gd", "TroubleToggle lsp_definitions", opts)
+    cmdmap("n", "<C-]>", "TroubleToggle lsp_definitions", opts)
+
+    -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+    cmdmap("n", "gi", "TroubleToggle lsp_implementations", opts)
     vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
     vim.keymap.set("v", "ga", vim.lsp.buf.range_code_action, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    -- vim.keymap.set("n", "gr", lsp_references, opts)
+
+    -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    cmdmap("n", "gr", "TroubleToggle lsp_references", opts)
+
     vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
     vim.keymap.set("n", "gn", vim.diagnostic.goto_next, opts)
     vim.keymap.set("n", "gN", vim.diagnostic.goto_prev, opts)
-
-    -- Meta-n synonym for gn
-    vim.keymap.set("n", "<M-n>", vim.diagnostic.goto_next, opts)
-    vim.keymap.set("n", "<M-N>", vim.diagnostic.goto_prev, opts)
 end
