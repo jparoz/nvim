@@ -21,58 +21,15 @@ vim.keymap.set("n", "<C-S-Tab>", "gT")
 vim.keymap.set("i", "<C-;>", "<ESC>:")
 
 
---- Tabular
--- @Fixme: x-mode doesn't work great
-cmdmap({"n", "x"}, "<Tab>=", "Tabularize /=")
-cmdmap({"n", "x"}, "<Tab>;", [[Tabularize /\w\+:]])
-
-
 --- Commentary
 vim.keymap.set({"o", "n", "x"}, "<BSlash>", "<Plug>Commentary", {remap = true})
 vim.keymap.set("n", "<BSlash><BSlash>", "<Plug>CommentaryLine", {remap = true})
 
 
---- Treesitter text objects
-local select_textobject = require("nvim-treesitter.textobjects.select").select_textobject
-for _, mode in ipairs({"o", "x"}) do
-    vim.keymap.set(mode, "af", function() select_textobject("@function.outer", mode) end, {silent = true})
-    vim.keymap.set(mode, "if", function() select_textobject("@function.inner", mode) end, {silent = true})
-    vim.keymap.set(mode, "am", function() select_textobject("@class.outer", mode) end, {silent = true})
-    vim.keymap.set(mode, "im", function() select_textobject("@class.inner", mode) end, {silent = true})
-    vim.keymap.set(mode, "aa", function() select_textobject("@parameter.outer", mode) end, {silent = true})
-    vim.keymap.set(mode, "ia", function() select_textobject("@parameter.inner", mode) end, {silent = true})
-end
-
-cmdmap("n", "]m", "TSTextobjectGotoNextStart @class.outer")
-cmdmap("n", "]f", "TSTextobjectGotoNextStart @function.outer")
-cmdmap("n", "][", "TSTextobjectGotoNextStart @function.outer")
-
-cmdmap("n", "]M", "TSTextobjectGotoNextEnd @class.outer")
-cmdmap("n", "]F", "TSTextobjectGotoNextEnd @function.outer")
-cmdmap("n", "]]", "TSTextobjectGotoNextEnd @function.outer")
-
-cmdmap("n", "[m", "TSTextobjectGotoPreviousStart @class.outer")
-cmdmap("n", "[f", "TSTextobjectGotoPreviousStart @function.outer")
-cmdmap("n", "[[", "TSTextobjectGotoPreviousStart @function.outer")
-
-cmdmap("n", "[M", "TSTextobjectGotoPreviousEnd @class.outer")
-cmdmap("n", "[F", "TSTextobjectGotoPreviousEnd @function.outer")
-cmdmap("n", "[]", "TSTextobjectGotoPreviousEnd @function.outer")
-
-
 ---- Leader mappings
-
--- -- Open a terminal in the current file's directory
--- cmdmap("n", "<Leader>t", "Terminal")  -- in current window
--- cmdmap("n", "<Leader>s", "STerminal") -- horizontal split
--- cmdmap("n", "<Leader>v", "VTerminal") -- vertical split
 
 -- open Fugitive status window
 cmdmap("n", "<Leader>-", "below Git")
-
--- -- Redo the action in a terminal open in the current tab
--- -- nnoremap <Enter> :call RedoTerminal()<CR>
--- cmdmap("n", "<Leader><Enter>", "call RedoTerminal()")
 
 vim.keymap.set("n", "<Leader>f", FZF.find_files)
 vim.keymap.set("n", "<Leader>g", FZF.live_grep)
