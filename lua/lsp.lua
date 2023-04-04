@@ -65,6 +65,12 @@ lspconfig.texlab.setup {
     flags = flags,
 }
 
+-- marksman (markdown)
+lspconfig.marksman.setup {
+    on_attach = on_attach,
+    flags = flags,
+}
+
 -- @Note: Sumneko Lua has been performing really poorly, mostly not working,
 --        and just making my laptop whir. For now, just disabling.
 if false then -- sumneko Lua LSP setup
