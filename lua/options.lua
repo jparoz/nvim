@@ -63,6 +63,12 @@ vim.diagnostic.config {
 opt.completeopt:append("menuone")
 opt.shortmess:append("c")
 
+g["mucomplete#no_mappings"] = true
+vim.cmd [[
+imap <unique> <tab> <plug>(MUcompleteFwd)
+imap <unique> <s-tab> <plug>(MUcompleteBwd)
+]]
+
 vim.cmd [[
 let s:rust_cond = { t -> t =~# '\%(\i\|\|::\)$' }
 let g:mucomplete#can_complete = {}
