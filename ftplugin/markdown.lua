@@ -5,7 +5,7 @@ vim.wo.conceallevel = 2
 vim.wo.concealcursor = "nc"
 vim.bo.textwidth = 0
 vim.wo.signcolumn = "yes"
-vim.o.showtabline = 2  -- always
+-- vim.o.showtabline = 2  -- always
 
 vim.keymap.set("n", "<Leader>]", function()
     vim.cmd "split"
