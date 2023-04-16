@@ -77,7 +77,7 @@ function LSP_mappings(client, bufnr)
     -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
     cmdmap("n", "gi", "TroubleToggle lsp_implementations", opts)
     vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("v", "ga", vim.lsp.buf.range_code_action, opts)
+    vim.keymap.set("v", "ga", vim.lsp.buf.code_action, opts)
 
     -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
     cmdmap("n", "gr", "TroubleToggle lsp_references", opts)

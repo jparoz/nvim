@@ -53,6 +53,9 @@ opt.foldmethod = "marker"
 opt.grepprg = "rg --vimgrep --no-heading --smart-case"
 opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 
+-- diff
+vim.opt.diffopt:append("linematch:60")
+
 -- Diagnostics
 vim.diagnostic.config {
     underline = false,
