@@ -25,15 +25,6 @@ augroup END
 ]]
 
 
--- Automatically open quickfix window when a command runs
--- currently commented because we don't want this right now
-vim.cmd ""--[[
-augroup AutoOpenQuickFix
-    autocmd!
-    autocmd QuickFixCmdPost [^l]* cwindow
-augroup END
-]]
-
 -- Automatically close the preview window when completion is finished
 vim.api.nvim_create_autocmd("CompleteDone", {
     pattern = "*",
