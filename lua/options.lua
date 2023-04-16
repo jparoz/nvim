@@ -116,7 +116,8 @@ function UpdateGitStatusline(dir)
     handle:close()
 
     -- Check if we have a remote
-    if os.execute("git config remote.origin.url") > 0 then
+    vim.fn.system("git config remote.origin.url")
+    if vim.v.shell_error > 0 then
         -- there is no origin
         return
     end
