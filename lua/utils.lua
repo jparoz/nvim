@@ -1,8 +1,9 @@
 local M = {}
 
-printf = function(s, ...) return print(s:format(...)) end
+---@type fun(s: string, ...: any)
+M.printf = function(s, ...) return print(s:format(...)) end
 
-printi = function(t) return print(vim.inspect(t)) end
+M.printi = function(t) return print(vim.inspect(t)) end
 
 M.lua2vim = function(name)
     vim.cmd(
@@ -24,6 +25,9 @@ end
 M.has = function(s)
     return vim.fn.has(s) == 1
 end
+
+---@diagnostic disable-next-line:lowercase-global
+printi = M.printi; printf = M.printf
 
 return setmetatable(M, {
     __index = function(t, name)
