@@ -1,11 +1,4 @@
-vim.g.fzf_layout = {
-    window = {
-        width = 0.8,
-        height = 0.9,
-    },
-}
-
-FZF = setmetatable({}, {__call = function(_, spec)
+local FZF = setmetatable({}, {__call = function(_, spec)
     spec = spec or {}
 
     local options = spec.options or {}
@@ -364,3 +357,5 @@ function FZF.i(t)
         layout = "reverse-list",
     }
 end
+
+return FZF

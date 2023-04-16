@@ -1,7 +1,3 @@
-local cmdmap = function(mode, lhs, cmd, opts)
-    vim.keymap.set(mode, lhs, "<CMD>" .. cmd .. "<CR>", opts)
-end
-
 vim.keymap.set("n", "U", "<C-r>")
 vim.keymap.set("n", "Y", "y$")
 vim.keymap.set("n", "Q", "@@")
@@ -21,30 +17,21 @@ vim.keymap.set("n", "<C-S-Tab>", "gT")
 vim.keymap.set("i", "<C-;>", "<ESC>:")
 
 
---- Commentary
-vim.keymap.set({"o", "n", "x"}, "<BSlash>", "<Plug>Commentary", {remap = true})
-vim.keymap.set("n", "<BSlash><BSlash>", "<Plug>CommentaryLine", {remap = true})
-
-
----- Leader mappings
-
--- open Fugitive status window
-cmdmap("n", "<Leader>-", "below Git")
-
+-- FZF
+local FZF = require "fzf"
 vim.keymap.set("n", "<Leader>f", FZF.find_files)
 vim.keymap.set("n", "<Leader>g", FZF.live_grep)
 vim.keymap.set("n", "<Leader>h", FZF.help_tags)
 vim.keymap.set("n", "<Leader>b", FZF.buffers)
-
 vim.keymap.set("n", "-", FZF.file_browser)
 
 
 --- Resize window to exactly 'textwidth'
-cmdmap("n", "<Leader>=", 'exec "vertical resize " . ' ..
+vim.keymap.set("n", "<Leader>=", '<CMD>exec "vertical resize " . ' ..
     '(' ..
         '(&textwidth > 0 ? &textwidth : 80)' ..
         ' + &numberwidth + (&signcolumn == "yes" ? 2 : 0)' ..
-    ')')
+    ')<CR>')
 
 
 --- Swap the buffers of two windows
@@ -55,34 +42,39 @@ end
 
 
 --- Buffer-local LSP-related mappings, run when an LSP client is started
-function LSP_mappings(client, bufnr)
-    local opts = { noremap=true, silent=true, buffer = bufnr }
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        local bufnr = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-    if client.name == "texlab" then
-        vim.keymap.set("n", "K", function() vim.cmd("TexlabForward") end, opts)
-    else
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    end
+        local opts = { noremap=true, silent=true, buffer = bufnr }
 
-    -- Search workspace symbols and insert into quickfix list
-    vim.keymap.set("n", "<Leader>/", vim.lsp.buf.workspace_symbol, opts)
+        if client.name == "texlab" then
+            vim.keymap.set("n", "K", function() vim.cmd("TexlabForward") end, opts)
+        else
+            vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        end
 
-    cmdmap("n", "<Leader>n", "TroubleToggle", opts)
+        -- Search workspace symbols and insert into quickfix list
+        vim.keymap.set("n", "<Leader>/", vim.lsp.buf.workspace_symbol, opts)
 
-    -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    -- vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
-    cmdmap("n", "gd", "TroubleToggle lsp_definitions", opts)
-    cmdmap("n", "<C-]>", "TroubleToggle lsp_definitions", opts)
+        vim.keymap.set("n", "<Leader>n", "<CMD>TroubleToggle<CR>", opts)
 
-    -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-    cmdmap("n", "gi", "TroubleToggle lsp_implementations", opts)
-    vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("v", "ga", vim.lsp.buf.code_action, opts)
+        -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        -- vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "gd", "<CMD>TroubleToggle lsp_definitions<CR>", opts)
+        vim.keymap.set("n", "<C-]>", "<CMD>TroubleToggle lsp_definitions<CR>", opts)
 
-    -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    cmdmap("n", "gr", "TroubleToggle lsp_references", opts)
+        -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+        vim.keymap.set("n", "gi", "<CMD>TroubleToggle lsp_implementations<CR>", opts)
+        vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("v", "ga", vim.lsp.buf.code_action, opts)
 
-    vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
-    vim.keymap.set("n", "gn", vim.diagnostic.goto_next, opts)
-    vim.keymap.set("n", "gN", vim.diagnostic.goto_prev, opts)
-end
+        -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        vim.keymap.set("n", "gr", "<CMD>TroubleToggle lsp_references<CR>", opts)
+
+        vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "gn", vim.diagnostic.goto_next, opts)
+        vim.keymap.set("n", "gN", vim.diagnostic.goto_prev, opts)
+    end,
+})
