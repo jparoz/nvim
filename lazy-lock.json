@@ -1,5 +1,6 @@
 {
   "delimitMate": { "branch": "master", "commit": "537a1da0fa5eeb88640425c37e545af933c56e1b" },
+  "fidget.nvim": { "branch": "main", "commit": "0ba1e16d07627532b6cae915cc992ecac249fb97" },
   "fzf": { "branch": "master", "commit": "96670d5f16dcf23d590eb1d83d1de351b2e8fb15" },
   "lazy.nvim": { "branch": "main", "commit": "eddee830ede0f95ced9802ca9abd3f8f662e5cc5" },
   "lightline.vim": { "branch": "master", "commit": "b1e91b41f5028d65fa3d31a425ff21591d5d957f" },
@@ -7,8 +8,10 @@
   "nvim-colorizer.lua": { "branch": "master", "commit": "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" },
   "nvim-ghost.nvim": { "branch": "main", "commit": "9368d9d153f719b0265a7a4a6ffcd2be9a0a142b" },
   "nvim-lspconfig": { "branch": "master", "commit": "eddaef928c1e1dd79a96f5db45f2fd7f2efe7ea0" },
+  "nvim-notify": { "branch": "master", "commit": "50d037041ada0895aeba4c0215cde6d11b7729c4" },
   "nvim-treesitter": { "branch": "master", "commit": "21f2fb188e4e5bb81fd0ff467c5e96dad858becb" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "8673926519ea61069f9c1366d1ad1949316d250e" },
+  "paint.nvim": { "branch": "main", "commit": "6ce64212804f425073c61ab0d9c2b034f0435260" },
   "rust.vim": { "branch": "master", "commit": "889b9a7515db477f4cb6808bef1769e53493c578" },
   "tabular": { "branch": "master", "commit": "339091ac4dd1f17e225fe7d57b48aff55f99b23a" },
   "tex-conceal.vim": { "branch": "master", "commit": "93ae39d9222b0892684d02324b85ee9d3647bf8e" },

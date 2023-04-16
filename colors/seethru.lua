@@ -84,6 +84,7 @@ hi("Virtual", {fg = 8, italic = true})
 -- Highlighted
 hi("String", {fg = 15})
 hi("Comment", {fg = 6})
+hi("SpecialComment", {fg = 6})
 hi("CursorColumn", {bg = 0})
 hi("CursorLineNr", {fg = 7})
 hi("CursorLine", {})
@@ -161,7 +162,6 @@ hi("PreCondit", {})
 hi("PreProc", {})
 hi("Repeat", {})
 hi("SpecialChar", {})
-hi("SpecialComment", {})
 hi("Special", {})
 hi("Statement", {})
 hi("StorageClass", {})
@@ -185,6 +185,13 @@ hi("DirvishSuffix", {fg = 8})
 hi("GitGutterAdd", {fg = 10})
 hi("GitGutterChange", {fg = 11})
 hi("GitGutterDelete", {fg = 9})
+
+-- Notify
+hi("NotifyBackground", {fg = 0, bg = 0})
+
+-- Fidget
+hi("FidgetTitle", {fg = 13, bg = 0})
+hi("FidgetTask", {fg = 5, bg = 0})
 
 -- LSP
 hi("DiagnosticError", {fg = 9})
