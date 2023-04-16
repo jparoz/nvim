@@ -181,6 +181,11 @@ hi("SneakStreakTarget", {fg = 0, bg = 2})
 -- Dirvish
 hi("DirvishSuffix", {fg = 8})
 
+-- GitGutter
+hi("GitGutterAdd", {fg = 10})
+hi("GitGutterChange", {fg = 11})
+hi("GitGutterDelete", {fg = 9})
+
 -- LSP
 hi("DiagnosticError", {fg = 9})
 hi("DiagnosticWarn", {fg = 3})
