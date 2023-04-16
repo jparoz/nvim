@@ -1,6 +1,3 @@
-vim.cmd "filetype plugin on"
-vim.cmd "syntax on"
-
 vim.g.mapleader = " "
 
 require "packages"
