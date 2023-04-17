@@ -27,13 +27,6 @@ local resize = '\z
 vim.keymap.set("n", "<Leader>=", resize)
 
 
---- Swap the buffers of two windows
-local swapBuffers = require("windows").swapBuffers
-for i=1, 9 do
-    vim.keymap.set("n", "<Leader>"..i, function() swapBuffers(i) end)
-end
-
-
 --- Buffer-local LSP-related mappings, run when an LSP client is started
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
