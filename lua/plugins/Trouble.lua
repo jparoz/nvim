@@ -8,6 +8,12 @@ opts = {
     fold_closed = "►",
     indent_lines = false,
     use_diagnostic_signs = true,
-}
+},
+
+cmd = {"Trouble", "TroubleToggle"},
+
+keys = {
+    { "<Leader>t", "<CMD>TroubleToggle<CR>" },
+},
 
 } }

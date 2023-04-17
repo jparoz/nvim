@@ -17,15 +17,6 @@ vim.keymap.set("n", "<C-S-Tab>", "gT")
 vim.keymap.set("i", "<C-;>", "<ESC>:")
 
 
--- FZF
-local FZF = require "fzf"
-vim.keymap.set("n", "<Leader>f", FZF.find_files)
-vim.keymap.set("n", "<Leader>g", FZF.live_grep)
-vim.keymap.set("n", "<Leader>h", FZF.help_tags)
-vim.keymap.set("n", "<Leader>b", FZF.buffers)
-vim.keymap.set("n", "-", FZF.file_browser)
-
-
 --- Resize window to exactly 'textwidth'
 vim.keymap.set("n", "<Leader>=", '<CMD>exec "vertical resize " . ' ..
     '(' ..
@@ -55,23 +46,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
             vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         end
 
-        -- Search workspace symbols and insert into quickfix list
-        vim.keymap.set("n", "<Leader>/", vim.lsp.buf.workspace_symbol, opts)
-
-        vim.keymap.set("n", "<Leader>n", "<CMD>TroubleToggle<CR>", opts)
-
-        -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        -- vim.keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "gd", "<CMD>TroubleToggle lsp_definitions<CR>", opts)
-        vim.keymap.set("n", "<C-]>", "<CMD>TroubleToggle lsp_definitions<CR>", opts)
-
-        -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "gi", "<CMD>TroubleToggle lsp_implementations<CR>", opts)
         vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
         vim.keymap.set("v", "ga", vim.lsp.buf.code_action, opts)
-
-        -- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "gr", "<CMD>TroubleToggle lsp_references<CR>", opts)
 
         vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
         vim.keymap.set("n", "gn", vim.diagnostic.goto_next, opts)

@@ -113,8 +113,11 @@ hi("WildMenu", {reverse = true})
 
 -- Diff
 hi("DiffAdd", {fg = 10})
+hi("diffAdded", {fg = 10})
 hi("DiffChange", {fg = 11})
+hi("diffChanged", {fg = 11})
 hi("DiffDelete", {fg = 9})
+hi("diffRemoved", {fg = 9})
 hi("DiffText", {fg = 4})
 
 -- Spell
@@ -192,6 +195,9 @@ hi("NotifyBackground", {fg = 0, bg = 0})
 -- Fidget
 hi("FidgetTitle", {fg = 13, bg = 0})
 hi("FidgetTask", {fg = 5, bg = 0})
+
+-- Telescope
+hi("TelescopeResultsDiffUntracked", {fg = 5})
 
 -- LSP
 hi("DiagnosticError", {fg = 9})
