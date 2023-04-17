@@ -1,7 +1,7 @@
 -- Lazy.nvim config. See init.lua for where this is used
 return {
     -- Automatically check for plugin updates
-    checker = { enabled = true, notify = false },
+    checker = { enabled = true },
 
     performance = {
         rtp = {
