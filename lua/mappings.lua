@@ -18,11 +18,13 @@ vim.keymap.set("i", "<C-;>", "<ESC>:")
 
 
 --- Resize window to exactly 'textwidth'
-vim.keymap.set("n", "<Leader>=", '<CMD>exec "vertical resize " . ' ..
-    '(' ..
-        '(&textwidth > 0 ? &textwidth : 80)' ..
-        ' + &numberwidth + (&signcolumn == "yes" ? 2 : 0)' ..
-    ')<CR>')
+local resize = '\z
+<CMD>exec "vertical resize " . \z
+    (\z
+        (&textwidth > 0 ? &textwidth : 80) \z
+         + &numberwidth + (&signcolumn == "yes" ? 2 : 0)\z
+    )<CR>'
+vim.keymap.set("n", "<Leader>=", resize)
 
 
 --- Swap the buffers of two windows
