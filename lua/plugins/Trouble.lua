@@ -14,6 +14,7 @@ cmd = {"Trouble", "TroubleToggle"},
 
 keys = {
     { "<Leader>t", "<CMD>TroubleToggle<CR>" },
+    { "<Leader>r", "<CMD>TroubleToggle lsp_references<CR>" },
 },
 
 } }
