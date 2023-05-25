@@ -6,6 +6,7 @@ return {
         extensions = {
             file_browser = {
                 dir_icon = " ",
+                hijack_netrw = true,
             },
         },
     },
