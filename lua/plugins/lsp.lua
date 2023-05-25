@@ -17,6 +17,11 @@ init = function()
                 vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
             end
 
+            if client.server_capabilities.documentFormattingProvider then
+                -- Automatically format on save
+                vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+            end
+
             vim.wo[winid].signcolumn = "yes"
         end,
     })
