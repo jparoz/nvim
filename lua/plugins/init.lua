@@ -20,7 +20,10 @@ return {
     { "teal-language/vim-teal", ft = "teal" },
     { "fladson/vim-kitty", ft = "kitty" },
     { "evanleck/vim-svelte", ft = "svelte" },
-    { "iamcco/markdown-preview.nvim", ft = "markdown" },
+    { "iamcco/markdown-preview.nvim",
+        ft = "markdown",
+        build = function() vim.fn["mkdp#util#install"]() end,
+    },
     { "KeitaNakamura/tex-conceal.vim", ft = "tex" },
     { "gi1242/vim-tex-syntax", ft = "tex" },
 }
