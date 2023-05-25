@@ -102,6 +102,15 @@ init = function()
 
     -- vscode-json-languageserver
     lspconfig.jsonls.setup{}
+
+    -- elixir-ls
+    lspconfig.elixirls.setup{
+        cmd = {
+            vim.fn.system("brew --prefix elixir-ls"):gsub("\n", "") ..
+                "/libexec/language_server.sh",
+            },
+    }
+
 end,
 
 } }
