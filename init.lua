@@ -14,8 +14,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require "lazy_config"
-require("lazy").setup("plugins", lazy_config)
+local lazy = require "lazy_config"
+require("lazy").setup("plugins", lazy.config)
 
 require "options"
 require "commands"
@@ -24,3 +24,8 @@ require "autocommands"
 
 --- Colorscheme
 vim.cmd [[colorscheme seethru]]
+
+-- If the lockfile has been updated (e.g. pulled from git)
+-- since this machine was restored/updated,
+-- restore from the lockfile.
+lazy.restore()
