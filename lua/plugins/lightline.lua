@@ -27,7 +27,7 @@ init = function()
                 -- closest to left
                 {"mode", "paste"},
                 {"readonly", "filename", "modified"},
-                {"git", "quickfix"},
+                {"git", "quickfix", "lazy"},
                 -- closest to centre
             },
             right = {
@@ -51,6 +51,7 @@ init = function()
             synstack = "SynStack",
             git = "GitStatusline",
             quickfix = "QFStatusline",
+            lazy = "LazyStatus",
         },
         component = {
             filename = "%f",
@@ -160,6 +161,16 @@ init = function()
         return vim.fn.join(strings, ", ")
     end
     utils.lua2vim("QFStatusline")
+
+    function LazyStatus()
+        local ls = require("lazy.status")
+        if ls.has_updates() then
+            return ls.updates() .. " updates available"
+        else
+            return ""
+        end
+    end
+    utils.lua2vim("LazyStatus")
 end,
 
 } }
