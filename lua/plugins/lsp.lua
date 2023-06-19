@@ -17,7 +17,10 @@ init = function()
                 vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
             end
 
-            if client.server_capabilities.documentFormattingProvider then
+            -- if client.server_capabilities.documentFormattingProvider then
+            if client.name == "rust_analyzer"
+                or client.name == "elixirls"
+            then
                 -- Automatically format on save
                 vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
             end
@@ -31,22 +34,26 @@ init = function()
         { severity_sort = true })
 
     vim.fn.sign_define("DiagnosticSignError",
-    { text = "●", texthl = "DiagnosticSignError" })
+        { text = "●", texthl = "DiagnosticSignError" })
     vim.fn.sign_define("DiagnosticSignWarn",
-    { text = "○", texthl = "DiagnosticSignWarn" })
+        { text = "○", texthl = "DiagnosticSignWarn" })
     vim.fn.sign_define("DiagnosticSignInfo",
-    { text = "ℹ", texthl = "DiagnosticSignInfo" })
+        { text = "ℹ", texthl = "DiagnosticSignInfo" })
     vim.fn.sign_define("DiagnosticSignHint",
-    { text = "➤", texthl = "DiagnosticSignHint" })
+        { text = "➤", texthl = "DiagnosticSignHint" })
 
     -- Show a border around the hover window
     vim.lsp.handlers["textDocument/hover"] =
         vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
 
     -- Only show the first line of diagnostics as virtual text
-    vim.diagnostic.config({virtual_text = {format = function(diag)
-        return diag.message:match("[^\n]+")
-    end}})
+    vim.diagnostic.config({
+        virtual_text = {
+            format = function(diag)
+                return diag.message:match("[^\n]+")
+            end
+        }
+    })
 
 
     -- Server configuration below
@@ -88,27 +95,27 @@ init = function()
                 },
                 forwardSearch = {
                     executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
-                    args = {"-g", "%l", "%p", "%f"},
+                    args = { "-g", "%l", "%p", "%f" },
                 },
             },
         },
     }
 
     -- marksman (markdown)
-    lspconfig.marksman.setup{}
+    lspconfig.marksman.setup {}
 
     -- lua-language-server
-    lspconfig.lua_ls.setup{}
+    lspconfig.lua_ls.setup {}
 
     -- vscode-json-languageserver
-    lspconfig.jsonls.setup{}
+    lspconfig.jsonls.setup {}
 
     -- elixir-ls
-    lspconfig.elixirls.setup{
+    lspconfig.elixirls.setup {
         cmd = {
             vim.fn.system("brew --prefix elixir-ls"):gsub("\n", "") ..
-                "/libexec/language_server.sh",
-            },
+            "/libexec/language_server.sh",
+        },
     }
 
 end,
