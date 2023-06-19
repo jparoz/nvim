@@ -105,7 +105,15 @@ init = function()
     lspconfig.marksman.setup {}
 
     -- lua-language-server
-    lspconfig.lua_ls.setup {}
+    lspconfig.lua_ls.setup {
+        settings = {
+            Lua = {
+                diagnostics = {
+                    unusedLocalExclude = { "_*" },
+                },
+            },
+        },
+    }
 
     -- vscode-json-languageserver
     lspconfig.jsonls.setup {}
