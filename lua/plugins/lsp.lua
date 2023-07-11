@@ -126,6 +126,9 @@ init = function()
         },
     }
 
+    -- fsautocomplete
+    lspconfig.fsautocomplete.setup {}
+
 end,
 
 } }
