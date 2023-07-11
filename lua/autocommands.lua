@@ -20,7 +20,7 @@ augroup END
 vim.cmd [[
 augroup LastPositionJump
   autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"" | endif
+  autocmd BufWinEnter * if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' | exe "normal! g`\"zz" | endif
 augroup END
 ]]
 
