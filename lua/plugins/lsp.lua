@@ -102,7 +102,10 @@ init = function()
     }
 
     -- marksman (markdown)
-    lspconfig.marksman.setup {}
+    lspconfig.marksman.setup {
+        -- Development version
+        -- cmd = { vim.env["HOME"] .. "/dev/projects/marksman/Marksman/bin/Debug/net7.0/marksman", "server" },
+    }
 
     -- lua-language-server
     lspconfig.lua_ls.setup {
