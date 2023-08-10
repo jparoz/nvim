@@ -26,7 +26,7 @@ init = function()
             left = {
                 -- closest to left
                 {"mode", "paste"},
-                {"readonly", "filename", "modified"},
+                {"readonly", "relativepath", "modified"},
                 {"git", "quickfix", "lazy"},
                 -- closest to centre
             },
@@ -34,9 +34,11 @@ init = function()
                 -- closest to right
                 {"lineinfo"},
                 {"percent"},
-                -- {"treesitter", "filetype"},
-                -- {"synstack", "filetype"},
-                {"filetype"},
+                {
+                    -- "treesitter",
+                    -- "synstack",
+                    "filetype",
+                },
                 -- closest to centre
             },
         },
@@ -52,9 +54,6 @@ init = function()
             git = "GitStatusline",
             quickfix = "QFStatusline",
             lazy = "LazyStatus",
-        },
-        component = {
-            filename = "%f",
         },
     }
 
