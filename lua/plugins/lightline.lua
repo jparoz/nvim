@@ -3,6 +3,20 @@ return { { "itchyny/lightline.vim",
 dependencies = { "tpope/vim-fugitive" },
 
 init = function()
+
+    -- Workaround to fix lightline being defocused on LSP goto-diagnostic
+    do
+        -- from https://github.com/neovim/neovim/pull/15981
+        local util = require "vim.lsp.util"
+        local orig = util.make_floating_popup_options
+        ---@diagnostic disable-next-line: duplicate-set-field
+        util.make_floating_popup_options = function(width, height, opts)
+            local orig_opts = orig(width, height, opts)
+            orig_opts.noautocmd = true
+            return orig_opts
+        end
+    end
+
     local utils = require "utils"
 
     vim.g.lightline = {
