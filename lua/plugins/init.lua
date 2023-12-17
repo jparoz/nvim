@@ -19,6 +19,18 @@ return {
     { "rust-lang/rust.vim", ft = "rust" },
     { "teal-language/vim-teal", ft = "teal" },
     { "fladson/vim-kitty", ft = "kitty" },
+    { "dart-lang/dart-vim-plugin",
+        ft = "dart",
+        init = function()
+            vim.g.dart_format_on_save = true
+        end,
+    },
+    { "akinsho/flutter-tools.nvim",
+        ft = "dart",
+        lazy = false,
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = true,
+    },
     { "evanleck/vim-svelte", ft = "svelte" },
     { "iamcco/markdown-preview.nvim",
         ft = "markdown",
