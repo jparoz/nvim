@@ -108,10 +108,14 @@ init = function()
         -- Get the name of the current branch
         local branch = vim.fn["fugitive#Head"]()
 
-        handle = io.popen("cd '" .. work .. "'; git diff origin/"..branch.."..HEAD --name-status")
-        if not handle then return end
-        GitCache[dir].diff = handle:read("a")
-        handle:close()
+        local cmd = "cd '" .. work .. "';" ..
+                    "git diff origin/" .. branch .. "..HEAD --name-status"
+        local res = vim.fn.system(cmd)
+        if vim.v.shell_error > 0 then
+            -- remote probably didn't have a matching branch
+            return
+        end
+        GitCache[dir].diff = res
     end
 
     function GitStatusline()
