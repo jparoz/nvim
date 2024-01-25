@@ -136,4 +136,8 @@ end
 vim.cmd [[
 command! -nargs=* Make lua Make("<args>")
 cnoreabbrev <expr> make (getcmdtype() ==# ':' && getcmdline() ==# 'make') ? 'Make' : 'make'
+
+cnoreabbrev <expr> git (getcmdtype() ==# ':' && getcmdline() ==# 'git') ? 'Git' : 'git'
+
+cnoreabbrev <expr> cargo (getcmdtype() ==# ':' && getcmdline() ==# 'cargo') ? 'Cargo' : 'cargo'
 ]]
