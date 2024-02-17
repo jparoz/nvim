@@ -84,7 +84,13 @@ function Make(args)
     local ignore_pats = MakeIgnoreLines[makeprg]
 
     if args then
-        makeprg = makeprg .. " " .. args
+        local num_replacements
+
+        makeprg, num_replacements = makeprg:gsub("%$%*", args)
+
+        if num_replacements == 0 then
+            makeprg = makeprg .. " " .. args
+        end
     end
 
     local cmd = vim.fn.expandcmd(makeprg)
