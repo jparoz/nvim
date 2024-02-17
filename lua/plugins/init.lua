@@ -29,7 +29,12 @@ return {
         ft = "dart",
         lazy = false,
         dependencies = { "nvim-lua/plenary.nvim" },
-        config = true,
+        opts = {
+            closing_tags = {
+                highlight = "Virtual",
+                prefix = "",
+            },
+        },
     },
     { "evanleck/vim-svelte", ft = "svelte" },
     { "iamcco/markdown-preview.nvim",

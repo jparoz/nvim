@@ -11,6 +11,12 @@ init = function()
     let g:mucomplete#can_complete.rust = { 'omni': s:rust_cond }
     ]]
 
+    -- Complete on . in Dart
+    vim.cmd [[
+    let s:dart_cond = { t -> t =~# '\%(\i\|\|\.\)$' }
+    let g:mucomplete#can_complete.dart = { 'omni': s:dart_cond }
+    ]]
+
     vim.g["mucomplete#chains"] = {
         default = {'omni', 'path', 'keyn', 'dict', 'uspl'},
         vim = {'path', 'cmd', 'keyn'},
