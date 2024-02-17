@@ -24,8 +24,6 @@ init = function()
                 -- Automatically format on save
                 vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
             end
-
-            vim.wo[winid].signcolumn = "yes"
         end,
     })
 

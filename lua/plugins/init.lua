@@ -9,7 +9,7 @@ return {
     "tpope/vim-speeddating",
 
     -- Good (very useful function, but could be better designed or implemented)
-    "airblade/vim-gitgutter",
+    { "lewis6991/gitsigns.nvim", opts = {} },
 
     -- Medium (could live without these, but nice to have sometimes)
     { "godlygeek/tabular", cmd = "Tabularize" },
