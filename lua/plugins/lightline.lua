@@ -57,6 +57,9 @@ init = function()
             },
         },
         inactive = {
+            left = {
+                { "relativepath" }
+            },
             right = {
                 { "lineinfo" },
                 { "percent" },
@@ -182,7 +185,7 @@ init = function()
     function LazyStatus()
         local ls = require("lazy.status")
         if ls.has_updates() then
-            return ls.updates() .. " updates available"
+            return ls.updates()
         else
             return ""
         end
