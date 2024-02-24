@@ -17,6 +17,9 @@ init = function()
                 vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
             end
 
+            -- Disable LSP highlighting
+            client.server_capabilities.semanticTokensProvider = nil
+
             -- if client.server_capabilities.documentFormattingProvider then
             if client.name == "rust_analyzer"
                 or client.name == "elixirls"
@@ -129,6 +132,15 @@ init = function()
 
     -- fsautocomplete
     lspconfig.fsautocomplete.setup {}
+
+    -- php
+    lspconfig.psalm.setup {}
+
+    -- html
+    lspconfig.html.setup {}
+
+    -- javascript
+    lspconfig.tsserver.setup {}
 
 end,
 
