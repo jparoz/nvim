@@ -17,13 +17,18 @@ vim.keymap.set("n", "<C-S-Tab>", "gT")
 vim.keymap.set("i", "<C-;>", "<ESC>:")
 
 
---- Resize window to exactly 'textwidth'
-local resize = '\z
-<CMD>exec "vertical resize " . \z
-    (\z
-        (&textwidth > 0 ? &textwidth : 80) \z
-         + &numberwidth + (&signcolumn == "yes" ? 2 : 0)\z
-    )<CR>'
+--- Resize window to fit exactly 'textwidth' columns of content
+local resize = function()
+    local statuscolumn = vim.api.nvim_eval_statusline(
+        vim.wo.statuscolumn,
+        { use_statuscol_lnum = 1 }
+    )
+
+    local tw = vim.bo.textwidth  -- tw is short for textwidth
+    local total_width = (tw > 0 and tw or 80) + statuscolumn.width
+
+    vim.cmd("vertical resize " .. total_width)
+end
 vim.keymap.set("n", "<Leader>=", resize)
 
 
