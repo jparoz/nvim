@@ -49,8 +49,3 @@ vim.opt.diffopt:append("linematch:60")
 vim.diagnostic.config {
     underline = false,
 }
-
--- If in an SSH session, use notermguicolors.
-if vim.env.SSH_CLIENT or vim.env.SSH_TTY then
-    vim.opt.termguicolors = false
-end

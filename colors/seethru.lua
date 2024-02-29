@@ -2,16 +2,20 @@ vim.g.colors_name = "seethru"
 
 -- Try to get the terminal's colour scheme, if the terminal is kitty
 local colors = {}
-local kitty_colors = vim.fn.system("kitty @ --password colors get-colors")
-if vim.v.shell_error == 0 then
-    -- we got the colours!
-    local colors_array = {}
-    for name, color in kitty_colors:gmatch("(%S+)%s+(#%x+)\n") do
+local kitty_colors =
+    vim.fn.readfile(vim.env.XDG_CONFIG_HOME .. "/kitty/current-theme.conf")
+
+local colors_array = {}
+for _, line in ipairs(kitty_colors) do
+    local name, color = line:match("(%S+)%s+(#%x+)")
+
+    if name and color then
         colors[name] = color
 
         local num = name:match("color(%d%d?%d?)")
         if num then
             local n = tonumber(num)
+            assert(n, "invalid kitty color scheme format")
             colors[n] = color
             colors_array[n+1] = color
         end
@@ -22,10 +26,9 @@ if vim.v.shell_error == 0 then
             colors.bg = color
         end
     end
-    vim.g.colors = colors_array
-else
-    -- we didn't get the colours.
 end
+vim.g.colors = colors_array
+
 
 local hi = function(group, opts)
     local cmd = "hi " .. group
