@@ -206,7 +206,7 @@ hi("TelescopeResultsDiffUntracked", {fg = 5})
 hi("DiagnosticError", {fg = 9})
 hi("DiagnosticWarn", {fg = 3})
 hi("DiagnosticInfo", {fg = 3})
-hi("DiagnosticHint", {fg = 3})
+hi("DiagnosticHint", {fg = 5})
 
 hi("DiagnosticVirtualTextError", {fg = 8, italic = true})
 hi("DiagnosticVirtualTextWarn", {fg = 8, italic = true})
