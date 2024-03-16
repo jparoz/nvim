@@ -15,16 +15,16 @@ return {
         opts = {
             signs = false,
             keywords = {
+                TODO = { icon = "●", color = "hint" },
+                NOTE = { icon = "ℹ", color = "hint", alt = { "INFO" } },
+                PERF = { icon = "●", color = "hint", alt = { "OPTIMIZE" } },
                 FIX = {
                     icon = "●",
-                    color = "error",
+                    color = "warning",
                     alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "CLEANUP" },
                 },
-                TODO = { icon = "●", color = "hint" },
-                HACK = { icon = "●", color = "warning", alt = { "XXX" } },
                 WARN = { icon = "●", color = "warning", alt = { "WARNING" } },
-                PERF = { icon = "●", alt = { "OPTIMIZE" } },
-                NOTE = { icon = "ℹ", color = "hint", alt = { "INFO" } },
+                HACK = { icon = "●", color = "warning", alt = { "XXX" } },
                 TEST = {
                     icon = "ℹ",
                     color = "info",
@@ -32,8 +32,12 @@ return {
                 },
             },
             highlight = {
+                pattern = [[.*<(KEYWORDS)\s*:?]],
                 keyword = "bg",
                 after = "",
+            },
+            search = {
+                pattern = [[\b(KEYWORDS)\b]],
             },
         },
         init = function(_plugin)
