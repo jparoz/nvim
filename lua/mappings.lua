@@ -13,9 +13,6 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 vim.keymap.set("n", "<C-Tab>", "gt")
 vim.keymap.set("n", "<C-S-Tab>", "gT")
 
--- This is to help stop a common mistake with current Hammerspoon config
-vim.keymap.set("i", "<C-;>", "<ESC>:")
-
 
 --- Resize window to fit exactly 'textwidth' columns of content
 local resize = function()
