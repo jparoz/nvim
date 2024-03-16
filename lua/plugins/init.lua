@@ -10,6 +10,42 @@ return {
 
     -- Good (very useful function, but could be better designed or implemented)
     { "lewis6991/gitsigns.nvim", opts = {} },
+    { "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+            signs = false,
+            keywords = {
+                FIX = {
+                    icon = "●",
+                    color = "error",
+                    alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "CLEANUP" },
+                },
+                TODO = { icon = "●", color = "hint" },
+                HACK = { icon = "●", color = "warning", alt = { "XXX" } },
+                WARN = { icon = "●", color = "warning", alt = { "WARNING" } },
+                PERF = { icon = "●", alt = { "OPTIMIZE" } },
+                NOTE = { icon = "ℹ", color = "hint", alt = { "INFO" } },
+                TEST = {
+                    icon = "ℹ",
+                    color = "info",
+                    alt = { "TESTING", "PASSED", "FAILED" }
+                },
+            },
+            highlight = {
+                keyword = "bg",
+                after = "",
+            },
+        },
+        init = function(_plugin)
+            vim.keymap.set("n", "]t", function()
+                require("todo-comments").jump_next()
+            end, { desc = "Next todo comment" })
+
+            vim.keymap.set("n", "[t", function()
+                require("todo-comments").jump_prev()
+            end, { desc = "Previous todo comment" })
+        end,
+    },
 
     -- Medium (could live without these, but nice to have sometimes)
     { "godlygeek/tabular", cmd = "Tabularize" },
