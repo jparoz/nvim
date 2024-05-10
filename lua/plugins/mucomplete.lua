@@ -4,17 +4,26 @@ init = function()
     vim.opt.completeopt:append("menuone")
     vim.opt.shortmess:append("c")
 
+    vim.cmd [[
+        let g:mucomplete#can_complete = {}
+    ]]
+
     -- Complete on :: in Rust
     vim.cmd [[
-    let s:rust_cond = { t -> t =~# '\%(\i\|\|::\)$' }
-    let g:mucomplete#can_complete = {}
-    let g:mucomplete#can_complete.rust = { 'omni': s:rust_cond }
+        let s:rust_cond = { t -> t =~# '\%(\i\|\|::\)$' }
+        let g:mucomplete#can_complete.rust = { 'omni': s:rust_cond }
+    ]]
+
+    -- Complete on : in Lua
+    vim.cmd [[
+        let s:lua_cond = { t -> t =~# '\%(\i\|\|:\)$' }
+        let g:mucomplete#can_complete.lua = { 'omni': s:lua_cond }
     ]]
 
     -- Complete on . in Dart
     vim.cmd [[
-    let s:dart_cond = { t -> t =~# '\%(\i\|\|\.\)$' }
-    let g:mucomplete#can_complete.dart = { 'omni': s:dart_cond }
+        let s:dart_cond = { t -> t =~# '\%(\i\|\|\.\)$' }
+        let g:mucomplete#can_complete.dart = { 'omni': s:dart_cond }
     ]]
 
     vim.g["mucomplete#chains"] = {
