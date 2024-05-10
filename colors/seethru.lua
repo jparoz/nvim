@@ -2,8 +2,9 @@ vim.g.colors_name = "seethru"
 
 -- Try to get the terminal's colour scheme, if the terminal is kitty
 local colors = {}
+local config_home = vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")
 local kitty_colors =
-    vim.fn.readfile(vim.env.XDG_CONFIG_HOME .. "/kitty/current-theme.conf")
+    vim.fn.readfile(config_home .. "/kitty/current-theme.conf")
 
 local colors_array = {}
 for _, line in ipairs(kitty_colors) do
