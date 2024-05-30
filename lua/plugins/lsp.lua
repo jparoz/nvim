@@ -116,6 +116,13 @@ init = function()
                 diagnostics = {
                     unusedLocalExclude = { "_*" },
                 },
+                workspace = {
+                    -- Automatically apply addon configs
+                    checkThirdParty = "ApplyInMemory",
+                    userThirdParty = {
+                        "/Users/jlp/.config/luals/addons/",
+                    },
+                },
             },
         },
     }
