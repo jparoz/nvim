@@ -23,6 +23,7 @@ init = function()
             -- if client.server_capabilities.documentFormattingProvider then
             if client.name == "rust_analyzer"
                 or client.name == "elixirls"
+                or client.name == "gleam"
             then
                 -- Automatically format on save
                 vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
@@ -141,6 +142,9 @@ init = function()
 
     -- javascript
     lspconfig.tsserver.setup {}
+
+    -- gleam
+    lspconfig.gleam.setup {}
 
 end,
 

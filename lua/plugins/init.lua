@@ -37,6 +37,7 @@ return {
         },
     },
     { "evanleck/vim-svelte", ft = "svelte" },
+    { "gleam-lang/gleam.vim", ft = "gleam" },
     { "iamcco/markdown-preview.nvim",
         ft = "markdown",
         build = function() vim.fn["mkdp#util#install"]() end,
