@@ -105,6 +105,8 @@ init = function()
 
     -- marksman (markdown)
     lspconfig.marksman.setup {
+        autostart = false,
+
         -- Development version
         -- cmd = { vim.env["HOME"] .. "/dev/projects/marksman/Marksman/bin/Debug/net7.0/marksman", "server" },
     }
