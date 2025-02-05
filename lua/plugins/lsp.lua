@@ -1,5 +1,7 @@
 return { { "neovim/nvim-lspconfig",
 
+dependencies = { "ray-x/lsp_signature.nvim" },
+
 init = function()
     local lspconfig = require('lspconfig')
 
@@ -9,6 +11,8 @@ init = function()
             local bufnr = args.buf
             local winid = vim.fn.bufwinid(bufnr)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+            require("lsp_signature").on_attach()
 
             if client.server_capabilities.completionProvider then
                 vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -150,11 +154,29 @@ init = function()
     lspconfig.html.setup {}
 
     -- javascript
-    lspconfig.tsserver.setup {}
+    lspconfig.ts_ls.setup {}
 
     -- gleam
     lspconfig.gleam.setup {}
 
 end,
 
-} }
+}, -- END "neovim/nvim-lspconfig"
+
+{ "ray-x/lsp_signature.nvim",
+    event = "InsertEnter",
+    opts = {
+        bind = true,
+        floating_window = false,
+        floating_window_off_x = 0,
+        hint_prefix = {
+            above = "↙ ",  -- when the hint is on the line above the current line
+            current = "← ",  -- when the hint is on the same line
+            below = "↖ "  -- when the hint is on the line below the current line
+        },
+        hint_scheme = "Virtual", -- highlight group
+    },
+    config = function(_, opt) require'lsp_signature'.setup(opt) end
+},
+
+}

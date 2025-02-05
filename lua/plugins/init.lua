@@ -13,7 +13,6 @@ return {
 
     -- Medium (could live without these, but nice to have sometimes)
     { "godlygeek/tabular", cmd = "Tabularize" },
-    { "subnut/nvim-ghost.nvim", module = false }, -- GhostText browser extension
 
     -- Language-specific
     { "rust-lang/rust.vim", ft = "rust" },
