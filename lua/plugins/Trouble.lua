@@ -2,7 +2,7 @@
 return { { "folke/trouble.nvim",
 
 opts = {
-    icons = false,
+    icons = {},
     padding = false,
     fold_open = "▼",
     fold_closed = "►",
@@ -13,8 +13,8 @@ opts = {
 cmd = {"Trouble", "TroubleToggle"},
 
 keys = {
-    { "<Leader>t", "<CMD>TroubleToggle<CR>" },
-    { "<Leader>r", "<CMD>TroubleToggle lsp_references<CR>" },
+    { "<Leader>t", "<CMD>Trouble toggle<CR>" },
+    { "<Leader>r", "<CMD>Trouble lsp_references toggle<CR>" },
 },
 
 } }
