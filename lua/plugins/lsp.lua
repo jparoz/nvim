@@ -24,14 +24,6 @@ init = function()
             -- Disable LSP highlighting
             client.server_capabilities.semanticTokensProvider = nil
 
-            -- if client.server_capabilities.documentFormattingProvider then
-            if client.name == "rust_analyzer"
-                or client.name == "elixirls"
-                or client.name == "gleam"
-            then
-                -- Automatically format on save
-                vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-            end
         end,
     })
 
