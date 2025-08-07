@@ -25,6 +25,11 @@ init = function()
         -- See https://github.com/lifepillar/vim-mucomplete/issues/180#issuecomment-939507716
         rust = {'omni', 'path', 'dict', 'uspl'},
     }
+
+    -- Mappings
+    vim.g["mucomplete#no_mappings"] = true
+    vim.cmd [[imap <tab> <plug>(MUcompleteFwd)]]
+    vim.cmd [[imap <s-tab> <plug>(MUcompleteBwd)]]
 end,
 
 } }
