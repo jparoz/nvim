@@ -1,12 +1,23 @@
 return {
 { "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-file-browser.nvim" },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope-file-browser.nvim",
+        "folke/trouble.nvim",
+    },
 
     opts = {
         extensions = {
             file_browser = {
                 dir_icon = " ",
                 hijack_netrw = true,
+            },
+        },
+
+        defaults = {
+            mappings = {
+                i = { ["<c-t>"] = require("trouble.sources.telescope").open },
+                n = { ["<c-t>"] = require("trouble.sources.telescope").open },
             },
         },
     },

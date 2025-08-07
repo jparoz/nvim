@@ -17,7 +17,7 @@ config = function()
 
             { -- Diagnostics
                 sign = {
-                    name = { "Diagnostic" },
+                    namespace = { "diagnostic" },
                     colwidth = 2,
                 },
                 click = "v:lua.ScSa",

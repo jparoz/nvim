@@ -41,7 +41,7 @@ init = function()
                 -- closest to left
                 {"mode", "paste"},
                 {"readonly", "relativepath", "modified"},
-                {"git", "quickfix", "lazy"},
+                {"git", "quickfix"},
                 -- closest to centre
             },
             right = {
@@ -49,7 +49,6 @@ init = function()
                 {"lineinfo"},
                 {"percent"},
                 {
-                    -- "treesitter",
                     -- "synstack",
                     "filetype",
                 },

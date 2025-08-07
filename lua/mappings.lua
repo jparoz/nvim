@@ -46,7 +46,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set({"n", "v"}, "ga", vim.lsp.buf.code_action, opts)
 
         vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
-        vim.keymap.set("n", "gn", vim.diagnostic.goto_next, opts)
-        vim.keymap.set("n", "gN", vim.diagnostic.goto_prev, opts)
+        vim.keymap.set("n", "gn", function()
+            vim.diagnostic.jump({count = -1})
+        end, opts)
+        vim.keymap.set("n", "gN", function()
+            vim.diagnostic.jump({count = 1})
+        end, opts)
     end,
 })

@@ -22,6 +22,11 @@ require "commands"
 require "mappings"
 require "autocommands"
 
+-- This file should only run in neovide
+if vim.g.neovide then
+    require "neovide"
+end
+
 --- Colorscheme
 vim.cmd [[colorscheme seethru]]
 

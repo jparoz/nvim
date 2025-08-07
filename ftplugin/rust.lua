@@ -1,5 +1,4 @@
 vim.bo.textwidth = 100
-vim.wo.signcolumn = "yes"
 
 vim.bo.makeprg = "cargo"
 

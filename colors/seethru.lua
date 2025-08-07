@@ -2,8 +2,50 @@ vim.g.colors_name = "seethru"
 
 -- Try to get the terminal's colour scheme, if the terminal is kitty
 local colors = {}
-local kitty_colors =
-    vim.fn.readfile(vim.env.XDG_CONFIG_HOME .. "/kitty/current-theme.conf")
+local kitty_colors = {}
+if vim.env.XDG_CONFIG_HOME then
+    kitty_colors = vim.fn.readfile(vim.env.XDG_CONFIG_HOME .. "/kitty/current-theme.conf")
+else
+    local contents = [[
+# Modified from Argonaut
+color0     #1f1f29
+color1     #ea412c
+color2     #abe15b
+color3     #ffda54
+color4     #4faff8
+color5     #eb73ad
+color6     #96f2ff
+color7     #d3d3d3
+color8     #444444
+color9     #ea250c
+color10    #8ce10b
+color11    #ffc800
+color12    #0092ff
+color13    #fa3293
+color14    #12e3ff
+color15    #eeeeee
+foreground #f2ece6
+background #14141a
+
+
+cursor #FFFFFF
+cursor_text_color #000000
+
+selection_foreground #000000
+selection_background #fffacd
+
+active_border_color #EEEEEE
+inactive_border_color #aaaaaa
+bell_border_color #ff5a00
+url_color #0087bd
+url_style dashed
+]]
+
+    for line in contents:gmatch("[^\r\n]+") do
+        kitty_colors[#kitty_colors+1] = line
+    end
+
+end
 
 local colors_array = {}
 for _, line in ipairs(kitty_colors) do
@@ -212,3 +254,8 @@ hi("DiagnosticVirtualTextError", {fg = 8, italic = true})
 hi("DiagnosticVirtualTextWarn", {fg = 8, italic = true})
 hi("DiagnosticVirtualTextInfo", {fg = 8, italic = true})
 hi("DiagnosticVirtualTextHint", {fg = 8, italic = true})
+
+-- Neovide title bar
+if vim.g.neovide then
+    vim.g.neovide_title_background_color = colors.bg
+end

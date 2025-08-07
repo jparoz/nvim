@@ -9,7 +9,17 @@ return {
     "tpope/vim-speeddating",
 
     -- Good (very useful function, but could be better designed or implemented)
-    { "lewis6991/gitsigns.nvim", opts = {} },
+    { "lewis6991/gitsigns.nvim",
+        opts = {
+            on_attach = function(bufnr)
+                -- Set up key mappings
+                local gs = require "gitsigns"
+                vim.keymap.set("n", "]g", gs.next_hunk, {buffer = bufnr})
+                vim.keymap.set("n", "[g", gs.prev_hunk, {buffer = bufnr})
+            end,
+        },
+    },
+
     { "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {
@@ -53,7 +63,6 @@ return {
 
     -- Medium (could live without these, but nice to have sometimes)
     { "godlygeek/tabular", cmd = "Tabularize" },
-    { "subnut/nvim-ghost.nvim", module = false }, -- GhostText browser extension
 
     -- Language-specific
     { "rust-lang/rust.vim", ft = "rust" },

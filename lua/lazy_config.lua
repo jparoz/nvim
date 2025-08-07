@@ -12,7 +12,9 @@ M.restore = function()
 
     -- Create the sentinal file if it doesn't exist
     if vim.fn.filereadable(restored_path) == 0 then
-        vim.fn.system { "touch", restored_path }
+        if not vim.fn.has("win32") then
+            vim.fn.system { "touch", restored_path }
+        end
         need_restore = true
     else
         local modified = vim.loop.fs_stat(lockfile_path).mtime.sec
@@ -23,14 +25,16 @@ M.restore = function()
     end
 
     if need_restore then
-        vim.notify(
-            "Lazy lockfile updated; restoring.",
-            vim.log.levels.INFO)
+        if not vim.fn.has("win32") then
+            vim.notify(
+                "Lazy lockfile updated; restoring.",
+                vim.log.levels.INFO)
 
-        require("lazy").restore{show=false}
+            require("lazy").restore{show=false}
 
-        -- Touch the file .lazy-lock.restored to mark the time.
-        vim.fn.system { "touch", restored_path }
+            -- Touch the file .lazy-lock.restored to mark the time.
+            vim.fn.system { "touch", restored_path }
+        end
     end
 end
 

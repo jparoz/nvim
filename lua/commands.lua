@@ -119,12 +119,15 @@ function Make(args)
                 end)
             end
 
-            vim.fn.setqflist({}, " ", {
-                title = cmd,
-                lines = lines,
-                efm = vim.api.nvim_buf_get_option(bufnr, "errorformat")
-            })
-            vim.api.nvim_command("doautocmd QuickFixCmdPost")
+            local efm = vim.api.nvim_buf_get_option(bufnr, "errorformat")
+            if efm ~= "" then
+                vim.fn.setqflist({}, " ", {
+                    title = cmd,
+                    lines = lines,
+                    efm = efm
+                })
+                vim.api.nvim_command("doautocmd QuickFixCmdPost")
+            end
         end
     end
 

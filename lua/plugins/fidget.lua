@@ -5,6 +5,11 @@ opts = {
     text = {
         spinner = "arc",
     },
+    notification = {
+        window = {
+            winblend = 0,
+        },
+    },
 },
 
 } }
