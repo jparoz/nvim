@@ -1,13 +1,14 @@
-return { { "neovim/nvim-lspconfig",
+return { { "mason-org/mason-lspconfig.nvim",
 
-init = function()
-    local lspconfig = require('lspconfig')
+dependencies = {
+    { "mason-org/mason.nvim", opts = {} },
+    "neovim/nvim-lspconfig",
+},
 
-    -- Map buffer local keybindings when the language server attaches
+config = function()
     vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
             local bufnr = args.buf
-            local winid = vim.fn.bufwinid(bufnr)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
 
             if client.server_capabilities.completionProvider then
@@ -17,36 +18,39 @@ init = function()
                 vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
             end
 
-            -- Disable LSP highlighting
+            -- Disable semantic highlighting
             client.server_capabilities.semanticTokensProvider = nil
 
-            -- if client.server_capabilities.documentFormattingProvider then
+            -- Auto-format on save for selected servers
             if client.name == "rust_analyzer"
                 or client.name == "elixirls"
                 or client.name == "ruff"
             then
-                -- Automatically format on save
-                vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.buf.format()
+                    end,
+                })
             end
         end,
     })
 
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        { severity_sort = true })
+    -- Diagnostic config & handlers
+    vim.lsp.handlers["textDocument/publishDiagnostics"] =
+        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+            severity_sort = true,
+        })
 
-    -- Show a border around the hover window
     vim.lsp.handlers["textDocument/hover"] =
         vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
 
     vim.diagnostic.config({
-        -- Only show the first line of diagnostics as virtual text
         virtual_text = {
             format = function(diag)
                 return diag.message:match("[^\n]+")
-            end
+            end,
         },
-
         signs = {
             text = {
                 [vim.diagnostic.severity.ERROR] = "●",
@@ -57,108 +61,66 @@ init = function()
         },
     })
 
+    -- mason-lspconfig setup
+    require("mason-lspconfig").setup({
+        automatic_installation = false,
+        handlers = {
+            -- Default handler
+            function(server_name)
+                require("lspconfig")[server_name].setup({})
+            end,
 
-    -- Server configuration below
+            -- Custom configs
+            rust_analyzer = function()
+                require("lspconfig").rust_analyzer.setup({
+                    settings = {
+                        ["rust-analyzer"] = {
+                            checkOnSave = {
+                                allFeatures = true,
+                                overrideCommand = {
+                                    "cargo", "clippy",
+                                    "--workspace", "--message-format=json",
+                                    "--all-targets", "--all-features",
+                                },
+                            },
+                        },
+                    },
+                })
+            end,
 
-    -- rust-analyzer
-    lspconfig.rust_analyzer.setup {
-        settings = {
-            ["rust-analyzer"] = {
-                checkOnSave = {
-                    allFeatures = true,
-                    -- Show clippy messages
-                    overrideCommand = {
-                        "cargo", "clippy", "--workspace", "--message-format=json",
-                        "--all-targets", "--all-features",
-                    }
-                }
-            }
+            lua_ls = function()
+                require("lspconfig").lua_ls.setup({
+                    settings = {
+                        Lua = {
+                            diagnostics = {
+                                unusedLocalExclude = { "_*" },
+                            },
+                        },
+                    },
+                })
+            end,
+
+            clangd = function()
+                require("lspconfig").clangd.setup({
+                    cmd = {
+                        "clangd",
+                        "--clang-tidy",
+                        "--completion-style=detailed",
+                        "--header-insertion=never",
+                    },
+                })
+            end,
+
+            elixirls = function()
+                require("lspconfig").elixirls.setup({
+                    cmd = {
+                        vim.fn.system("brew --prefix elixir-ls"):gsub("\n", "") ..
+                        "/libexec/language_server.sh",
+                    },
+                })
+            end,
         },
-    }
-
-    -- -- Haskell Language Server
-    -- lspconfig.hls.setup {
-    --     filetypes = { "haskell", "lhaskell", "cabal" },
-    -- }
-
-    -- -- TeXLab
-    -- lspconfig.texlab.setup {
-    --     settings = {
-    --         texlab = {
-    --             build = {
-    --                 -- args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "-outdir=output", "%f" },
-    --                 args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-    --                 executable = "latexmk",
-    --                 forwardSearchAfter = false,
-    --                 onSave = false,
-    --             },
-    --             chktex = {
-    --                 -- onOpenAndSave = true,
-    --             },
-    --             forwardSearch = {
-    --                 executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
-    --                 args = { "-g", "%l", "%p", "%f" },
-    --             },
-    --         },
-    --     },
-    -- }
-
-    -- -- marksman (markdown)
-    -- lspconfig.marksman.setup {
-    --     -- Development version
-    --     -- cmd = { vim.env["HOME"] .. "/dev/projects/marksman/Marksman/bin/Debug/net7.0/marksman", "server" },
-    -- }
-
-    -- lua-language-server
-    lspconfig.lua_ls.setup {
-        settings = {
-            Lua = {
-                diagnostics = {
-                    unusedLocalExclude = { "_*" },
-                },
-            },
-        },
-    }
-
-    -- basedpyright
-    -- lspconfig.basedpyright.setup {}
-
-    -- ruff
-    lspconfig.ruff.setup {}
-
-    -- clangd
-    lspconfig.clangd.setup {
-        cmd = {
-            "clangd",
-            "--clang-tidy",
-            "--completion-style=detailed",
-            "--header-insertion=never",
-        }
-    }
-
-    -- -- vscode-json-languageserver
-    -- lspconfig.jsonls.setup {}
-
-    -- -- elixir-ls
-    -- lspconfig.elixirls.setup {
-    --     cmd = {
-    --         vim.fn.system("brew --prefix elixir-ls"):gsub("\n", "") ..
-    --         "/libexec/language_server.sh",
-    --     },
-    -- }
-
-    -- -- fsautocomplete
-    -- lspconfig.fsautocomplete.setup {}
-
-    -- -- php
-    -- lspconfig.psalm.setup {}
-
-    -- -- html
-    -- lspconfig.html.setup {}
-
-    -- -- javascript
-    -- lspconfig.tsserver.setup {}
-
+    })
 end,
 
 } }
