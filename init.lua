@@ -29,8 +29,3 @@ end
 
 --- Colorscheme
 vim.cmd [[colorscheme seethru]]
-
--- If the lockfile has been updated (e.g. pulled from git)
--- since this machine was restored/updated,
--- restore from the lockfile.
-lazy.restore()
