@@ -11,6 +11,13 @@ init = function()
     let g:mucomplete#can_complete.rust = { 'omni': s:rust_cond }
     ]]
 
+    -- Complete on :: in C++
+    vim.cmd [[
+    let s:cpp_cond = { t -> t =~# '\%(\i\|\|::\)$' }
+    let g:mucomplete#can_complete = {}
+    let g:mucomplete#can_complete.cpp = { 'omni': s:cpp_cond }
+    ]]
+
     -- Complete on . in Dart
     vim.cmd [[
     let s:dart_cond = { t -> t =~# '\%(\i\|\|\.\)$' }
