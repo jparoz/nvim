@@ -3,8 +3,10 @@ vim.g.colors_name = "seethru"
 -- Try to get the terminal's colour scheme, if the terminal is kitty
 local colors = {}
 local kitty_colors = {}
-if vim.env.XDG_CONFIG_HOME then
-    kitty_colors = vim.fn.readfile(vim.env.XDG_CONFIG_HOME .. "/kitty/current-theme.conf")
+local config_home = vim.env.XDG_CONFIG_HOME or (vim.env.HOME and vim.env.HOME .. "/.config")
+local conf_path = config_home .. "/kitty/current-theme.conf"
+if config_home and vim.uv.fs_stat(conf_path) then
+    kitty_colors = vim.fn.readfile(conf_path)
 else
     local contents = [[
 # Modified from Argonaut
@@ -42,9 +44,8 @@ url_style dashed
 ]]
 
     for line in contents:gmatch("[^\r\n]+") do
-        kitty_colors[#kitty_colors+1] = line
+        kitty_colors[#kitty_colors + 1] = line
     end
-
 end
 
 local colors_array = {}
@@ -59,7 +60,7 @@ for _, line in ipairs(kitty_colors) do
             local n = tonumber(num)
             assert(n, "invalid kitty color scheme format")
             colors[n] = color
-            colors_array[n+1] = color
+            colors_array[n + 1] = color
         end
 
         if name == "foreground" then
@@ -95,7 +96,7 @@ local hi = function(group, opts)
 
     local any = false
     for k, v in pairs(opts) do
-        if v then  -- i.e. if style `k` is true, e.g. reverse = true
+        if v then -- i.e. if style `k` is true, e.g. reverse = true
             cmd = cmd .. " cterm=" .. k
             cmd = cmd .. " gui=" .. k
             any = true
@@ -111,77 +112,77 @@ end
 
 
 -- Quickfix
-hi("QuickFixLine", {fg = 3})
+hi("QuickFixLine", { fg = 3 })
 
 -- Faded
-hi("ColorColumn", {bg = 0})
+hi("ColorColumn", { bg = 0 })
 hi("FoldColumn", {})
-hi("Folded", {fg = 7})
-hi("LineNr", {fg = 8})
-hi("NonText", {fg = 8})
+hi("Folded", { fg = 7 })
+hi("LineNr", { fg = 8 })
+hi("NonText", { fg = 8 })
 hi("SignColumn", {})
-hi("SpecialKey", {fg = 8})
-hi("StatusLine", {fg = 0, bg = 0})
-hi("StatusLineNC", {fg = 8, bg = 0})
-hi("WinSeparator", {fg = 0, bg = 0})
-hi("Virtual", {fg = 8, italic = true})
+hi("SpecialKey", { fg = 8 })
+hi("StatusLine", { fg = 0, bg = 0 })
+hi("StatusLineNC", { fg = 8, bg = 0 })
+hi("WinSeparator", { fg = 0, bg = 0 })
+hi("Virtual", { fg = 8, italic = true })
 
 -- Highlighted
-hi("String", {fg = 15})
-hi("Comment", {fg = 6})
-hi("SpecialComment", {fg = 6})
-hi("CursorColumn", {bg = 0})
-hi("CursorLineNr", {fg = 7})
+hi("String", { fg = 15 })
+hi("Comment", { fg = 6 })
+hi("SpecialComment", { fg = 6 })
+hi("CursorColumn", { bg = 0 })
+hi("CursorLineNr", { fg = 7 })
 hi("CursorLine", {})
-hi("Cursor", {reverse = true})
-hi("Directory", {fg = 4})
-hi("ErrorMsg", {fg = 9})
-hi("Error", {fg = 9, italic = true})
-hi("WarningMsg", {fg = 3, italic = true})
-hi("Warning", {fg = 3, italic = true})
-hi("MatchParen", {fg = 4, reverse = true})
-hi("ModeMsg", {fg = 10})
-hi("MoreMsg", {fg = 10})
-hi("PmenuSel", {fg = 0, bg = 5})
-hi("Question", {fg = 10})
-hi("Search", {fg = 11, reverse = true})
-hi("IncSearch", {reverse = true})
-hi("Todo", {fg = 3})
-hi("Title", {bold = true})
+hi("Cursor", { reverse = true })
+hi("Directory", { fg = 4 })
+hi("ErrorMsg", { fg = 9 })
+hi("Error", { fg = 9, italic = true })
+hi("WarningMsg", { fg = 3, italic = true })
+hi("Warning", { fg = 3, italic = true })
+hi("MatchParen", { fg = 4, reverse = true })
+hi("ModeMsg", { fg = 10 })
+hi("MoreMsg", { fg = 10 })
+hi("PmenuSel", { fg = 0, bg = 5 })
+hi("Question", { fg = 10 })
+hi("Search", { fg = 11, reverse = true })
+hi("IncSearch", { reverse = true })
+hi("Todo", { fg = 3 })
+hi("Title", { bold = true })
 
 -- Reversed
-hi("PmenuSbar", {reverse = true})
-hi("Pmenu", {reverse = true})
-hi("PmenuThumb", {reverse = true})
-hi("TabLineSel", {bold = true})
-hi("Visual", {bg = 8})
-hi("WildMenu", {reverse = true})
+hi("PmenuSbar", { reverse = true })
+hi("Pmenu", { reverse = true })
+hi("PmenuThumb", { reverse = true })
+hi("TabLineSel", { bold = true })
+hi("Visual", { bg = 8 })
+hi("WildMenu", { reverse = true })
 
 -- Diff
-hi("DiffAdd", {fg = 10})
-hi("diffAdded", {fg = 10})
-hi("DiffChange", {fg = 11})
-hi("diffChanged", {fg = 11})
-hi("DiffDelete", {fg = 9})
-hi("diffRemoved", {fg = 9})
-hi("DiffText", {fg = 4})
+hi("DiffAdd", { fg = 10 })
+hi("diffAdded", { fg = 10 })
+hi("DiffChange", { fg = 11 })
+hi("diffChanged", { fg = 11 })
+hi("DiffDelete", { fg = 9 })
+hi("diffRemoved", { fg = 9 })
+hi("DiffText", { fg = 4 })
 
 -- Spell
-hi("SpellBad", {underline = true})
+hi("SpellBad", { underline = true })
 hi("SpellCap", {})
-hi("SpellLocal", {fg = 5, underline = true})
-hi("SpellRare", {fg = 5, underline = true})
+hi("SpellLocal", { fg = 5, underline = true })
+hi("SpellRare", { fg = 5, underline = true })
 
 -- Vim Features
 hi("Menu", {})
 hi("Scrollbar", {})
-hi("TabLineFill", {reverse = true})
+hi("TabLineFill", { reverse = true })
 hi("TabLine", {})
 hi("Tooltip", {})
 
 -- Floating windows
 hi("NormalFloat", {})
-hi("FloatBorder", {fg = 8})
+hi("FloatBorder", { fg = 8 })
 -- FloatShadow
 -- FloatShadowThrough
 
@@ -222,38 +223,38 @@ hi("Underlined", {})
 
 -- Sneak
 hi("SneakPluginScope", {})
-hi("SneakStreakMask", {fg = 0, bg = 10})
-hi("SneakStreakStatusLine", {fg = 0, bg = 10})
-hi("SneakStreakTarget", {fg = 0, bg = 2})
+hi("SneakStreakMask", { fg = 0, bg = 10 })
+hi("SneakStreakStatusLine", { fg = 0, bg = 10 })
+hi("SneakStreakTarget", { fg = 0, bg = 2 })
 
 -- Dirvish
-hi("DirvishSuffix", {fg = 8})
+hi("DirvishSuffix", { fg = 8 })
 
 -- GitGutter
-hi("GitGutterAdd", {fg = 10})
-hi("GitGutterChange", {fg = 11})
-hi("GitGutterDelete", {fg = 9})
+hi("GitGutterAdd", { fg = 10 })
+hi("GitGutterChange", { fg = 11 })
+hi("GitGutterDelete", { fg = 9 })
 
 -- Notify
-hi("NotifyBackground", {fg = 0, bg = 0})
+hi("NotifyBackground", { fg = 0, bg = 0 })
 
 -- Fidget
-hi("FidgetTitle", {fg = 13, bg = 0})
-hi("FidgetTask", {fg = 5, bg = 0})
+hi("FidgetTitle", { fg = 13, bg = 0 })
+hi("FidgetTask", { fg = 5, bg = 0 })
 
 -- Telescope
-hi("TelescopeResultsDiffUntracked", {fg = 5})
+hi("TelescopeResultsDiffUntracked", { fg = 5 })
 
 -- LSP
-hi("DiagnosticError", {fg = 9})
-hi("DiagnosticWarn", {fg = 3})
-hi("DiagnosticInfo", {fg = 3})
-hi("DiagnosticHint", {fg = 5})
+hi("DiagnosticError", { fg = 9 })
+hi("DiagnosticWarn", { fg = 3 })
+hi("DiagnosticInfo", { fg = 3 })
+hi("DiagnosticHint", { fg = 5 })
 
-hi("DiagnosticVirtualTextError", {fg = 8, italic = true})
-hi("DiagnosticVirtualTextWarn", {fg = 8, italic = true})
-hi("DiagnosticVirtualTextInfo", {fg = 8, italic = true})
-hi("DiagnosticVirtualTextHint", {fg = 8, italic = true})
+hi("DiagnosticVirtualTextError", { fg = 8, italic = true })
+hi("DiagnosticVirtualTextWarn", { fg = 8, italic = true })
+hi("DiagnosticVirtualTextInfo", { fg = 8, italic = true })
+hi("DiagnosticVirtualTextHint", { fg = 8, italic = true })
 
 -- Neovide title bar
 if vim.g.neovide then

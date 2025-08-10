@@ -3,6 +3,7 @@ return { { "mason-org/mason-lspconfig.nvim",
 dependencies = {
     { "mason-org/mason.nvim", opts = {} },
     "neovim/nvim-lspconfig",
+    "ray-x/lsp_signature.nvim",
 },
 
 config = function()
@@ -11,6 +12,8 @@ config = function()
         callback = function(args)
             local bufnr = args.buf
             local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+            require("lsp_signature").on_attach()
 
             if client.server_capabilities.completionProvider then
                 vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -22,18 +25,6 @@ config = function()
             -- Disable semantic highlighting
             client.server_capabilities.semanticTokensProvider = nil
 
-            -- Auto-format on save for selected servers
-            if client.name == "rust_analyzer"
-                or client.name == "elixirls"
-                or client.name == "ruff"
-            then
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    buffer = bufnr,
-                    callback = function()
-                        vim.lsp.buf.format()
-                    end,
-                })
-            end
         end,
     })
 
@@ -43,10 +34,12 @@ config = function()
             severity_sort = true,
         })
 
+    -- Show a border around the hover window
     vim.lsp.handlers["textDocument/hover"] =
         vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
 
     vim.diagnostic.config({
+        -- Only show the first line of diagnostics as virtual text
         virtual_text = {
             format = function(diag)
                 return diag.message:match("[^\n]+")
@@ -124,4 +117,22 @@ config = function()
     })
 end,
 
-} }
+}, -- END "mason-org/mason-lspconfig.nvim"
+
+{ "ray-x/lsp_signature.nvim",
+    event = "InsertEnter",
+    opts = {
+        bind = true,
+        floating_window = false,
+        floating_window_off_x = 0,
+        hint_prefix = {
+            above = "↙ ",  -- when the hint is on the line above the current line
+            current = "← ",  -- when the hint is on the same line
+            below = "↖ "  -- when the hint is on the line below the current line
+        },
+        hint_scheme = "Virtual", -- highlight group
+    },
+    config = function(_, opt) require'lsp_signature'.setup(opt) end
+},
+
+}

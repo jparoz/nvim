@@ -13,6 +13,10 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 vim.keymap.set("n", "<C-Tab>", "gt")
 vim.keymap.set("n", "<C-S-Tab>", "gT")
 
+-- Comment/uncomment
+vim.keymap.set({"o", "n", "x"}, "<BSlash>", "gc", {remap = true})
+vim.keymap.set("n", "<BSlash><BSlash>", "gcl", {remap = true})
+
 
 --- Resize window to fit exactly 'textwidth' columns of content
 local resize = function()
