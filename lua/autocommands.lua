@@ -25,8 +25,8 @@ augroup END
 ]]
 
 
--- Automatically close the preview window when completion is finished
 vim.api.nvim_create_autocmd("CompleteDone", {
+    desc = "Automatically close the preview window when completion is finished",
     pattern = "*",
     callback = function()
         vim.cmd "pclose"

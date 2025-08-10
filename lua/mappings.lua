@@ -29,8 +29,8 @@ end
 vim.keymap.set("n", "<Leader>=", resize)
 
 
---- Buffer-local LSP-related mappings, run when an LSP client is started
 vim.api.nvim_create_autocmd("LspAttach", {
+    desc = "Make LSP-related mappings when an LSP is attached",
     callback = function(args)
         local bufnr = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
