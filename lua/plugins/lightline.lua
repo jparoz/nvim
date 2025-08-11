@@ -39,20 +39,16 @@ init = function()
         active = {
             left = {
                 -- closest to left
-                {"mode", "paste"},
-                {"readonly", "relativepath", "modified"},
-                {"git", "quickfix", "treesitter" },
+                { "mode", "paste" },
+                { "readonly", "relativepath", "git", "modified" },
+                { "treesitter" },
                 -- closest to centre
             },
             right = {
                 -- closest to right
-                {"lineinfo"},
-                {"percent"},
-                {
-                    -- "treesitter",
-                    -- "synstack",
-                    "filetype",
-                },
+                { "lineinfo" },
+                { "filetype" },
+                -- { "synstack" },
                 -- closest to centre
             },
         },
@@ -62,7 +58,7 @@ init = function()
             },
             right = {
                 { "lineinfo" },
-                { "percent" },
+                { "filetype" },
             },
         },
         component_function = {
@@ -114,15 +110,21 @@ init = function()
 
         if width < 5 then return "" end
 
+        -- Max width of 100
+        if width > 100 then width = 100 end
+
         -- Generate the statusline string based on the file type
         local filetype = vim.opt.filetype:get()
+
+        -- Manually truncate from the left
+        local indicator_size = 999
+
+        local res
 
         if filetype == "lua" then
             local opts = {}
 
-            -- Note: don't ask me why subtract 5,
-            -- it's because nvim-treesitter is silly
-            opts.indicator_size = width-5
+            opts.indicator_size = indicator_size
             opts.type_patterns = {"function_declaration"}
 
             -- Only include the function name and parameters
@@ -130,7 +132,7 @@ init = function()
                 return nodes_text(node, node:field("parameters")[1])
             end
 
-            return statusline(opts)
+            res = statusline(opts)
 
         elseif filetype == "rust" then
             -- For Rust,
@@ -138,21 +140,23 @@ init = function()
             -- with nvim-treesitter.statusline();
             -- so we'll manually walk the treesitter tree.
 
-            local s = TreesitterStatusRust()
-
-            if #s > width then
-                -- truncate with ...
-                s = s:sub(1, width-3) .. "..."
-            end
-
-            return s
+            res = TreesitterStatusRust()
 
         else
             -- Default
-            -- Note: don't ask me why subtract 5,
-            -- it's because nvim-treesitter is silly
-            return statusline({indicator_size = width-5})
+            res = statusline({indicator_size = indicator_size})
         end
+
+        if not res then return "" end
+
+        -- Truncate from the beginning not the end
+        if #res > width then
+            -- truncate with ...
+            res = res:sub(1, width-3) .. "..."
+        end
+
+        return res
+
     end
 
     utils.lua2vim("TreesitterStatus")
@@ -264,8 +268,6 @@ init = function()
         return goRustTS(vim.treesitter.get_node())
     end
 
-
-    utils.lua2vim("TreesitterStatus")
 
     GitCache = {}
 
