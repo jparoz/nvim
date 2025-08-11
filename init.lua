@@ -21,6 +21,7 @@ require "options"
 require "commands"
 require "mappings"
 require "autocommands"
+require "lsp"
 
 -- This file should only run in neovide
 if vim.g.neovide then

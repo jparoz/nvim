@@ -20,6 +20,15 @@ return {
         },
     },
 
+    { "mason-org/mason-lspconfig.nvim",
+        opts = {},
+        dependencies = {
+            { "mason-org/mason.nvim", opts = {} },
+            "neovim/nvim-lspconfig",
+            "ray-x/lsp_signature.nvim",
+        },
+    },
+
     { "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {
