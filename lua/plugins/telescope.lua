@@ -31,6 +31,7 @@ return {
         { "<Leader>h", function() require("telescope.builtin").help_tags() end },
         { "<Leader>b", function() require("telescope.builtin").buffers() end },
         { "<Leader>/", function() require("telescope.builtin").lsp_workspace_symbols() end },
+        { "<Leader>c", require("config_files").picker },
         { "gd",        function() require("telescope.builtin").lsp_definitions() end },
         { "gi",        function() require("telescope.builtin").lsp_implementations() end },
         { "gr",        function() require("telescope.builtin").lsp_references() end },
