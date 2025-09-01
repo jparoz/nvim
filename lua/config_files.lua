@@ -20,6 +20,7 @@ function M.files()
     if hostname == "JESSE3DDG" then
         local added = {
             { name = "clangd", path = vim.env.LOCALAPPDATA .. "/clangd/config.yaml" },
+            { name = "clang-format", path = vim.env.USERPROFILE .. "/.clang-format" },
         }
         return vim.iter({common, added}):flatten():totable()
     end
