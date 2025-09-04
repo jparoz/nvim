@@ -20,6 +20,12 @@ return {
         },
     },
 
+    { "sindrets/diffview.nvim",
+        opts = {
+            use_icons = false,
+        },
+    },
+
     { "mason-org/mason-lspconfig.nvim",
         opts = {},
         dependencies = {
