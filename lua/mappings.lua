@@ -41,11 +41,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         local opts = { noremap=true, silent=true, buffer = bufnr }
 
-        if client.name == "texlab" then
-            vim.keymap.set("n", "K", function() vim.cmd("TexlabForward") end, opts)
-        else
-            vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        end
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
         vim.keymap.set({"n", "v"}, "ga", vim.lsp.buf.code_action, opts)
 
@@ -56,5 +52,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "gN", function()
             vim.diagnostic.jump({count = -1, float = true})
         end, opts)
+
+        if client.name == "clangd" then
+            vim.keymap.set("n", "<F2>", function() vim.cmd [[LspClangdSwitchSourceHeader]] end)
+        end
     end,
 })

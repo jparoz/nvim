@@ -74,6 +74,7 @@ vim.lsp.config("clangd", {
         "--clang-tidy",
         "--completion-style=detailed",
         "--header-insertion=never",
+        "--log=info",
     },
 })
 
