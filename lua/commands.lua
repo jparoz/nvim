@@ -79,7 +79,9 @@ function Make(args)
 
 
     local makeprg = vim.api.nvim_buf_get_option(bufnr, "makeprg")
-    if not makeprg then return end
+    if not makeprg or makeprg == "" then
+        makeprg = "make"
+    end
 
     local ignore_pats = MakeIgnoreLines[makeprg]
 
@@ -103,6 +105,7 @@ function Make(args)
         end
 
         if event == "exit" then
+            vim.notify("Make finished")
             vim.g.MakeJobID = nil
 
             -- Filter out makeprg-specific lines
@@ -131,6 +134,7 @@ function Make(args)
         end
     end
 
+    vim.notify("Starting Make command: " .. cmd)
     local job_id = vim.fn.jobstart(cmd, {
         on_stderr = on_event,
         on_stdout = on_event,
