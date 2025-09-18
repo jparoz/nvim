@@ -36,6 +36,16 @@ vim.keymap.set("n", "<Leader>=", resize)
 vim.api.nvim_create_autocmd("LspAttach", {
     desc = "Make LSP-related mappings when an LSP is attached",
     callback = function(args)
+        local function jump_next()
+            vim.diagnostic.jump({count = 1, float = true})
+        end
+        local function jump_prev()
+            vim.diagnostic.jump({count = -1, float = true})
+        end
+        local function code_actions()
+            vim.lsp.buf.code_action {apply = true}
+        end
+
         local bufnr = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
 
@@ -43,15 +53,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
-        vim.keymap.set({"n", "v"}, "ga", function() vim.lsp.buf.code_action {apply = true} end, opts)
-
         vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
-        vim.keymap.set("n", "gn", function()
-            vim.diagnostic.jump({count = 1, float = true})
-        end, opts)
-        vim.keymap.set("n", "gN", function()
-            vim.diagnostic.jump({count = -1, float = true})
-        end, opts)
+
+        vim.keymap.set("n", "gn", jump_next, opts)
+        vim.keymap.set("n", "gN", jump_prev, opts)
+        vim.keymap.set({"n", "v"}, "ga", code_actions, opts)
+
+        vim.keymap.set("n", "<CR>", jump_next, opts)
+        vim.keymap.set("n", "<S-CR>", jump_prev, opts)
+        vim.keymap.set("n", "<C-CR>", code_actions, opts)
 
         if client.name == "clangd" then
             vim.keymap.set("n", "<F2>", function() vim.cmd [[LspClangdSwitchSourceHeader]] end)
