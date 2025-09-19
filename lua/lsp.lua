@@ -77,6 +77,7 @@ vim.lsp.config("clangd", {
         "--log=info",
     },
 })
+vim.lsp.enable("clangd")
 
 vim.lsp.config("elixirls", {
     cmd = {
