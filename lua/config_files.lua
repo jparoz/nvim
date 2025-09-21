@@ -21,6 +21,7 @@ function M.files()
         local added = {
             { name = "clangd", path = vim.env.LOCALAPPDATA .. "/clangd/config.yaml" },
             { name = "clang-format", path = vim.env.USERPROFILE .. "/.clang-format" },
+            { name = "PowerShell profile", path = vim.env.USERPROFILE .. "/Documents/WindowsPowerShell/profile.ps1" },
         }
         return vim.iter({common, added}):flatten():totable()
     end
