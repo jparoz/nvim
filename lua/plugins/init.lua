@@ -67,4 +67,7 @@ return {
     },
     { "KeitaNakamura/tex-conceal.vim", ft = "tex" },
     { "gi1242/vim-tex-syntax", ft = "tex" },
+    { "bakudankun/pico-8.vim", init = function()
+        vim.g.pico8_config = {imitate_console = false, use_keymap = false}
+    end },
 }
