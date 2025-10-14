@@ -64,6 +64,10 @@ vim.lsp.config("lua_ls", {
     },
 })
 
+vim.lsp.config("pico8_ls", {
+    filetypes = { "p8", "pico8" },
+})
+
 vim.lsp.config("clangd", {
     cmd = {
         "clangd",
