@@ -4,10 +4,6 @@ vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     severity_sort = true,
 })
 
--- Show a border around the hover window
-vim.lsp.handlers["textDocument/hover"] =
-vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
-
 vim.diagnostic.config({
     -- Only show the first line of diagnostics as virtual text
     virtual_text = {

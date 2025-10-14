@@ -45,6 +45,9 @@ vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 
 vim.opt.diffopt:append("linematch:60")
 
+-- Border around floating windows e.g. LSP hover
+vim.opt.winborder = "rounded"
+
 -- Diagnostics
 vim.diagnostic.config {
     underline = false,
