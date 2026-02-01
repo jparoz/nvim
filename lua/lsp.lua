@@ -42,8 +42,7 @@ vim.lsp.config("*", {
 vim.lsp.config("rust_analyzer", {
     settings = {
         ["rust-analyzer"] = {
-            checkOnSave = {
-                allFeatures = true,
+            check = {
                 overrideCommand = {
                     "cargo", "clippy",
                     "--workspace", "--message-format=json",
@@ -53,6 +52,7 @@ vim.lsp.config("rust_analyzer", {
         },
     },
 })
+vim.lsp.enable("rust_analyzer")
 
 vim.lsp.config("lua_ls", {
     settings = {
