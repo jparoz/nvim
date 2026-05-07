@@ -19,7 +19,7 @@ config = function()
                 sign = {
                     name = { "Dap.*" },
                 },
-                click = "v:lua.ScSa",
+                click = "v:lua.ScLa",
             },
 
             { -- Diagnostics
