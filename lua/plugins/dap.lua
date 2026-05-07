@@ -66,6 +66,13 @@ config = function()
 
     -- Open DAP terminal in new tab
     dap.defaults.fallback.terminal_win_cmd = "tabnew"
+
+    -- Auto-close DAP terminal on program terminate
+    dap.listeners.on_session["auto_close_term"] = function(old, new)
+        if old and not new then
+            vim.api.nvim_buf_delete(old.term_buf, {force = true})
+        end
+    end
 end,
 
 } }
