@@ -32,6 +32,14 @@ local resize = function()
 end
 vim.keymap.set("n", "<Leader>=", resize)
 
+-- K to inspect variable in DAP, or else LSP hover
+vim.keymap.set("n", "K", function()
+    if require("dap").session() then
+        require("dap.ui.widgets").hover()
+    else
+        vim.lsp.buf.hover()
+    end
+end)
 
 vim.api.nvim_create_autocmd("LspAttach", {
     desc = "Make LSP-related mappings when an LSP is attached",
@@ -50,8 +58,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local client = vim.lsp.get_client_by_id(args.data.client_id)
 
         local opts = { noremap=true, silent=true, buffer = bufnr }
-
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
         vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
 
