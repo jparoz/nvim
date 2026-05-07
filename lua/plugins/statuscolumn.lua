@@ -15,6 +15,13 @@ config = function()
                 click = "v:lua.ScSa",
             },
 
+            { -- DAP
+                sign = {
+                    name = { "Dap.*" },
+                },
+                click = "v:lua.ScSa",
+            },
+
             { -- Diagnostics
                 sign = {
                     namespace = { "diagnostic" },

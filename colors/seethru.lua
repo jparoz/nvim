@@ -235,6 +235,10 @@ hi("GitGutterAdd", { fg = 10 })
 hi("GitGutterChange", { fg = 11 })
 hi("GitGutterDelete", { fg = 9 })
 
+-- DAP
+hi("DapBreakpoint", { fg = 9 })
+hi("DapStopped", { fg = 10 })
+
 -- Notify
 hi("NotifyBackground", { fg = 0, bg = 0 })
 
