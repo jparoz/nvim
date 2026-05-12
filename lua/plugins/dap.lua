@@ -75,4 +75,8 @@ config = function()
     end
 end,
 
+}, { "theHamsta/nvim-dap-virtual-text",
+
+opts = { },
+
 } }
