@@ -3,14 +3,6 @@ return { { "mfussenegger/nvim-dap",
 config = function()
     local dap = require("dap")
 
-    dap.set_log_level("TRACE")
-
-    dap.adapters.lldb = {
-        type = "executable",
-        command = "lldb-dap.exe",
-        name = "lldb",
-    }
-
     dap.adapters.codelldb = {
         type = "server",
         port = "${port}",
@@ -40,8 +32,8 @@ config = function()
     vim.keymap.set("n", "<F4>", dap.terminate)
     vim.keymap.set("n", "<F5>", dap.continue)
     vim.keymap.set("n", "<F10>", dap.step_over)
-    vim.keymap.set("n", "<F11>", dap.step_out)
-    vim.keymap.set("n", "<F12>", dap.step_into)
+    vim.keymap.set("n", "<F11>", dap.step_into)
+    vim.keymap.set("n", "<F12>", dap.step_out)
 
     vim.keymap.set("n", "<F6>", dap.toggle_breakpoint)
     vim.keymap.set("n", "<F7>", function()
@@ -76,6 +68,8 @@ config = function()
 end,
 
 }, { "theHamsta/nvim-dap-virtual-text",
+
+dependencies = { "mfussenegger/nvim-dap" },
 
 opts = { },
 
