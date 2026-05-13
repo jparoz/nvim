@@ -3,7 +3,7 @@ return {
         "nvim-treesitter/nvim-treesitter",
         main = "nvim-treesitter.configs",
         opts = {
-            ensure_installed = { "lua", "rust", "markdown" },
+            ensure_installed = { "c", "cpp", "lua", "rust", "markdown" },
 
             highlight = {
                 enable = true,
