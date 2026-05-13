@@ -9,6 +9,7 @@ return {
     "tpope/vim-speeddating",
 
     -- Good (very useful function, but could be better designed or implemented)
+    "tpope/vim-obsession",
     { "lewis6991/gitsigns.nvim",
         opts = {
             on_attach = function(bufnr)
