@@ -75,4 +75,9 @@ dependencies = { "mfussenegger/nvim-dap" },
 
 opts = { },
 
+init = function()
+    vim.cmd [[ hi link NvimDapVirtualText Virtual ]]
+    vim.cmd [[ hi link NvimDapVirtualTextChanged DiffChange ]]
+end,
+
 } }
