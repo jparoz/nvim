@@ -29,6 +29,8 @@ config = function()
         },
     }
 
+    vim.keymap.set("n", "<F2>", dap.up)
+    vim.keymap.set("n", "<F3>", dap.down)
     vim.keymap.set("n", "<F4>", dap.terminate)
     vim.keymap.set("n", "<F5>", dap.continue)
     vim.keymap.set("n", "<F10>", dap.step_over)
