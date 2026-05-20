@@ -25,7 +25,7 @@ return {
     cmd = "Telescope",
 
     keys = {
-        { "-",         function() require("telescope").extensions.file_browser.file_browser() end },
+        { "<Leader>-", function() require("telescope").extensions.file_browser.file_browser() end },
         { "<Leader>f", function() require("telescope.builtin").find_files() end },
         { "<Leader>g", function() require("telescope.builtin").live_grep() end },
         { "<Leader>h", function() require("telescope.builtin").help_tags() end },
